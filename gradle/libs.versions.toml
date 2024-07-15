@@ -1,31 +1,114 @@
 [versions]
+
+# Commons
 agp = "8.5.1"
-kotlin = "1.9.0"
-coreKtx = "1.13.1"
+core = "1.13.1"
+ktor = "2.3.12"
+splash = "1.0.1"
+kotlin = "2.0.0"
+detekt = "1.23.6"
+activity = "1.9.0"
+material = "1.2.1"
+lifecycle = "2.8.3"
+coroutines = "1.8.1"
+compose = "2024.06.00"
+navigation = "2.8.0-beta05"
+
+# Tests
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.3"
-activityCompose = "1.9.0"
-composeBom = "2024.04.01"
+mockito = "5.3.1"
+espresso = "3.6.1"
+junit-version = "1.2.1"
 
 [libraries]
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+# UI
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-animation = { group = "androidx.compose.animation", name = "animation" }
+ui-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+ui-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+ui-material = { group = "androidx.compose.material3", name = "material3", version.ref = "material" }
+
+# Ktor
+ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+# Others
+core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
+compose = { group = "androidx.compose", name = "compose-bom", version.ref = "compose" }
+splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash" }
+activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+
+# Android Test
+ui-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+ui-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-version" }
+
+# Tests
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito" }
+espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+application = { id = "com.android.application", version.ref = "agp" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
+
+[bundles]
+debug = [
+    "ui-tooling",
+    "ui-manifest"
+]
+
+test = [
+    "junit",
+    "mockito",
+    "kotlinx-coroutines-test"
+]
+
+android-test = [
+    "espresso",
+    "ui-junit",
+    "ui-junit4",
+    "ui-manifest",
+]
+
+core = [
+    # Others
+    "core",
+    "splash",
+    "activity",
+    "lifecycle",
+    "navigation",
+    "coroutines-core",
+    # UI
+    "ui",
+    "ui-icons",
+    "ui-runtime",
+    "ui-tooling",
+    "ui-preview",
+    "ui-material",
+    "ui-graphics",
+    "ui-animation",
+    "ui-foundation",
+    # Client HTTP
+    "ktor-cio",
+    "ktor-core",
+    "ktor-logging",
+    "ktor-negotiation",
+    "ktor-serialization"
+]
