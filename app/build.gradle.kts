@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.compiler)
     alias(libs.plugins.application)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -75,6 +77,8 @@ android {
 
 dependencies {
     // Others
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.android)
     implementation(libs.bundles.core)
     implementation(platform(libs.compose))
 
@@ -82,31 +86,12 @@ dependencies {
     testImplementation(libs.bundles.test)
 
     // Test Android
+    kspAndroidTest(libs.hilt.compiler)
     androidTestImplementation(platform(libs.compose))
     androidTestImplementation(libs.bundles.android.test)
 
     // Debug
     debugImplementation(libs.bundles.debug)
-
-//    implementation(libs.ui)
-//    implementation(libs.ui.tooling)
-//    implementation(libs.ui.graphics)
-//    implementation(libs.ui.material)
-//
-//    implementation(libs.core)
-//    implementation(libs.activity)
-//    implementation(libs.lifecycle)
-//    implementation(platform(libs.compose))
-//
-//    testImplementation(libs.junit)
-//
-//    debugImplementation(libs.ui.tooling)
-//    debugImplementation(libs.ui.manifest)
-//
-//    androidTestImplementation(libs.junit)
-//    androidTestImplementation(libs.espresso)
-//    androidTestImplementation(libs.ui.junit4)
-//    androidTestImplementation(platform(libs.compose))
 }
 
 detekt {
