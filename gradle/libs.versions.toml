@@ -12,6 +12,7 @@ detekt = "1.23.6"
 activity = "1.9.0"
 material = "1.2.1"
 lifecycle = "2.8.3"
+datastore = "1.1.1"
 leakcanary = "2.14"
 coroutines = "1.8.1"
 ksp = "2.0.0-1.0.21"
@@ -51,12 +52,14 @@ hilt-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin"
 
 core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 compose = { group = "androidx.compose", name = "compose-bom", version.ref = "compose" }
 splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash" }
 activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 
 # Android Test
@@ -110,9 +113,11 @@ core = [
     "core",
     "splash",
     "activity",
+    "datastore",
     "lifecycle",
     "navigation",
     "coroutines-core",
+    "datastore-preferences",
     # UI
     "ui",
     "ui-icons",
