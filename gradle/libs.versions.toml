@@ -1,7 +1,7 @@
 [versions]
 
 # Commons
-agp = "8.5.1"
+agp = "8.5.2"
 coil = "2.6.0"
 ktor = "2.3.12"
 hilt = "2.51.1"
