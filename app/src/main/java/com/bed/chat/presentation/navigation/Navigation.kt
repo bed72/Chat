@@ -14,14 +14,6 @@ fun Navigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = SplashDestination) {
         composable<SplashDestination> {
             SplashInitScreen {
-                navController.navigate(
-                    route = SignInDestination,
-                    builder = {
-                        popUpTo(route = SplashDestination) {
-                           inclusive = true
-                        }
-                    }
-                )
             }
         }
         composable<SplashDestination> {
