@@ -18,7 +18,9 @@
         <activity
             android:exported="true"
             android:name=".MainActivity"
-            android:theme="@style/Theme.Chat" >
+            android:windowSoftInputMode="stateVisible"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.Chat.SplashScreen" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

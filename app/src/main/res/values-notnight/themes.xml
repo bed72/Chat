@@ -6,17 +6,17 @@
         name="Theme.Chat"
         parent="android:Theme.Material.Light.NoActionBar" >
 
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowLightNavigationBar">false</item>
-        <item name="android:statusBarColor">@color/dark_background</item>
-        <item name="android:navigationBarColor">@color/dark_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:statusBarColor">@color/light_background</item>
+        <item name="android:navigationBarColor">@color/light_background</item>
 
     </style>
 
     <!-- Splash -->
     <style name="Theme.Chat.SplashScreen" parent="Theme.SplashScreen">
         <item name="postSplashScreenTheme">@style/Theme.Chat</item>
-        <item name="windowSplashScreenBackground">@color/dark_background</item>
+        <item name="windowSplashScreenBackground">@color/light_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
     </style>
 
