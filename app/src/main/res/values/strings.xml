@@ -12,5 +12,7 @@
     <string name="show_password_input">Ícone para mostrar a senha.</string>
     <string name="hide_password_input">Ícone para esconder a senha.</string>
 
+    <string name="label_sign_in_button">Entrar</string>
+
 
 </resources>

@@ -7,8 +7,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 
-import androidx.compose.material3.Text
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.ui.unit.dp
@@ -28,12 +26,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 
 import com.bed.chat.R
 import com.bed.chat.presentation.components.Container
+import com.bed.chat.presentation.components.PrimaryButton
 import com.bed.chat.presentation.components.PrimaryTextField
 
 @Composable
@@ -45,6 +42,7 @@ fun SignInInitScreen() {
 fun SignInScreen(modifier: Modifier = Modifier) {
     val (email, setEmail) = remember { mutableStateOf("") }
     val (password, setPassword) = remember { mutableStateOf("") }
+    val (isLoading, setIsLoading) = remember { mutableStateOf(false) }
 
     Container {
         Column(
@@ -83,15 +81,13 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = modifier.height(32.dp))
 
-            Button(
-                modifier = modifier
-                    .height(54.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
-                onClick = {  }
-            ) {
-                Text(text = "Entrar")
-            }
+            PrimaryButton(
+                text = stringResource(id = R.string.label_sign_in_button),
+                isLoading = isLoading,
+                onClick = {
+                    setIsLoading(!isLoading)
+                }
+            )
         }
     }
 }
