@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 
 import androidx.compose.material.icons.Icons
@@ -36,6 +36,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 import com.bed.chat.R
+import com.bed.chat.presentation.theme.ChatTheme
 
 @Composable
 fun PrimaryTextField(
@@ -153,11 +154,13 @@ private fun handleVisualTransformation(iconIsVisible: Boolean, keyboardType: Key
 
 @Preview
 @Composable
-private fun PrimaryTextFieldEmailValidPreview() {
-    PrimaryTextField(
-        value = "",
-        label = "E-mail",
-        placeholder = "Digite seu e-mail",
-        onValueChange = {}
-    )
+private fun PrimaryTextFieldPreview() {
+    ChatTheme {
+        PrimaryTextField(
+            value = "",
+            label = "E-mail",
+            placeholder = "Digite seu e-mail",
+            onValueChange = {}
+        )
+    }
 }

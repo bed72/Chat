@@ -18,7 +18,7 @@
         <activity
             android:exported="true"
             android:name=".MainActivity"
-            android:windowSoftInputMode="stateVisible"
+            android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.Chat.SplashScreen" >
 

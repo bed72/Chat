@@ -28,10 +28,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 
 import com.bed.chat.R
+import com.bed.chat.presentation.components.Container
 import com.bed.chat.presentation.components.PrimaryTextField
 
 @Composable
@@ -44,50 +46,52 @@ fun SignInScreen(modifier: Modifier = Modifier) {
     val (email, setEmail) = remember { mutableStateOf("") }
     val (password, setPassword) = remember { mutableStateOf("") }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.background)
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            modifier = modifier.size(200.dp),
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = stringResource(id = R.string.app_icon_description)
-        )
-
-        PrimaryTextField(
-            value = email,
-            onValueChange = setEmail,
-            keyboardType = KeyboardType.Email,
-            label = stringResource(id = R.string.label_email_input),
-            placeholder = stringResource(id = R.string.placeholder_email_input)
-        )
-
-        Spacer(modifier = modifier.height(16.dp))
-
-        PrimaryTextField(
-            value = password,
-            imeAction = ImeAction.Done,
-            onValueChange = setPassword,
-            keyboardType = KeyboardType.Password,
-            label = stringResource(id = R.string.label_password_input),
-            placeholder = stringResource(id = R.string.placeholder_password_input)
-        )
-
-        Spacer(modifier = modifier.height(32.dp))
-
-        Button(
+    Container {
+        Column(
             modifier = modifier
-                .height(48.dp)
-                .fillMaxSize(),
-            shape = RoundedCornerShape(8.dp),
-            onClick = {  }
+                .fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.background)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Entrar")
+            Image(
+                modifier = modifier.size(272.dp),
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                contentDescription = stringResource(id = R.string.app_icon_description)
+            )
+
+            PrimaryTextField(
+                value = email,
+                onValueChange = setEmail,
+                keyboardType = KeyboardType.Email,
+                label = stringResource(id = R.string.label_email_input),
+                placeholder = stringResource(id = R.string.placeholder_email_input)
+            )
+
+            Spacer(modifier = modifier.height(16.dp))
+
+            PrimaryTextField(
+                value = password,
+                imeAction = ImeAction.Done,
+                onValueChange = setPassword,
+                keyboardType = KeyboardType.Password,
+                label = stringResource(id = R.string.label_password_input),
+                placeholder = stringResource(id = R.string.placeholder_password_input)
+            )
+
+            Spacer(modifier = modifier.height(32.dp))
+
+            Button(
+                modifier = modifier
+                    .height(54.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(8.dp),
+                onClick = {  }
+            ) {
+                Text(text = "Entrar")
+            }
         }
     }
 }

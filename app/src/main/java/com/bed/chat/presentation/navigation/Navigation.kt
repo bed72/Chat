@@ -13,8 +13,7 @@ import com.bed.chat.presentation.feature.splash.SplashInitScreen
 fun Navigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = SplashDestination) {
         composable<SplashDestination> {
-            SplashInitScreen {
-            }
+            SplashInitScreen {}
         }
         composable<SplashDestination> {
             SignInInitScreen()
