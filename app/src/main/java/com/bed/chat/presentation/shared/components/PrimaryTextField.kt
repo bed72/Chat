@@ -88,9 +88,10 @@ fun PrimaryTextField(
                     )
             },
             colors = OutlinedTextFieldDefaults.colors(
+                errorTextColor = MaterialTheme.colorScheme.error,
                 errorBorderColor = MaterialTheme.colorScheme.error,
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
             )
         )
 

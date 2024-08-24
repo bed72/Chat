@@ -10,12 +10,27 @@ value class PasswordValue private constructor(private val value: String) {
     operator fun invoke() = value
 
     companion object {
-        private const val PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$"
+        private const val EMPTY = "A senha não pode ser vazia."
+        private const val LENGTH = "A senha deve ter no mínimo 8 caracteres."
+        private const val NUMBER = "A senha deve conter pelo menos um número."
+        private const val CAPITAL_LETTER = "A senha deve conter pelo menos uma letra maiúscula."
 
-        operator fun invoke(value: String): EitherNel<String, PasswordValue> =
-            if(isValid(value)) PasswordValue(value).right()
-            else Values.INVALID_PASSWORD.message.leftNel()
+        private const val HAS_NUMBER = ".*[0-9].*"
+        private const val HAS_MINIMAL_LENGTH = ".{8,}"
+        private const val HAS_CAPITAL_LETTER = ".*[A-Z].*"
 
-        private fun isValid(value: String) = PATTERN.toRegex().matches(value)
+        operator fun invoke(value: String?): EitherNel<String, PasswordValue> = when {
+            value.isNullOrEmpty() -> EMPTY.leftNel()
+            hasCapitalLetter(value) -> CAPITAL_LETTER.leftNel()
+            hasNumbers(value) -> NUMBER.leftNel()
+            hasMinimalLength(value) -> LENGTH.leftNel()
+            else -> PasswordValue(value).right()
+        }
+
+        private fun hasNumbers(value: String) = HAS_NUMBER.toRegex().matches(value).not()
+
+        private fun hasCapitalLetter(value: String) = HAS_CAPITAL_LETTER.toRegex().matches(value).not()
+
+        private fun hasMinimalLength(value: String) = HAS_MINIMAL_LENGTH.toRegex().matches(value).not()
     }
 }

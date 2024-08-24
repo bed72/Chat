@@ -19,6 +19,7 @@ import com.bed.chat.presentation.feature.signin.validators.PasswordValidator
 
 @HiltViewModel
 class SignInViewModel @Inject constructor() : ViewModel() {
+
     private val emailValidator: Validator<String> by lazy { EmailValidator() }
     private val passwordValidator: Validator<String> by lazy { PasswordValidator() }
 
@@ -41,6 +42,9 @@ class SignInViewModel @Inject constructor() : ViewModel() {
     private fun emailChanged(value: String) {
         emailValidator(
             value = value,
+            default = { email ->
+                formState = formState.copy(email = email, emailMessage = null, emailIsValid = false)
+            },
             success = { email ->
                 formState = formState.copy(email = email, emailMessage = null, emailIsValid = true)
             },
@@ -53,6 +57,9 @@ class SignInViewModel @Inject constructor() : ViewModel() {
     private fun passwordChanged(value: String) {
         passwordValidator(
             value = value,
+            default = { password ->
+                formState = formState.copy(password = password, passwordMessage = null, passwordIsValid = false)
+            },
             success = { password ->
                 formState = formState
                     .copy(password = password, passwordMessage = null, passwordIsValid = true)

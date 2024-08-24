@@ -65,8 +65,3 @@ fun <E, A, B, R> accumulatedValidation(
 ): EitherNel<E, R> = either {
     zipOrAccumulate({ a.bindNel() }, { b.bindNel() }) { a, b -> f(a, b) }
 }
-
-enum class Values(val message: String) {
-    INVALID_EMAIL("E-mail inválido."),
-    INVALID_PASSWORD("Senha inválida."),
-}

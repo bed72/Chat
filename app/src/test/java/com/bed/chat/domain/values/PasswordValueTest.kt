@@ -14,12 +14,52 @@ class PasswordValueTest {
     }
 
     @Test
-    fun `Should return failure message when value is invalid`() {
-        listOf("", "password", "PassWord", "passw0rd", "PassW0r").forEach {
-            val password = PasswordValue(it)
+    fun `Should return failure message when value is null`() {
+        val password = PasswordValue(null)
 
-            assertTrue(password.isLeft())
-            password.mapLeft { message -> assertEquals(Values.INVALID_PASSWORD.message, message.first()) }
+        assertTrue(password.isLeft())
+        password.mapLeft { message ->
+            assertEquals("A senha não pode ser vazia.", message.first())
+        }
+    }
+
+    @Test
+    fun `Should return failure message when value is empty`() {
+        val password = PasswordValue("")
+
+        assertTrue(password.isLeft())
+        password.mapLeft { message ->
+            assertEquals("A senha não pode ser vazia.", message.first())
+        }
+    }
+
+    @Test
+    fun `Should return failure message when value is length less than 8`() {
+        val password = PasswordValue("C1cada")
+
+        assertTrue(password.isLeft())
+        password.mapLeft { message ->
+            assertEquals("A senha deve ter no mínimo 8 caracteres.", message.first())
+        }
+    }
+
+    @Test
+    fun `Should return failure message when value is not has number`() {
+        val password = PasswordValue("Cicadada")
+
+        assertTrue(password.isLeft())
+        password.mapLeft { message ->
+            assertEquals("A senha deve conter pelo menos um número.", message.first())
+        }
+    }
+
+    @Test
+    fun `Should return failure message when value is not has capital latter`() {
+        val password = PasswordValue("c1cadada")
+
+        assertTrue(password.isLeft())
+        password.mapLeft { message ->
+            assertEquals("A senha deve conter pelo menos uma letra maiúscula.", message.first())
         }
     }
 }

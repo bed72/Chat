@@ -10,12 +10,17 @@ value class EmailValue private constructor(private val value: String) {
     operator fun invoke() = value
 
     companion object {
+        private const val INVALID = "E-mail inválido."
+        private const val EMPTY = "O e-mail não pode ser vazio."
+
         private const val PATTERN = "^[a-zA-Z\\d+_.-]+@[a-zA-Z\\d.-]+\\.[a-zA-z]{2,3}\$"
 
-        operator fun invoke(value: String): EitherNel<String, EmailValue> =
-            if(isValid(value)) EmailValue(value).right()
-            else Values.INVALID_EMAIL.message.leftNel()
+        operator fun invoke(value: String?): EitherNel<String, EmailValue> = when {
+            value.isNullOrEmpty() -> EMPTY.leftNel()
+            isValid(value) -> INVALID.leftNel()
+            else -> EmailValue(value).right()
+        }
 
-        private fun isValid(value: String) = PATTERN.toRegex().matches(value)
+        private fun isValid(value: String) = PATTERN.toRegex().matches(value).not()
     }
 }
