@@ -3,9 +3,9 @@ package com.bed.chat.presentation.feature.signin
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 import androidx.compose.material3.MaterialTheme
 
@@ -29,21 +29,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 
 import com.bed.chat.R
+
 import com.bed.chat.presentation.components.Container
 import com.bed.chat.presentation.components.PrimaryButton
 import com.bed.chat.presentation.components.PrimaryTextField
 
+import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
+import com.bed.chat.presentation.feature.signin.state.SignInFormState
+
 @Composable
-fun SignInInitScreen() {
-    SignInScreen()
+fun SignInInitScreen(
+    viewModel: SignInViewModel = viewModel()
+) {
+    SignInScreen(viewModel.formState, viewModel::onFormEvent)
 }
 
 @Composable
-fun SignInScreen(modifier: Modifier = Modifier) {
-    val (email, setEmail) = remember { mutableStateOf("") }
-    val (password, setPassword) = remember { mutableStateOf("") }
-    val (isLoading, setIsLoading) = remember { mutableStateOf(false) }
-
+fun SignInScreen(
+    formState: SignInFormState,
+    onFormEvent: (SignInFormEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Container {
         Column(
             modifier = modifier
@@ -61,32 +67,30 @@ fun SignInScreen(modifier: Modifier = Modifier) {
             )
 
             PrimaryTextField(
-                value = email,
-                onValueChange = setEmail,
+                value = formState.email,
                 keyboardType = KeyboardType.Email,
                 label = stringResource(id = R.string.label_email_input),
-                placeholder = stringResource(id = R.string.placeholder_email_input)
+                placeholder = stringResource(id = R.string.placeholder_email_input),
+                onValueChange = { onFormEvent(SignInFormEvent.EmailChanged(it)) }
             )
 
             Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
-                value = password,
+                value = formState.password,
                 imeAction = ImeAction.Done,
-                onValueChange = setPassword,
                 keyboardType = KeyboardType.Password,
                 label = stringResource(id = R.string.label_password_input),
-                placeholder = stringResource(id = R.string.placeholder_password_input)
+                placeholder = stringResource(id = R.string.placeholder_password_input),
+                onValueChange = { onFormEvent(SignInFormEvent.PasswordChanged(it)) }
             )
 
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryButton(
+                isLoading = formState.isLoading,
                 text = stringResource(id = R.string.label_sign_in_button),
-                isLoading = isLoading,
-                onClick = {
-                    setIsLoading(!isLoading)
-                }
+                onClick = { onFormEvent(SignInFormEvent.Submit) }
             )
         }
     }
@@ -95,5 +99,5 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 @Composable
 @Preview(showBackground = true)
 private fun SplashScreenPreview() {
-    SignInScreen()
+    SignInScreen(formState = SignInFormState(), onFormEvent = {})
 }
