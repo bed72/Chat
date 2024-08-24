@@ -13,9 +13,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import com.bed.chat.presentation.feature.signin.state.SignInFormState
 import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
 
+import com.bed.chat.presentation.shared.validator.Validator
+import com.bed.chat.presentation.feature.signin.validators.EmailValidator
+import com.bed.chat.presentation.feature.signin.validators.PasswordValidator
 
 @HiltViewModel
 class SignInViewModel @Inject constructor() : ViewModel() {
+    private val emailValidator: Validator<String> by lazy { EmailValidator() }
+    private val passwordValidator: Validator<String> by lazy { PasswordValidator() }
+
     var formState by mutableStateOf(SignInFormState())
         private set
 
@@ -28,14 +34,33 @@ class SignInViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun doSignIn() {
-        formState = formState.copy(isLoading = true)
+        if (formState.emailIsValid && formState.passwordIsValid)
+            formState = formState.copy(isLoading = true)
     }
 
-    private fun emailChanged(email: String) {
-        formState = formState.copy(email = email)
+    private fun emailChanged(value: String) {
+        emailValidator(
+            value = value,
+            success = { email ->
+                formState = formState.copy(email = email, emailMessage = null, emailIsValid = true)
+            },
+            failure = { message, email ->
+                formState = formState.copy(email = email, emailMessage = message, emailIsValid = false)
+            }
+        )
     }
 
-    private fun passwordChanged(password: String) {
-        formState = formState.copy(password = password)
+    private fun passwordChanged(value: String) {
+        passwordValidator(
+            value = value,
+            success = { password ->
+                formState = formState
+                    .copy(password = password, passwordMessage = null, passwordIsValid = true)
+            },
+            failure = { message, password ->
+                formState = formState
+                    .copy(password = password, passwordMessage = message, passwordIsValid = false)
+            }
+        )
     }
 }

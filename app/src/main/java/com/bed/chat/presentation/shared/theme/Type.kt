@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.theme
+package com.bed.chat.presentation.shared.theme
 
 import androidx.compose.material3.Typography
 

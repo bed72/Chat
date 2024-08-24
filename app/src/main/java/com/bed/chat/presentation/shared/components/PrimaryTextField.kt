@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.components
+package com.bed.chat.presentation.shared.components
 
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
@@ -36,7 +36,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 import com.bed.chat.R
-import com.bed.chat.presentation.theme.ChatTheme
+import com.bed.chat.presentation.shared.theme.ChatTheme
 
 @Composable
 fun PrimaryTextField(
@@ -107,19 +107,19 @@ private fun LabelTextField(modifier: Modifier, label: String?) {
             color = MaterialTheme.colorScheme.outline,
             style = MaterialTheme.typography.bodyLarge
         )
-        Spacer(modifier = modifier.height(4.dp))
+        Spacer(modifier = modifier.height(6.dp))
     }
 }
 
 @Composable
 private fun MessageTextField(modifier: Modifier, message: String?) {
     message?.let {
-        Spacer(modifier = modifier.height(4.dp))
+        Spacer(modifier = modifier.height(6.dp))
         Text(
             text = it,
             modifier = modifier.padding(start = 4.dp),
             color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.components
+package com.bed.chat.presentation.shared.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.animation.animateContentSize

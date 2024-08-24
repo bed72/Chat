@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.navigation
+package com.bed.chat.presentation.shared.navigation
 
 import kotlinx.serialization.Serializable
 

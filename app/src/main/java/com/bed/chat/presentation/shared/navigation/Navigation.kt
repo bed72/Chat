@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.navigation
+package com.bed.chat.presentation.shared.navigation
 
 import androidx.compose.runtime.Composable
 
@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 
 import com.bed.chat.presentation.feature.signin.SignInInitScreen
 import com.bed.chat.presentation.feature.splash.SplashInitScreen
+import com.bed.chat.presentation.shared.navigation.SplashDestination
 
 @Composable
 fun Navigation(navController: NavHostController) {

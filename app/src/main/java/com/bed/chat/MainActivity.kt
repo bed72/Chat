@@ -10,9 +10,9 @@ import androidx.navigation.compose.rememberNavController
 
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
-import com.bed.chat.presentation.theme.ChatTheme
+import com.bed.chat.presentation.shared.theme.ChatTheme
 
-import com.bed.chat.presentation.navigation.Navigation
+import com.bed.chat.presentation.shared.navigation.Navigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

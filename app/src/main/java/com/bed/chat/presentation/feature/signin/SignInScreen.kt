@@ -30,9 +30,9 @@ import androidx.compose.foundation.rememberScrollState
 
 import com.bed.chat.R
 
-import com.bed.chat.presentation.components.Container
-import com.bed.chat.presentation.components.PrimaryButton
-import com.bed.chat.presentation.components.PrimaryTextField
+import com.bed.chat.presentation.shared.components.Container
+import com.bed.chat.presentation.shared.components.PrimaryButton
+import com.bed.chat.presentation.shared.components.PrimaryTextField
 
 import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
 import com.bed.chat.presentation.feature.signin.state.SignInFormState
@@ -68,6 +68,7 @@ fun SignInScreen(
 
             PrimaryTextField(
                 value = formState.email,
+                message = formState.emailMessage,
                 keyboardType = KeyboardType.Email,
                 label = stringResource(id = R.string.label_email_input),
                 placeholder = stringResource(id = R.string.placeholder_email_input),
@@ -79,6 +80,7 @@ fun SignInScreen(
             PrimaryTextField(
                 value = formState.password,
                 imeAction = ImeAction.Done,
+                message = formState.passwordMessage,
                 keyboardType = KeyboardType.Password,
                 label = stringResource(id = R.string.label_password_input),
                 placeholder = stringResource(id = R.string.placeholder_password_input),
