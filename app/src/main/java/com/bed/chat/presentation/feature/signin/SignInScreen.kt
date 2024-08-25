@@ -1,24 +1,17 @@
 package com.bed.chat.presentation.feature.signin
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.lifecycle.viewmodel.compose.viewModel
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 
 import androidx.compose.runtime.Composable
 
-import androidx.lifecycle.viewmodel.compose.viewModel
-
-import androidx.compose.material3.MaterialTheme
-
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -30,12 +23,16 @@ import androidx.compose.foundation.rememberScrollState
 
 import com.bed.chat.R
 
+import com.bed.chat.presentation.shared.theme.ChatTheme
+
+import com.bed.chat.presentation.shared.components.Header
 import com.bed.chat.presentation.shared.components.Container
 import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.PrimaryTextField
 
 import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
 import com.bed.chat.presentation.feature.signin.state.SignInFormState
+import com.bed.chat.presentation.shared.components.TextLinkButton
 
 @Composable
 fun SignInInitScreen(
@@ -54,17 +51,18 @@ fun SignInScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.background)
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                modifier = modifier.size(272.dp),
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = stringResource(id = R.string.app_icon_description)
+            Header(
+                image = R.drawable.ic_launcher_foreground,
+                imageDescription = R.string.app_icon_description,
+                title = R.string.sign_in_title,
+                subtitle = R.string.sign_in_sub_title
             )
+
+            Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
                 value = formState.email,
@@ -91,15 +89,29 @@ fun SignInScreen(
 
             PrimaryButton(
                 isLoading = formState.isLoading,
-                text = stringResource(id = R.string.label_sign_in_button),
+                text = stringResource(id = R.string.sign_in_title_button),
                 onClick = { onFormEvent(SignInFormEvent.Submit) }
+            )
+
+            Spacer(modifier = modifier.height(32.dp))
+
+            TextLinkButton(
+                text = R.string.sign_in_description_create_account,
+                link = R.string.sign_in_description_create_account_link,
+                click = {}
             )
         }
     }
 }
 
 @Composable
-@Preview(showBackground = true)
-private fun SplashScreenPreview() {
-    SignInScreen(formState = SignInFormState(), onFormEvent = {})
+@Preview(
+    showSystemUi = true,
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_YES
+)
+private fun SignInScreenPreview() {
+    ChatTheme {
+        SignInScreen(formState = SignInFormState(), onFormEvent = {})
+    }
 }

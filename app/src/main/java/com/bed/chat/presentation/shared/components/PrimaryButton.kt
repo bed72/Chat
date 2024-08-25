@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun PrimaryButton(
@@ -30,10 +31,11 @@ fun PrimaryButton(
 ) {
     Button(
         modifier = modifier
-            .height(54.dp),
+            .height(54.dp)
+            .fillMaxWidth(),
         onClick = onClick,
         enabled = !isLoading,
-        shape = if (isLoading) MaterialTheme.shapes.extraLarge else MaterialTheme.shapes.medium,
+        shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -41,21 +43,17 @@ fun PrimaryButton(
             disabledContentColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f),
         )
     ) {
-        Box(
-            modifier = modifier.animateContentSize()
-        ) {
-            if (isLoading) CircularProgressIndicator(
-                modifier = Modifier
-                    .size(24.dp)
-                    .aspectRatio(1f),
-                strokeCap = StrokeCap.Round
-            )
-            else Text(
-                text = text,
-                textAlign = TextAlign.Center,
-                modifier = modifier.fillMaxWidth()
-            )
-        }
+        if (isLoading) CircularProgressIndicator(
+            modifier = Modifier
+                .size(24.dp)
+                .aspectRatio(1f),
+            strokeCap = StrokeCap.Round
+        )
+        else Text(
+            text = text,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.W500)
+        )
     }
 }
 

@@ -4,6 +4,14 @@
     <!-- Splash Screen -->
     <string name="app_icon_description">Ícone da aplicação, um megafone.</string>
 
+    <!-- SignIn Screen -->
+    <string name="sign_in_title">Bem vindo!</string>
+    <string name="sign_in_title_button">Entrar</string>
+    <string name="sign_in_description_create_account_link">Criar conta</string>">
+    <string name="sign_in_description_create_account">Não possui uma conta?</string>
+    <string name="sign_in_sub_title">Olá.\nAcesse sua conta e divulge seus produtos</string>
+
+    <!-- Inputs Component -->
     <string name="label_email_input">E-mail</string>
     <string name="placeholder_email_input">Entre com seu e-mail</string>
 
@@ -11,8 +19,5 @@
     <string name="placeholder_password_input">Entre com sua senha</string>
     <string name="show_password_input">Ícone para mostrar a senha.</string>
     <string name="hide_password_input">Ícone para esconder a senha.</string>
-
-    <string name="label_sign_in_button">Entrar</string>
-
 
 </resources>
