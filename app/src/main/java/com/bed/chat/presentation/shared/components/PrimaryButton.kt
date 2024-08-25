@@ -33,7 +33,7 @@ fun PrimaryButton(
             .height(54.dp),
         onClick = onClick,
         enabled = !isLoading,
-        shape = MaterialTheme.shapes.medium,
+        shape = if (isLoading) MaterialTheme.shapes.extraLarge else MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
