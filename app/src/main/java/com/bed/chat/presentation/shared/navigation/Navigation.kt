@@ -6,18 +6,36 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 
-import com.bed.chat.presentation.feature.signin.SignInInitScreen
+import androidx.compose.animation.AnimatedContentTransitionScope
+
+import com.bed.chat.presentation.shared.extensions.slideInTo
+import com.bed.chat.presentation.shared.extensions.slideOutTo
+
 import com.bed.chat.presentation.feature.splash.SplashInitScreen
-import com.bed.chat.presentation.shared.navigation.SplashDestination
+import com.bed.chat.presentation.feature.signin.SignInInitScreen
+import com.bed.chat.presentation.feature.signup.SignUpInitScreen
 
 @Composable
 fun Navigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = SplashDestination) {
         composable<SplashDestination> {
-            SplashInitScreen {}
+            SplashInitScreen {
+                navController.navigate(SignInDestination)
+            }
         }
-        composable<SplashDestination> {
-            SignInInitScreen()
+        composable<SignInDestination>(
+            enterTransition = { slideInTo(AnimatedContentTransitionScope.SlideDirection.Right) },
+            exitTransition = { slideOutTo(AnimatedContentTransitionScope.SlideDirection.Left) }
+        ) {
+            SignInInitScreen(
+                onNavigateToSignUp = { navController.navigate(SignUpDestination) }
+            )
+        }
+        composable<SignUpDestination>(
+            enterTransition = { slideInTo(AnimatedContentTransitionScope.SlideDirection.Left) },
+            exitTransition = { slideOutTo(AnimatedContentTransitionScope.SlideDirection.Right) }
+        ) {{}
+            SignUpInitScreen()
         }
     }
 }

@@ -6,12 +6,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
+import androidx.compose.ui.Modifier
+
+import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+
 import androidx.navigation.compose.rememberNavController
 
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
-
 import com.bed.chat.presentation.shared.navigation.Navigation
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +30,13 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ChatTheme {
-                Navigation(navController = rememberNavController())
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background),
+                ) {
+                    Navigation(navController = rememberNavController())
+                }
             }
         }
     }

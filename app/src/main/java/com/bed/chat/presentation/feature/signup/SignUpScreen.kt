@@ -1,6 +1,5 @@
-package com.bed.chat.presentation.feature.signin
+package com.bed.chat.presentation.feature.signup
 
-import androidx.lifecycle.viewmodel.compose.viewModel
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 
 import androidx.compose.runtime.Composable
@@ -31,26 +30,14 @@ import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.TextLinkButton
 import com.bed.chat.presentation.shared.components.PrimaryTextField
 
-import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
-import com.bed.chat.presentation.feature.signin.state.SignInFormState
-
 @Composable
-fun SignInInitScreen(
-    onNavigateToSignUp: () -> Unit,
-    viewModel: SignInViewModel = viewModel()
+fun SignUpInitScreen(
 ) {
-    SignInScreen(
-        formState = viewModel.formState,
-        onFormEvent = viewModel::onFormEvent,
-        onNavigateToSignUp = onNavigateToSignUp
-    )
+    SignUpScreen()
 }
 
 @Composable
-fun SignInScreen(
-    formState: SignInFormState,
-    onNavigateToSignUp: () -> Unit,
-    onFormEvent: (SignInFormEvent) -> Unit,
+fun SignUpScreen(
     modifier: Modifier = Modifier,
 ) {
     Container {
@@ -71,32 +58,32 @@ fun SignInScreen(
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryTextField(
-                value = formState.email,
-                message = formState.emailMessage,
+                value = "",
+                message = "",
                 keyboardType = KeyboardType.Email,
                 label = stringResource(id = R.string.label_email_input),
                 placeholder = stringResource(id = R.string.placeholder_email_input),
-                onValueChange = { onFormEvent(SignInFormEvent.EmailChanged(it)) }
+                onValueChange = {  }
             )
 
             Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
-                value = formState.password,
+                value = "",
+                message = "",
                 imeAction = ImeAction.Done,
-                message = formState.passwordMessage,
                 keyboardType = KeyboardType.Password,
                 label = stringResource(id = R.string.label_password_input),
                 placeholder = stringResource(id = R.string.placeholder_password_input),
-                onValueChange = { onFormEvent(SignInFormEvent.PasswordChanged(it)) }
+                onValueChange = {  }
             )
 
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryButton(
-                isLoading = formState.isLoading,
+                isLoading = false,
                 text = stringResource(id = R.string.sign_in_title_button),
-                onClick = { onFormEvent(SignInFormEvent.Submit) }
+                onClick = {  }
             )
 
             Spacer(modifier = modifier.height(32.dp))
@@ -104,7 +91,7 @@ fun SignInScreen(
             TextLinkButton(
                 text = R.string.sign_in_description_create_account,
                 link = R.string.sign_in_description_create_account_link,
-                click = { onNavigateToSignUp() }
+                click = {}
             )
         }
     }
@@ -116,8 +103,8 @@ fun SignInScreen(
     showBackground = true,
     uiMode = UI_MODE_NIGHT_YES
 )
-private fun SignInScreenPreview() {
+private fun SignUpScreenPreview() {
     ChatTheme {
-        SignInScreen(formState = SignInFormState(), onNavigateToSignUp = {}, onFormEvent = {})
+        SignUpScreen()
     }
 }
