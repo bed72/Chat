@@ -2,6 +2,7 @@ package com.bed.chat.presentation.shared.navigation
 
 import androidx.compose.runtime.Composable
 
+import androidx.navigation.navOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -20,7 +21,12 @@ fun Navigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = SplashDestination) {
         composable<SplashDestination> {
             SplashInitScreen {
-                navController.navigate(SignInDestination)
+                navController.navigate(
+                    route = SignInDestination,
+                    navOptions = navOptions {
+                        popUpTo(SplashDestination) { inclusive = true }
+                    }
+                )
             }
         }
         composable<SignInDestination>(
