@@ -41,7 +41,9 @@ fun Navigation(navController: NavHostController) {
             enterTransition = { slideInTo(AnimatedContentTransitionScope.SlideDirection.Left) },
             exitTransition = { slideOutTo(AnimatedContentTransitionScope.SlideDirection.Right) }
         ) {{}
-            SignUpInitScreen()
+            SignUpInitScreen(
+                onNavigateToSignIn = { navController.navigate(SignInDestination) }
+            )
         }
     }
 }

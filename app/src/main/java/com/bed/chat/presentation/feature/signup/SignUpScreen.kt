@@ -32,13 +32,15 @@ import com.bed.chat.presentation.shared.components.PrimaryTextField
 
 @Composable
 fun SignUpInitScreen(
+    onNavigateToSignIn: () -> Unit,
 ) {
-    SignUpScreen()
+    SignUpScreen(onNavigateToSignIn = onNavigateToSignIn)
 }
 
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
+    onNavigateToSignIn: () -> Unit,
 ) {
     Container {
         Column(
@@ -91,7 +93,7 @@ fun SignUpScreen(
             TextLinkButton(
                 text = R.string.sign_up_description_create_account,
                 link = R.string.sign_up_description_create_account_link,
-                click = {}
+                click = { onNavigateToSignIn() }
             )
         }
     }
@@ -105,6 +107,6 @@ fun SignUpScreen(
 )
 private fun SignUpScreenPreview() {
     ChatTheme {
-        SignUpScreen()
+        SignUpScreen(onNavigateToSignIn = {})
     }
 }
