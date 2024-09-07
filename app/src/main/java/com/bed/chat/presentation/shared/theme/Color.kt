@@ -1,6 +1,5 @@
 package com.bed.chat.presentation.shared.theme
 
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val lightPrimary = Color(0xFF006C46)
@@ -34,10 +33,6 @@ val lightSurfaceTint = Color(0xFF006C46)
 val lightOutlineVariant = Color(0xFFC0C9C1)
 val lightScrim = Color(0xFF000000)
 
-val lightBackgroundGradient = Brush.verticalGradient(
-    colors = listOf(lightPrimary, lightBackground, lightSecondary)
-)
-
 val darkPrimary = Color(0xFF72DAA5)
 val darkOnPrimary = Color(0xFF003822)
 val darkPrimaryContainer = Color(0xFF005234)
@@ -68,10 +63,6 @@ val darkShadow = Color(0xFF000000)
 val darkSurfaceTint = Color(0xFF72DAA5)
 val darkOutlineVariant = Color(0xFF404943)
 val darkScrim = Color(0xFF000000)
-
-val darkBackgroundGradient = Brush.verticalGradient(
-    colors = listOf(darkPrimary, darkBackground, darkSecondary)
-)
 
 val seed = Color(0xFF006C46)
 val background = Color(0xFF101418)

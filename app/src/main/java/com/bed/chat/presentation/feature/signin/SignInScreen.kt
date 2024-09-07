@@ -2,6 +2,7 @@ package com.bed.chat.presentation.feature.signin
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.background
 
 import androidx.compose.runtime.Composable
 
@@ -57,8 +58,9 @@ fun SignInScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+
             verticalArrangement = Arrangement.Center,
         ) {
             Header(

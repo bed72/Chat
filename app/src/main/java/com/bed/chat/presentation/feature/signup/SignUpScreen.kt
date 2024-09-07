@@ -51,8 +51,8 @@ fun SignUpScreen(
             Header(
                 image = R.drawable.ic_launcher_foreground,
                 imageDescription = R.string.app_icon_description,
-                title = R.string.sign_in_title,
-                subtitle = R.string.sign_in_sub_title
+                title = R.string.sign_up_title,
+                subtitle = R.string.sign_up_sub_title
             )
 
             Spacer(modifier = modifier.height(32.dp))
@@ -82,15 +82,15 @@ fun SignUpScreen(
 
             PrimaryButton(
                 isLoading = false,
-                text = stringResource(id = R.string.sign_in_title_button),
+                text = stringResource(id = R.string.sign_up_title_button),
                 onClick = {  }
             )
 
             Spacer(modifier = modifier.height(32.dp))
 
             TextLinkButton(
-                text = R.string.sign_in_description_create_account,
-                link = R.string.sign_in_description_create_account_link,
+                text = R.string.sign_up_description_create_account,
+                link = R.string.sign_up_description_create_account_link,
                 click = {}
             )
         }
