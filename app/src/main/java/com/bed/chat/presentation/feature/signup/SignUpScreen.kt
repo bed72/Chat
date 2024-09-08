@@ -61,7 +61,26 @@ fun SignUpScreen(
 
             PrimaryTextField(
                 value = "",
-                message = "",
+                keyboardType = KeyboardType.Email,
+                label = stringResource(id = R.string.label_first_name_input),
+                placeholder = stringResource(id = R.string.placeholder_first_name_input),
+                onValueChange = {  }
+            )
+
+            Spacer(modifier = modifier.height(16.dp))
+
+            PrimaryTextField(
+                value = "",
+                keyboardType = KeyboardType.Email,
+                label = stringResource(id = R.string.label_second_name_input),
+                placeholder = stringResource(id = R.string.placeholder_second_name_input),
+                onValueChange = {  }
+            )
+
+            Spacer(modifier = modifier.height(16.dp))
+
+            PrimaryTextField(
+                value = "",
                 keyboardType = KeyboardType.Email,
                 label = stringResource(id = R.string.label_email_input),
                 placeholder = stringResource(id = R.string.placeholder_email_input),
@@ -72,11 +91,20 @@ fun SignUpScreen(
 
             PrimaryTextField(
                 value = "",
-                message = "",
-                imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Password,
                 label = stringResource(id = R.string.label_password_input),
                 placeholder = stringResource(id = R.string.placeholder_password_input),
+                onValueChange = {  }
+            )
+
+            Spacer(modifier = modifier.height(16.dp))
+
+            PrimaryTextField(
+                value = "",
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Password,
+                label = stringResource(id = R.string.label_confirm_password_input),
+                placeholder = stringResource(id = R.string.placeholder_confirm_password_input),
                 onValueChange = {  }
             )
 
