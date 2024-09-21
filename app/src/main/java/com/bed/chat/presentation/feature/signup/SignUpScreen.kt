@@ -1,5 +1,7 @@
 package com.bed.chat.presentation.feature.signup
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 
 import androidx.compose.runtime.Composable
@@ -30,17 +32,27 @@ import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.TextLinkButton
 import com.bed.chat.presentation.shared.components.PrimaryTextField
 
+import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
+import com.bed.chat.presentation.feature.signup.state.SignUpFormState
+
 @Composable
 fun SignUpInitScreen(
     onNavigateToSignIn: () -> Unit,
+    viewModel: SignUpViewModel = viewModel()
 ) {
-    SignUpScreen(onNavigateToSignIn = onNavigateToSignIn)
+    SignUpScreen(
+        formState = viewModel.formState,
+        onFormEvent = viewModel::onFormEvent,
+        onNavigateToSignIn = onNavigateToSignIn,
+    )
 }
 
 @Composable
 fun SignUpScreen(
-    modifier: Modifier = Modifier,
+    formState: SignUpFormState,
     onNavigateToSignIn: () -> Unit,
+    onFormEvent: (SignUpFormEvent) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Container {
         Column(
@@ -61,7 +73,6 @@ fun SignUpScreen(
 
             PrimaryTextField(
                 value = "",
-                keyboardType = KeyboardType.Email,
                 label = stringResource(id = R.string.label_first_name_input),
                 placeholder = stringResource(id = R.string.placeholder_first_name_input),
                 onValueChange = {  }
@@ -71,7 +82,6 @@ fun SignUpScreen(
 
             PrimaryTextField(
                 value = "",
-                keyboardType = KeyboardType.Email,
                 label = stringResource(id = R.string.label_second_name_input),
                 placeholder = stringResource(id = R.string.placeholder_second_name_input),
                 onValueChange = {  }
@@ -80,21 +90,23 @@ fun SignUpScreen(
             Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
-                value = "",
+                value = formState.email,
+                message = formState.emailMessage,
                 keyboardType = KeyboardType.Email,
                 label = stringResource(id = R.string.label_email_input),
                 placeholder = stringResource(id = R.string.placeholder_email_input),
-                onValueChange = {  }
+                onValueChange = { onFormEvent(SignUpFormEvent.EmailChanged(it)) }
             )
 
             Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
-                value = "",
+                value = formState.password,
+                message = formState.passwordMessage,
                 keyboardType = KeyboardType.Password,
                 label = stringResource(id = R.string.label_password_input),
                 placeholder = stringResource(id = R.string.placeholder_password_input),
-                onValueChange = {  }
+                onValueChange = { onFormEvent(SignUpFormEvent.PasswordChanged(it)) }
             )
 
             Spacer(modifier = modifier.height(16.dp))
@@ -113,7 +125,7 @@ fun SignUpScreen(
             PrimaryButton(
                 isLoading = false,
                 text = stringResource(id = R.string.sign_up_title_button),
-                onClick = {  }
+                onClick = { onFormEvent(SignUpFormEvent.Submit) }
             )
 
             Spacer(modifier = modifier.height(32.dp))
@@ -135,6 +147,10 @@ fun SignUpScreen(
 )
 private fun SignUpScreenPreview() {
     ChatTheme {
-        SignUpScreen(onNavigateToSignIn = {})
+        SignUpScreen(
+            onFormEvent = {},
+            onNavigateToSignIn = {},
+            formState = SignUpFormState()
+        )
     }
 }

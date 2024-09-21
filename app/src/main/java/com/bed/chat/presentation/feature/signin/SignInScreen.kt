@@ -120,6 +120,10 @@ fun SignInScreen(
 )
 private fun SignInScreenPreview() {
     ChatTheme {
-        SignInScreen(formState = SignInFormState(), onNavigateToSignUp = {}, onFormEvent = {})
+        SignInScreen(
+            onFormEvent = {},
+            onNavigateToSignUp = {},
+            formState = SignInFormState()
+        )
     }
 }

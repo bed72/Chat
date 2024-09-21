@@ -1,42 +1,44 @@
-package com.bed.chat.presentation.feature.signin
+package com.bed.chat.presentation.feature.signup
 
 import javax.inject.Inject
-
-import androidx.lifecycle.ViewModel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-
-import com.bed.chat.presentation.feature.signin.state.SignInFormState
-import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
 
 import com.bed.chat.presentation.shared.validator.Validator
 import com.bed.chat.presentation.shared.validator.EmailValidator
 import com.bed.chat.presentation.shared.validator.PasswordValidator
 
-@HiltViewModel
-class SignInViewModel @Inject constructor() : ViewModel() {
+import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
+import com.bed.chat.presentation.feature.signup.state.SignUpFormState
 
+@HiltViewModel
+class SignUpViewModel @Inject constructor() : ViewModel() {
     private val emailValidator: Validator<String> by lazy { EmailValidator() }
     private val passwordValidator: Validator<String> by lazy { PasswordValidator() }
 
-    var formState by mutableStateOf(SignInFormState())
+    var formState by mutableStateOf(SignUpFormState())
         private set
 
-    fun onFormEvent(event: SignInFormEvent) {
+    fun onFormEvent(event: SignUpFormEvent) {
         when (event) {
-            SignInFormEvent.Submit -> { doSignIn() }
-            is SignInFormEvent.EmailChanged -> { emailChanged(event.email) }
-            is SignInFormEvent.PasswordChanged -> { passwordChanged(event.password) }
+            SignUpFormEvent.Submit -> { doSignUp() }
+            is SignUpFormEvent.EmailChanged -> { emailChanged(event.email) }
+            is SignUpFormEvent.PasswordChanged -> { passwordChanged(event.password) }
+            is SignUpFormEvent.FirstNameChanged -> {}
+            is SignUpFormEvent.SecondNameChanged -> {}
         }
     }
 
-    private fun doSignIn() {
-        if (formState.emailIsValid && formState.passwordIsValid)
-            formState = formState.copy(isLoading = true)
+    private fun doSignUp() {
+        with (formState) {
+            if (firstNameIsValid && secondNameIsValid && emailIsValid && passwordIsValid)
+                formState = formState.copy(isLoading = true)
+        }
     }
 
     private fun emailChanged(value: String) {

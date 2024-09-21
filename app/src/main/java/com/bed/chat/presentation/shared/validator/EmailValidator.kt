@@ -1,8 +1,6 @@
-package com.bed.chat.presentation.feature.signin.validators
+package com.bed.chat.presentation.shared.validator
 
 import com.bed.chat.domain.values.EmailValue
-
-import com.bed.chat.presentation.shared.validator.Validator
 
 class EmailValidator : Validator<String> {
     override fun invoke(
