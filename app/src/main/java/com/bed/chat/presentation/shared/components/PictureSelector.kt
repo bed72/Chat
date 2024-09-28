@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.foundation.layout.size
@@ -43,6 +44,7 @@ fun PictureSelector(
             model = uri ?: R.drawable.ic_photo,
             placeholder = painterResource(id = R.drawable.ic_photo),
             modifier = Modifier.clip(CircleShape).size(84.dp).padding(6.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
             contentDescription = stringResource(R.string.picture_selector_description)
         )
 
