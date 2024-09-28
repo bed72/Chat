@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.ui.Alignment
 
 import com.bed.chat.R
 
@@ -34,6 +35,7 @@ import com.bed.chat.presentation.shared.components.PrimaryTextField
 
 import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
 import com.bed.chat.presentation.feature.signup.state.SignUpFormState
+import com.bed.chat.presentation.shared.components.PictureSelector
 
 @Composable
 fun SignUpInitScreen(
@@ -61,7 +63,9 @@ fun SignUpScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
+
         ) {
+
             Header(
                 image = R.drawable.ic_launcher_foreground,
                 imageDescription = R.string.app_icon_description,
@@ -69,7 +73,11 @@ fun SignUpScreen(
                 subtitle = R.string.sign_up_sub_title
             )
 
-            Spacer(modifier = modifier.height(32.dp))
+            Spacer(modifier = modifier.height(16.dp))
+
+            PictureSelector(modifier = modifier.align(Alignment.CenterHorizontally))
+
+            Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
                 value = "",

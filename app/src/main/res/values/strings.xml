@@ -14,9 +14,9 @@
     <!-- SignUp Screen -->
     <string name="sign_up_title">Criar conta</string>
     <string name="sign_up_title_button">Criar</string>
+    <string name="sign_up_sub_title">Entre com seu e-mail e senha.</string>
     <string name="sign_up_description_create_account_link">Acessar conta</string>">
     <string name="sign_up_description_create_account">Já possui uma conta?</string>
-    <string name="sign_up_sub_title">Entre com seu e-mail e senha.</string>
 
     <!-- Inputs Component -->
     <string name="label_email_input">E-mail</string>
@@ -35,5 +35,9 @@
     <string name="placeholder_password_input">Entre com sua senha</string>
     <string name="show_password_input">Ícone para mostrar a senha.</string>
     <string name="hide_password_input">Ícone para esconder a senha.</string>
+
+    <!-- Picture Selector Component -->
+    <string name="picture_selector_title">Selecione uma imagem</string>
+    <string name="picture_selector_description">Ícone de câmera, para selecionar uma imagem.</string>
 
 </resources>

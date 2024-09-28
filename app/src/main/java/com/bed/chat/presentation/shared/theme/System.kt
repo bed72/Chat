@@ -3,8 +3,8 @@ package com.bed.chat.presentation.shared.theme
 import android.graphics.Color
 import androidx.activity.SystemBarStyle
 
-private val systemBarDark = Color.parseColor("#121318")
-private val systemBarLight = Color.parseColor("#F8F6FD")
+private val systemBarDark = Color.parseColor("#000D1412")
+private val systemBarLight = Color.parseColor("#00F1F8F3")
 
 private val dark = SystemBarStyle.dark(systemBarDark)
 private val light = SystemBarStyle.light(systemBarLight, systemBarDark)
