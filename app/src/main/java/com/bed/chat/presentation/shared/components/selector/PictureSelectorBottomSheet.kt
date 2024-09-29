@@ -1,10 +1,15 @@
 package com.bed.chat.presentation.shared.components.selector
 
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import android.content.Context
+
 import androidx.annotation.StringRes
 import androidx.annotation.DrawableRes
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 
 import androidx.compose.runtime.Composable
 
@@ -28,6 +33,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.defaultMinSize
 
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.compose.rememberLauncherForActivityResult
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SheetState
@@ -39,6 +47,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 
 import com.bed.chat.R
+import com.bed.chat.data.providers.ChatFileProvider
 import com.bed.chat.presentation.shared.theme.ChatTheme
 
 @Composable
@@ -47,12 +56,19 @@ fun PictureSelectorBottomSheet(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
     onPictureSelected: (Uri) -> Unit,
+    context: Context = LocalContext.current,
     sheetState: SheetState = rememberModalBottomSheetState()
 ) {
+    var photo by remember { mutableStateOf<Uri?>(null) }
 
-    val picker = rememberLauncherForActivityResult(
+    val fromGallery = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { it?.let(onPictureSelected) }
+    )
+
+    val fromCamera = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = { success -> if (success) photo?.let(onPictureSelected) }
     )
 
     ModalBottomSheet(
@@ -72,14 +88,17 @@ fun PictureSelectorBottomSheet(
             icon = R.drawable.ic_camera,
             title = R.string.picture_selector_bottom_sheet_camera_title,
             iconDescription = R.string.picture_selector_bottom_sheet_camera_description,
-            onClick = {}
+            onClick = {
+                photo = ChatFileProvider(context.applicationContext)
+                fromCamera.launch(photo!!)
+            }
         )
 
         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp))
 
         PictureSelectorOption(
             icon = R.drawable.ic_gallery,
-            onClick = { picker.launch("image/*") },
+            onClick = { fromGallery.launch("image/*") },
             title = R.string.picture_selector_bottom_sheet_gallery_title,
             iconDescription = R.string.picture_selector_bottom_sheet_gallery_description
         )

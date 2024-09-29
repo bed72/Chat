@@ -29,13 +29,11 @@ android {
     buildTypes {
         debug {
             isDebuggable = true
-            applicationIdSuffix = ".debug"
         }
 
         register("profile") {
             isMinifyEnabled = true
             isShrinkResources = true
-            applicationIdSuffix = ".profile"
             initWith(getByName("debug"))
             signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
