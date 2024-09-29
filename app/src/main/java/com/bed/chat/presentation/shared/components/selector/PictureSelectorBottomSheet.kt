@@ -1,5 +1,8 @@
 package com.bed.chat.presentation.shared.components.selector
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.DrawableRes
 
@@ -43,8 +46,15 @@ import com.bed.chat.presentation.shared.theme.ChatTheme
 fun PictureSelectorBottomSheet(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+    onPictureSelected: (Uri) -> Unit,
     sheetState: SheetState = rememberModalBottomSheetState()
 ) {
+
+    val picker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { it?.let(onPictureSelected) }
+    )
+
     ModalBottomSheet(
         sheetState = sheetState,
         modifier = modifier,
@@ -69,9 +79,9 @@ fun PictureSelectorBottomSheet(
 
         PictureSelectorOption(
             icon = R.drawable.ic_gallery,
+            onClick = { picker.launch("image/*") },
             title = R.string.picture_selector_bottom_sheet_gallery_title,
-            iconDescription = R.string.picture_selector_bottom_sheet_gallery_description,
-            onClick = {}
+            iconDescription = R.string.picture_selector_bottom_sheet_gallery_description
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -132,6 +142,7 @@ private fun PictureBottomSheetSelectorPreview() {
     ChatTheme {
         PictureSelectorBottomSheet(
             onDismissRequest = {},
+            onPictureSelected = {},
             sheetState = sheetState
         )
     }

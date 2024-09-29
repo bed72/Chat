@@ -1,12 +1,12 @@
 package com.bed.chat.presentation.feature.signup
 
+import android.net.Uri
+
+import kotlinx.coroutines.launch
+
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
@@ -15,6 +15,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -26,8 +31,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
 
 import com.bed.chat.R
+
+import com.bed.chat.presentation.feature.signup.state.SignUpFormState
+import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 
@@ -36,10 +45,6 @@ import com.bed.chat.presentation.shared.components.Container
 import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.TextLinkButton
 import com.bed.chat.presentation.shared.components.PrimaryTextField
-
-import com.bed.chat.presentation.feature.signup.state.SignUpFormState
-import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
-
 import com.bed.chat.presentation.shared.components.selector.PictureSelector
 import com.bed.chat.presentation.shared.components.selector.PictureSelectorBottomSheet
 
@@ -63,7 +68,9 @@ fun SignUpScreen(
     onFormEvent: (SignUpFormEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
+    val scope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState()
+    val (picture, setPicture) = remember { mutableStateOf<Uri?>(null) }
     val (openPictureSelectorBottomSheet, setOpenPictureSelectorBottomSheet) =
         remember { mutableStateOf(false) }
 
@@ -88,6 +95,7 @@ fun SignUpScreen(
             Spacer(modifier = modifier.height(16.dp))
 
             PictureSelector(
+                picture = picture,
                 modifier = modifier
                     .align(Alignment.CenterHorizontally)
                     .clickable { setOpenPictureSelectorBottomSheet(true) }
@@ -155,18 +163,27 @@ fun SignUpScreen(
             Spacer(modifier = modifier.height(32.dp))
 
             TextLinkButton(
-                text = R.string.sign_up_description_create_account,
                 link = R.string.sign_up_description_create_account_link,
+                text = R.string.sign_up_description_create_account,
                 click = { onNavigateToSignIn() }
             )
 
             if (openPictureSelectorBottomSheet)
                 PictureSelectorBottomSheet(
-                    onDismissRequest = { setOpenPictureSelectorBottomSheet(false) }
+                    sheetState = sheetState,
+                    onDismissRequest = { setOpenPictureSelectorBottomSheet(false) },
+                    onPictureSelected = { uri ->
+                        setPicture(uri)
+
+                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                            if (!sheetState.isVisible) setOpenPictureSelectorBottomSheet(false)
+                        }
+                    }
                 )
         }
     }
 }
+
 
 @Composable
 @Preview(
