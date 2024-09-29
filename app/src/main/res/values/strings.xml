@@ -38,6 +38,12 @@
 
     <!-- Picture Selector Component -->
     <string name="picture_selector_title">Selecione uma imagem</string>
-    <string name="picture_selector_description">Ícone de câmera, para selecionar uma imagem.</string>
+    <string name="picture_selector_description">Ícone de uma câmera de fotos, para selecionar uma imagem.</string>
+
+    <string name="picture_selector_bottom_sheet_camera_title">Câmera</string>
+    <string name="picture_selector_bottom_sheet_gallery_title">Galeria</string>
+    <string name="picture_selector_bottom_sheet_title">De onde deseja selecionar a imagem?</string>
+    <string name="picture_selector_bottom_sheet_camera_description">Ícone de uma câmera de fotos</string>
+    <string name="picture_selector_bottom_sheet_gallery_description">Ícone de uma galeria de fotos</string>
 
 </resources>

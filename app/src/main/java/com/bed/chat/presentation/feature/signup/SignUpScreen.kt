@@ -4,15 +4,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -21,7 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.ui.Alignment
+import androidx.compose.material3.ExperimentalMaterial3Api
 
 import com.bed.chat.R
 
@@ -33,9 +37,11 @@ import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.TextLinkButton
 import com.bed.chat.presentation.shared.components.PrimaryTextField
 
-import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
 import com.bed.chat.presentation.feature.signup.state.SignUpFormState
-import com.bed.chat.presentation.shared.components.PictureSelector
+import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
+
+import com.bed.chat.presentation.shared.components.selector.PictureSelector
+import com.bed.chat.presentation.shared.components.selector.PictureSelectorBottomSheet
 
 @Composable
 fun SignUpInitScreen(
@@ -49,6 +55,7 @@ fun SignUpInitScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
     formState: SignUpFormState,
@@ -56,6 +63,11 @@ fun SignUpScreen(
     onFormEvent: (SignUpFormEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+
+    val (openPictureSelectorBottomSheet, setOpenPictureSelectorBottomSheet) =
+        remember { mutableStateOf(false) }
+
+
     Container {
         Column(
             modifier = modifier
@@ -75,7 +87,11 @@ fun SignUpScreen(
 
             Spacer(modifier = modifier.height(16.dp))
 
-            PictureSelector(modifier = modifier.align(Alignment.CenterHorizontally))
+            PictureSelector(
+                modifier = modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clickable { setOpenPictureSelectorBottomSheet(true) }
+            )
 
             Spacer(modifier = modifier.height(16.dp))
 
@@ -143,6 +159,11 @@ fun SignUpScreen(
                 link = R.string.sign_up_description_create_account_link,
                 click = { onNavigateToSignIn() }
             )
+
+            if (openPictureSelectorBottomSheet)
+                PictureSelectorBottomSheet(
+                    onDismissRequest = { setOpenPictureSelectorBottomSheet(false) }
+                )
         }
     }
 }

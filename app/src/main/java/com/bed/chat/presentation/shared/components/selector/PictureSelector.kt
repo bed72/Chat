@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.shared.components
+package com.bed.chat.presentation.shared.components.selector
 
 import android.net.Uri
 
