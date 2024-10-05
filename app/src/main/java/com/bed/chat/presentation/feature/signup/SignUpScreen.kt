@@ -1,7 +1,5 @@
 package com.bed.chat.presentation.feature.signup
 
-import android.net.Uri
-
 import kotlinx.coroutines.launch
 
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -12,13 +10,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 
 import androidx.compose.foundation.clickable
@@ -70,10 +65,6 @@ fun SignUpScreen(
 ) {
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
-    val (picture, setPicture) = remember { mutableStateOf<Uri?>(null) }
-    val (openPictureSelectorBottomSheet, setOpenPictureSelectorBottomSheet) =
-        remember { mutableStateOf(false) }
-
 
     Container {
         Column(
@@ -87,36 +78,38 @@ fun SignUpScreen(
 
             Header(
                 image = R.drawable.ic_launcher_foreground,
-                imageDescription = R.string.app_icon_description,
                 title = R.string.sign_up_title,
-                subtitle = R.string.sign_up_sub_title
+                subtitle = R.string.sign_up_sub_title,
+                imageDescription = R.string.app_icon_description
             )
 
             Spacer(modifier = modifier.height(16.dp))
 
             PictureSelector(
-                picture = picture,
+                picture = formState.picture,
                 modifier = modifier
                     .align(Alignment.CenterHorizontally)
-                    .clickable { setOpenPictureSelectorBottomSheet(true) }
+                    .clickable { onFormEvent(SignUpFormEvent.OpenPictureSelectorBottomSheet) }
             )
 
             Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
-                value = "",
+                value = formState.firstName,
                 label = stringResource(id = R.string.label_first_name_input),
+                message = formState.firstNameMessage,
                 placeholder = stringResource(id = R.string.placeholder_first_name_input),
-                onValueChange = {  }
+                onValueChange = { onFormEvent(SignUpFormEvent.FirstNameChanged(it)) }
             )
 
             Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
-                value = "",
+                value = formState.secondName,
+                message = formState.secondNameMessage,
                 label = stringResource(id = R.string.label_second_name_input),
                 placeholder = stringResource(id = R.string.placeholder_second_name_input),
-                onValueChange = {  }
+                onValueChange = { onFormEvent(SignUpFormEvent.SecondNameChanged(it)) }
             )
 
             Spacer(modifier = modifier.height(16.dp))
@@ -143,15 +136,6 @@ fun SignUpScreen(
 
             Spacer(modifier = modifier.height(16.dp))
 
-            PrimaryTextField(
-                value = "",
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Password,
-                label = stringResource(id = R.string.label_confirm_password_input),
-                placeholder = stringResource(id = R.string.placeholder_confirm_password_input),
-                onValueChange = {  }
-            )
-
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryButton(
@@ -168,15 +152,18 @@ fun SignUpScreen(
                 click = { onNavigateToSignIn() }
             )
 
-            if (openPictureSelectorBottomSheet)
+            if (formState.isPictureSelectorBottomSheetOpen)
                 PictureSelectorBottomSheet(
                     sheetState = sheetState,
-                    onDismissRequest = { setOpenPictureSelectorBottomSheet(false) },
+                    onDismissRequest = {
+                        onFormEvent(SignUpFormEvent.ClosePictureSelectorBottomSheet)
+                    },
                     onPictureSelected = { uri ->
-                        setPicture(uri)
+                        onFormEvent(SignUpFormEvent.PictureChanged(uri))
 
                         scope.launch { sheetState.hide() }.invokeOnCompletion {
-                            if (!sheetState.isVisible) setOpenPictureSelectorBottomSheet(false)
+                            if (!sheetState.isVisible)
+                                onFormEvent(SignUpFormEvent.ClosePictureSelectorBottomSheet)
                         }
                     }
                 )

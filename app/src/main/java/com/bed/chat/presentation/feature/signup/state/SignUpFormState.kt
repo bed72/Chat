@@ -1,6 +1,10 @@
 package com.bed.chat.presentation.feature.signup.state
 
+import android.net.Uri
+
 data class SignUpFormState(
+    val picture: Uri? = null,
+
     val firstName: String = "",
     val firstNameMessage: String? = null,
     val firstNameIsValid: Boolean = false,
@@ -18,4 +22,5 @@ data class SignUpFormState(
     val passwordIsValid: Boolean = false,
 
     val isLoading: Boolean = false,
+    val isPictureSelectorBottomSheetOpen: Boolean = false
 )

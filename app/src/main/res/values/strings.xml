@@ -28,9 +28,6 @@
     <string name="label_second_name_input">Sobrenome</string>
     <string name="placeholder_second_name_input">Entre com seu sobrenome</string>
 
-    <string name="label_confirm_password_input">Confirmação da senha</string>
-    <string name="placeholder_confirm_password_input">Confirme sua senha</string>
-
     <string name="label_password_input">Senha</string>
     <string name="placeholder_password_input">Entre com sua senha</string>
     <string name="show_password_input">Ícone para mostrar a senha.</string>

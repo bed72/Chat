@@ -1,5 +1,7 @@
 package com.bed.chat.presentation.feature.signup
 
+import android.net.Uri
+
 import javax.inject.Inject
 
 import androidx.compose.runtime.getValue
@@ -28,9 +30,12 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         when (event) {
             SignUpFormEvent.Submit -> { doSignUp() }
             is SignUpFormEvent.EmailChanged -> { emailChanged(event.email) }
+            is SignUpFormEvent.PictureChanged -> { pictureChanged(event.picture) }
             is SignUpFormEvent.PasswordChanged -> { passwordChanged(event.password) }
-            is SignUpFormEvent.FirstNameChanged -> {}
-            is SignUpFormEvent.SecondNameChanged -> {}
+            is SignUpFormEvent.FirstNameChanged -> { firstNameChanged(event.firstName) }
+            is SignUpFormEvent.SecondNameChanged -> { secondNameChanged(event.secondName) }
+            SignUpFormEvent.OpenPictureSelectorBottomSheet -> { openPictureSelectorBottomSheet() }
+            SignUpFormEvent.ClosePictureSelectorBottomSheet -> { closePictureSelectorBottomSheet() }
         }
     }
 
@@ -39,6 +44,26 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
             if (firstNameIsValid && secondNameIsValid && emailIsValid && passwordIsValid)
                 formState = formState.copy(isLoading = true)
         }
+    }
+
+    private fun pictureChanged(picture: Uri?) {
+        formState = formState.copy(picture = picture)
+    }
+
+    private fun firstNameChanged(value: String) {
+        formState = formState.copy(firstName = value)
+    }
+
+    private fun secondNameChanged(value: String) {
+        formState = formState.copy(secondName = value)
+    }
+
+    private fun openPictureSelectorBottomSheet() {
+        formState = formState.copy(isPictureSelectorBottomSheetOpen = true)
+    }
+
+    private fun closePictureSelectorBottomSheet() {
+        formState = formState.copy(isPictureSelectorBottomSheetOpen = false)
     }
 
     private fun emailChanged(value: String) {
