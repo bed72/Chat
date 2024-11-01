@@ -5,13 +5,9 @@ import android.net.Uri
 data class SignUpFormState(
     val picture: Uri? = null,
 
-    val firstName: String = "",
-    val firstNameMessage: String? = null,
-    val firstNameIsValid: Boolean = false,
-
-    val secondName: String = "",
-    val secondNameMessage: String? = null,
-    val secondNameIsValid: Boolean = false,
+    val name: String = "",
+    val nameMessage: String? = null,
+    val nameIsValid: Boolean = false,
 
     val email: String = "",
     val emailMessage: String? = null,
@@ -21,6 +17,9 @@ data class SignUpFormState(
     val passwordMessage: String? = null,
     val passwordIsValid: Boolean = false,
 
+    val message: String? = null,
+
     val isLoading: Boolean = false,
+    val formIsValid: Boolean = false,
     val isPictureSelectorBottomSheetOpen: Boolean = false
 )

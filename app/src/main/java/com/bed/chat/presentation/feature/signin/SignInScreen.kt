@@ -2,7 +2,6 @@ package com.bed.chat.presentation.feature.signin
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.background
 
 import androidx.compose.runtime.Composable
 
@@ -38,7 +37,9 @@ import com.bed.chat.presentation.feature.signin.state.SignInFormState
 @Composable
 fun SignInInitScreen(
     onNavigateToSignUp: () -> Unit,
-    viewModel: SignInViewModel = viewModel()
+    viewModel: SignInViewModel = viewModel {
+        SignInViewModel(SignInFormValidator())
+    }
 ) {
     SignInScreen(
         formState = viewModel.formState,
@@ -64,8 +65,6 @@ fun SignInScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             Header(
-                image = R.drawable.ic_launcher_foreground,
-                imageDescription = R.string.app_icon_description,
                 title = R.string.sign_in_title,
                 subtitle = R.string.sign_in_sub_title
             )

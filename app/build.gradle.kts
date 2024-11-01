@@ -9,12 +9,12 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "com.bed.chat"
 
     defaultConfig {
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
         applicationId = "com.bed.chat"
@@ -33,7 +33,7 @@ android {
 
         register("profile") {
             isMinifyEnabled = true
-            isShrinkResources = true
+//            isShrinkResources = true
             initWith(getByName("debug"))
             signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
@@ -44,7 +44,7 @@ android {
 
         release {
             isMinifyEnabled = true
-            isShrinkResources = true
+//            isShrinkResources = true
             signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

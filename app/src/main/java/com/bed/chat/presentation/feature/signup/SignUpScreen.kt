@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
+
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 
@@ -46,7 +47,9 @@ import com.bed.chat.presentation.shared.components.selector.PictureSelectorBotto
 @Composable
 fun SignUpInitScreen(
     onNavigateToSignIn: () -> Unit,
-    viewModel: SignUpViewModel = viewModel()
+    viewModel: SignUpViewModel = viewModel {
+        SignUpViewModel(SignUpFormValidator())
+    }
 ) {
     SignUpScreen(
         formState = viewModel.formState,
@@ -77,13 +80,11 @@ fun SignUpScreen(
         ) {
 
             Header(
-                image = R.drawable.ic_launcher_foreground,
                 title = R.string.sign_up_title,
                 subtitle = R.string.sign_up_sub_title,
-                imageDescription = R.string.app_icon_description
             )
 
-            Spacer(modifier = modifier.height(16.dp))
+            Spacer(modifier = modifier.height(32.dp))
 
             PictureSelector(
                 picture = formState.picture,
@@ -95,21 +96,11 @@ fun SignUpScreen(
             Spacer(modifier = modifier.height(16.dp))
 
             PrimaryTextField(
-                value = formState.firstName,
+                value = formState.name,
                 label = stringResource(id = R.string.label_first_name_input),
-                message = formState.firstNameMessage,
+                message = formState.nameMessage,
                 placeholder = stringResource(id = R.string.placeholder_first_name_input),
-                onValueChange = { onFormEvent(SignUpFormEvent.FirstNameChanged(it)) }
-            )
-
-            Spacer(modifier = modifier.height(16.dp))
-
-            PrimaryTextField(
-                value = formState.secondName,
-                message = formState.secondNameMessage,
-                label = stringResource(id = R.string.label_second_name_input),
-                placeholder = stringResource(id = R.string.placeholder_second_name_input),
-                onValueChange = { onFormEvent(SignUpFormEvent.SecondNameChanged(it)) }
+                onValueChange = { onFormEvent(SignUpFormEvent.NameChanged(it)) }
             )
 
             Spacer(modifier = modifier.height(16.dp))

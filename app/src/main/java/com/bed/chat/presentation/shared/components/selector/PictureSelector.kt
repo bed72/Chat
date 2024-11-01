@@ -40,9 +40,9 @@ fun PictureSelector(
     ) {
         AsyncImage(
             contentScale = ContentScale.Crop,
-            model = picture ?: R.drawable.ic_picture_select,
+            model = picture ?: R.drawable.ic_user,
             modifier = Modifier.size(84.dp).clip(CircleShape),
-            placeholder = painterResource(id = R.drawable.ic_picture_select),
+            placeholder = painterResource(id = R.drawable.ic_user),
             contentDescription = stringResource(R.string.picture_selector_description),
             colorFilter = if (picture == null) ColorFilter.tint(MaterialTheme.colorScheme.onSurface) else null
         )

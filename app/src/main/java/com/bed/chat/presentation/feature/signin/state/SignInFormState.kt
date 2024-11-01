@@ -9,5 +9,8 @@ data class SignInFormState(
     val passwordMessage: String? = null,
     val passwordIsValid: Boolean = false,
 
+    val message: String? = null,
+
     val isLoading: Boolean = false,
+    val formIsValid: Boolean = false,
 )

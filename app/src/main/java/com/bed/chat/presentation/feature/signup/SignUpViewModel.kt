@@ -2,60 +2,48 @@ package com.bed.chat.presentation.feature.signup
 
 import android.net.Uri
 
-import javax.inject.Inject
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-
-import com.bed.chat.presentation.shared.validator.Validator
-import com.bed.chat.presentation.shared.validator.EmailValidator
-import com.bed.chat.presentation.shared.validator.PasswordValidator
 
 import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
 import com.bed.chat.presentation.feature.signup.state.SignUpFormState
 
-@HiltViewModel
-class SignUpViewModel @Inject constructor() : ViewModel() {
-    private val emailValidator: Validator<String> by lazy { EmailValidator() }
-    private val passwordValidator: Validator<String> by lazy { PasswordValidator() }
+class SignUpViewModel(
+    private val validator: SignUpFormValidator,
+) : ViewModel() {
 
     var formState by mutableStateOf(SignUpFormState())
         private set
 
     fun onFormEvent(event: SignUpFormEvent) {
         when (event) {
-            SignUpFormEvent.Submit -> { doSignUp() }
+            SignUpFormEvent.Submit -> { submit() }
             is SignUpFormEvent.EmailChanged -> { emailChanged(event.email) }
+            is SignUpFormEvent.NameChanged -> { nameChanged(event.firstName) }
             is SignUpFormEvent.PictureChanged -> { pictureChanged(event.picture) }
             is SignUpFormEvent.PasswordChanged -> { passwordChanged(event.password) }
-            is SignUpFormEvent.FirstNameChanged -> { firstNameChanged(event.firstName) }
-            is SignUpFormEvent.SecondNameChanged -> { secondNameChanged(event.secondName) }
             SignUpFormEvent.OpenPictureSelectorBottomSheet -> { openPictureSelectorBottomSheet() }
             SignUpFormEvent.ClosePictureSelectorBottomSheet -> { closePictureSelectorBottomSheet() }
         }
     }
 
-    private fun doSignUp() {
-        with (formState) {
-            if (firstNameIsValid && secondNameIsValid && emailIsValid && passwordIsValid)
-                formState = formState.copy(isLoading = true)
-        }
+    @Suppress("ForbiddenComment")
+    private fun submit() {
+        formState = formState.copy(isLoading = true, message = null)
+
+        if (validateForm()) {
+            // TODO: submit form
+        } else formState = formState.copy(isLoading = false, message = null)
     }
+
+    private fun validateForm(): Boolean =
+        validator(formState).also { formState = it }.formIsValid
 
     private fun pictureChanged(picture: Uri?) {
         formState = formState.copy(picture = picture)
-    }
-
-    private fun firstNameChanged(value: String) {
-        formState = formState.copy(firstName = value)
-    }
-
-    private fun secondNameChanged(value: String) {
-        formState = formState.copy(secondName = value)
     }
 
     private fun openPictureSelectorBottomSheet() {
@@ -66,35 +54,24 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         formState = formState.copy(isPictureSelectorBottomSheetOpen = false)
     }
 
+    private fun nameChanged(value: String) {
+        formState = formState.copy(
+            name = value,
+            nameMessage = if (value.isNotEmpty()) null else formState.nameMessage
+        )
+    }
+
     private fun emailChanged(value: String) {
-        emailValidator(
-            value = value,
-            default = { email ->
-                formState = formState.copy(email = email, emailMessage = null, emailIsValid = false)
-            },
-            success = { email ->
-                formState = formState.copy(email = email, emailMessage = null, emailIsValid = true)
-            },
-            failure = { message, email ->
-                formState = formState.copy(email = email, emailMessage = message, emailIsValid = false)
-            }
+        formState = formState.copy(
+            email = value,
+            emailMessage = if (value.isNotEmpty()) null else formState.emailMessage
         )
     }
 
     private fun passwordChanged(value: String) {
-        passwordValidator(
-            value = value,
-            default = { password ->
-                formState = formState.copy(password = password, passwordMessage = null, passwordIsValid = false)
-            },
-            success = { password ->
-                formState = formState
-                    .copy(password = password, passwordMessage = null, passwordIsValid = true)
-            },
-            failure = { message, password ->
-                formState = formState
-                    .copy(password = password, passwordMessage = message, passwordIsValid = false)
-            }
+        formState = formState.copy(
+            password = value,
+            passwordMessage = if (value.isNotEmpty()) null else formState.passwordMessage
         )
     }
 }

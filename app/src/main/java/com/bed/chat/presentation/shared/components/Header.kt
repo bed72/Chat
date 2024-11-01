@@ -33,8 +33,6 @@ import com.bed.chat.presentation.shared.theme.ChatTheme
 
 @Composable
 fun Header(
-    @DrawableRes image: Int,
-    @StringRes imageDescription: Int,
     @StringRes title: Int,
     @StringRes subtitle: Int,
     modifier: Modifier = Modifier
@@ -44,17 +42,6 @@ fun Header(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                modifier = modifier
-                    .clip(CircleShape)
-                    .background(color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.2f))
-                    .size(48.dp),
-                painter = painterResource(id = image),
-                contentDescription = stringResource(id = imageDescription)
-            )
-
-            Spacer(modifier = modifier.width(16.dp))
-
             Text(
                 text = stringResource(id = title),
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -79,8 +66,6 @@ fun Header(
 private fun HeaderPreview() {
     ChatTheme {
         Header(
-            image = R.drawable.ic_launcher_foreground,
-            imageDescription = R.string.app_icon_description,
             title = R.string.sign_in_title,
             subtitle = R.string.sign_in_sub_title
         )

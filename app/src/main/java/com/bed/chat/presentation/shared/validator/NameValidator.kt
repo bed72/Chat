@@ -1,12 +1,11 @@
 package com.bed.chat.presentation.shared.validator
 
-import com.bed.chat.domain.values.EmailValue
+import com.bed.chat.domain.values.NameValue
 
-class EmailValidator : Validator<String> {
+class NameValidator : Validator<String> {
     override fun invoke(value: String): Pair<String?, String?> =
-        EmailValue(value).fold(
+        NameValue(value).fold(
             { messages -> messages.firstOrNull() to null },
-            { email -> null to email() },
+            { name -> null to name() },
         )
 }
-

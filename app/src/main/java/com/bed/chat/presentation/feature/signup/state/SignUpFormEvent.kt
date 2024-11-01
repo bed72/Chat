@@ -8,7 +8,6 @@ sealed interface SignUpFormEvent {
     data object ClosePictureSelectorBottomSheet : SignUpFormEvent
     data class EmailChanged(val email: String) : SignUpFormEvent
     data class PictureChanged(val picture: Uri?) : SignUpFormEvent
+    data class NameChanged(val firstName: String) : SignUpFormEvent
     data class PasswordChanged(val password: String) : SignUpFormEvent
-    data class FirstNameChanged(val firstName: String) : SignUpFormEvent
-    data class SecondNameChanged(val secondName: String) : SignUpFormEvent
 }

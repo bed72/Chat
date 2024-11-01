@@ -3,21 +3,9 @@ package com.bed.chat.presentation.shared.validator
 import com.bed.chat.domain.values.PasswordValue
 
 class PasswordValidator : Validator<String> {
-    override fun invoke(
-        value: String,
-        default: (String) -> Unit,
-        success: (String) -> Unit,
-        failure: (String, String) -> Unit
-    ) {
-        if (value.isEmpty()) {
-            default(value)
-
-            return
-        }
-
+    override fun invoke(value: String): Pair<String?, String?> =
         PasswordValue(value).fold(
-            ifRight = { success(it()) },
-            ifLeft = { failure(it.first(), value) }
+            { messages -> messages.firstOrNull() to null },
+            { password -> null to password() }
         )
-    }
 }
