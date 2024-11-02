@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 
 import androidx.compose.material.icons.Icons
@@ -48,6 +49,7 @@ fun PrimaryTextField(
     message: String? = null,
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     val (isFocused, setIsFocused) = remember { mutableStateOf(false) }
     val (iconIsVisible, setIconIsVisible) = remember { mutableStateOf(false) }
@@ -62,6 +64,7 @@ fun PrimaryTextField(
             singleLine = true,
             isError = message != null,
             onValueChange = onValueChange,
+            keyboardActions = keyboardActions,
             shape = MaterialTheme.shapes.medium,
             visualTransformation = handleVisualTransformation(iconIsVisible, keyboardType),
             keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),

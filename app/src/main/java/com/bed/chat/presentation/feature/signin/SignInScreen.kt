@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
 import com.bed.chat.R
 
@@ -55,6 +57,8 @@ fun SignInScreen(
     onFormEvent: (SignInFormEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Container {
         Column(
             modifier = modifier
@@ -88,8 +92,12 @@ fun SignInScreen(
                 message = formState.passwordMessage,
                 keyboardType = KeyboardType.Password,
                 label = stringResource(id = R.string.label_password_input),
+                onValueChange = { onFormEvent(SignInFormEvent.PasswordChanged(it)) },
                 placeholder = stringResource(id = R.string.placeholder_password_input),
-                onValueChange = { onFormEvent(SignInFormEvent.PasswordChanged(it)) }
+                keyboardActions = KeyboardActions(onDone = {
+                    keyboardController?.hide()
+                    onFormEvent(SignInFormEvent.Submit)
+                })
             )
 
             Spacer(modifier = modifier.height(32.dp))
@@ -97,7 +105,10 @@ fun SignInScreen(
             PrimaryButton(
                 isLoading = formState.isLoading,
                 text = stringResource(id = R.string.sign_in_title_button),
-                onClick = { onFormEvent(SignInFormEvent.Submit) }
+                onClick = {
+                    keyboardController?.hide()
+                    onFormEvent(SignInFormEvent.Submit)
+                }
             )
 
             Spacer(modifier = modifier.height(32.dp))
@@ -105,7 +116,10 @@ fun SignInScreen(
             TextLinkButton(
                 text = R.string.sign_in_description_create_account,
                 link = R.string.sign_in_description_create_account_link,
-                click = { onNavigateToSignUp() }
+                click = {
+                    onNavigateToSignUp()
+                    keyboardController?.hide()
+                }
             )
         }
     }

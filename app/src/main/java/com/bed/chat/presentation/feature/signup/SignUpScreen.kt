@@ -25,9 +25,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
 import com.bed.chat.R
 
@@ -68,6 +70,7 @@ fun SignUpScreen(
 ) {
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Container {
         Column(
@@ -122,7 +125,11 @@ fun SignUpScreen(
                 keyboardType = KeyboardType.Password,
                 label = stringResource(id = R.string.label_password_input),
                 placeholder = stringResource(id = R.string.placeholder_password_input),
-                onValueChange = { onFormEvent(SignUpFormEvent.PasswordChanged(it)) }
+                onValueChange = { onFormEvent(SignUpFormEvent.PasswordChanged(it)) },
+                keyboardActions = KeyboardActions(onDone = {
+                    keyboardController?.hide()
+                    onFormEvent(SignUpFormEvent.Submit)
+                })
             )
 
             Spacer(modifier = modifier.height(16.dp))
@@ -132,7 +139,10 @@ fun SignUpScreen(
             PrimaryButton(
                 isLoading = false,
                 text = stringResource(id = R.string.sign_up_title_button),
-                onClick = { onFormEvent(SignUpFormEvent.Submit) }
+                onClick = {
+                    keyboardController?.hide()
+                    onFormEvent(SignUpFormEvent.Submit)
+                }
             )
 
             Spacer(modifier = modifier.height(32.dp))
@@ -140,7 +150,10 @@ fun SignUpScreen(
             TextLinkButton(
                 link = R.string.sign_up_description_create_account_link,
                 text = R.string.sign_up_description_create_account,
-                click = { onNavigateToSignIn() }
+                click = {
+                    onNavigateToSignIn()
+                    keyboardController?.hide()
+                }
             )
 
             if (formState.isPictureSelectorBottomSheetOpen)
