@@ -7,17 +7,17 @@
     <application
         tools:targetApi="31"
         android:label="@string/app_name"
+        android:name=".ChatApp"
         android:allowBackup="true"
         android:theme="@style/Theme.Chat"
         android:icon="@mipmap/ic_launcher"
-        android:name=".presentation.ChatApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:fullBackupContent="@xml/backup_rules"
         android:dataExtractionRules="@xml/data_extraction_rules" >
 
         <activity
             android:exported="true"
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.Chat.SplashScreen" >

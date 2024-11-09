@@ -1,4 +1,4 @@
-package com.bed.chat
+package com.bed.chat.presentation
 
 import android.os.Bundle
 

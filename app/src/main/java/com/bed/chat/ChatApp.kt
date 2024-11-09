@@ -1,7 +1,6 @@
-package com.bed.chat.presentation
+package com.bed.chat
 
 import android.app.Application
-
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
