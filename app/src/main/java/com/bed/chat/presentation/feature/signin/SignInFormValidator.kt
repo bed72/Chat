@@ -1,5 +1,7 @@
 package com.bed.chat.presentation.feature.signin
 
+import javax.inject.Inject
+
 import com.bed.chat.presentation.shared.validator.Validator
 import com.bed.chat.presentation.shared.validator.FormValidator
 import com.bed.chat.presentation.shared.validator.EmailValidator
@@ -7,7 +9,7 @@ import com.bed.chat.presentation.shared.validator.PasswordValidator
 
 import com.bed.chat.presentation.feature.signin.state.SignInFormState
 
-class SignInFormValidator : FormValidator<SignInFormState> {
+class SignInFormValidator @Inject constructor() : FormValidator<SignInFormState> {
     val emailValidator: Validator<String> by lazy { EmailValidator() }
     val passwordValidator: Validator<String> by lazy { PasswordValidator() }
 

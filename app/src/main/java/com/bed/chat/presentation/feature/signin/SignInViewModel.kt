@@ -5,12 +5,21 @@ import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import com.bed.chat.domain.models.input.SignInInputModel
+import com.bed.chat.domain.models.output.FailureOutputModel
 
+import dagger.hilt.android.lifecycle.HiltViewModel
+
+import com.bed.chat.domain.repositories.AuthenticationRepository
+
+import com.bed.chat.presentation.shared.extensions.launch
 import com.bed.chat.presentation.feature.signin.state.SignInFormState
 import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
 
+@HiltViewModel
 class SignInViewModel(
     private val validator: SignInFormValidator,
+    private val repository: AuthenticationRepository,
 ) : ViewModel() {
 
     var formState by mutableStateOf(SignInFormState())
@@ -29,8 +38,27 @@ class SignInViewModel(
         formState = formState.copy(isLoading = true, message = null)
 
         if (validateForm()) {
-            // TODO sign in
+            launch {
+                repository.signIn(
+                    SignInInputModel(
+                        username = formState.email,
+                        password = formState.password,
+                    )
+                ).fold(::failure, ::success)
+            }
         } else formState = formState.copy(isLoading = false, message = null)
+    }
+
+    private fun failure(model: FailureOutputModel) {
+        formState = formState.copy(
+            isLoading = false,
+            message = model.message,
+        )
+    }
+
+    @Suppress("ForbiddenComment")
+    private fun success(data: Unit) {
+        // TODO: Navigate to login screen
     }
 
     private fun validateForm(): Boolean =

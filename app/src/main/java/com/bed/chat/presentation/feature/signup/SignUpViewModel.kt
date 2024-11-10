@@ -2,17 +2,27 @@ package com.bed.chat.presentation.feature.signup
 
 import android.net.Uri
 
+import androidx.lifecycle.ViewModel
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 
-import androidx.lifecycle.ViewModel
+import com.bed.chat.domain.models.input.SignUpInputModel
+import com.bed.chat.domain.models.output.FailureOutputModel
 
+import dagger.hilt.android.lifecycle.HiltViewModel
+
+import com.bed.chat.domain.repositories.AuthenticationRepository
+
+import com.bed.chat.presentation.shared.extensions.launch
 import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
 import com.bed.chat.presentation.feature.signup.state.SignUpFormState
 
+@HiltViewModel
 class SignUpViewModel(
     private val validator: SignUpFormValidator,
+    private val repository: AuthenticationRepository,
 ) : ViewModel() {
 
     var formState by mutableStateOf(SignUpFormState())
@@ -30,13 +40,33 @@ class SignUpViewModel(
         }
     }
 
-    @Suppress("ForbiddenComment")
     private fun submit() {
         formState = formState.copy(isLoading = true, message = null)
 
         if (validateForm()) {
-            // TODO: submit form
+            launch {
+                repository.signUp(
+                    SignUpInputModel(
+                        username = formState.name,
+                        email = formState.email,
+                        password = formState.password,
+                        picture = null,
+                    )
+                ).fold(::failure, ::success)
+            }
         } else formState = formState.copy(isLoading = false, message = null)
+    }
+
+    private fun failure(model: FailureOutputModel) {
+        formState = formState.copy(
+            isLoading = false,
+            message = model.message,
+        )
+    }
+
+    @Suppress("ForbiddenComment")
+    private fun success(data: Unit) {
+        // TODO: Navigate to login screen
     }
 
     private fun validateForm(): Boolean =

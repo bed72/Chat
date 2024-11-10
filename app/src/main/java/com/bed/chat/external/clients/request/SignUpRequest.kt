@@ -1,5 +1,6 @@
 package com.bed.chat.external.clients.request
 
+import com.bed.chat.domain.models.input.SignUpInputModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -12,8 +13,15 @@ data class SignUpRequest(
     val password: String,
 
     @SerialName("firstName")
-    val firstName: String,
+    val name: String,
 
     @SerialName("profilePictureId")
     val picture: String?,
+)
+
+fun SignUpInputModel.toRequest() = SignUpRequest(
+    name = name,
+    username = username,
+    password = password,
+    picture = picture
 )
