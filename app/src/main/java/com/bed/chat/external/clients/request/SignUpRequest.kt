@@ -1,8 +1,9 @@
 package com.bed.chat.external.clients.request
 
-import com.bed.chat.domain.models.input.SignUpInputModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
+import com.bed.chat.domain.models.input.SignUpInputModel
 
 @Serializable
 data class SignUpRequest(
@@ -20,7 +21,7 @@ data class SignUpRequest(
 )
 
 fun SignUpInputModel.toRequest() = SignUpRequest(
-    name = name,
+    name = email,
     username = username,
     password = password,
     picture = picture

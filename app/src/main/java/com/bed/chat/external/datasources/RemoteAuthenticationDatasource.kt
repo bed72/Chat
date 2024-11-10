@@ -15,23 +15,23 @@ import com.bed.chat.external.clients.HttpUrl
 import com.bed.chat.external.clients.HttpClient
 
 import com.bed.chat.external.clients.request.SignInRequest
-import com.bed.chat.external.clients.request.SignUpRequest
 import com.bed.chat.external.clients.response.TokenResponse
 
 import com.bed.chat.data.datasources.AuthenticationDatasource
+import com.bed.chat.external.clients.request.SignUpRequest
 import com.bed.chat.external.clients.response.FailureResponse
 
 class RemoteAuthenticationDatasource @Inject constructor(
     private val client: HttpClient
 ) : AuthenticationDatasource {
-    override suspend fun signUp(parameter: SignInRequest): DataSignUpType =
+    override suspend fun signUp(parameter: SignUpRequest): DataSignUpType =
         client.http.request<FailureResponse, Unit> {
             setBody(parameter)
             method = HttpMethod.Post
             url(HttpUrl.SIGN_UP.value)
         }
 
-    override suspend fun signIn(parameter: SignUpRequest): DataSignInType =
+    override suspend fun signIn(parameter: SignInRequest): DataSignInType =
         client.http.request<FailureResponse, TokenResponse> {
             setBody(parameter)
             method = HttpMethod.Post

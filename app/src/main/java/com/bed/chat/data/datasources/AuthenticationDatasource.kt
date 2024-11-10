@@ -7,6 +7,6 @@ import com.bed.chat.external.clients.request.SignInRequest
 import com.bed.chat.external.clients.request.SignUpRequest
 
 interface AuthenticationDatasource {
-    suspend fun signUp(parameter: SignInRequest): DataSignUpType
-    suspend fun signIn(parameter: SignUpRequest): DataSignInType
+    suspend fun signUp(parameter: SignUpRequest): DataSignUpType
+    suspend fun signIn(parameter: SignInRequest): DataSignInType
 }

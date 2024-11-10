@@ -16,10 +16,10 @@ import com.bed.chat.domain.repositories.AuthenticationRepository
 class AuthenticationRepositoryImpl @Inject constructor(
     private val datasource: AuthenticationDatasource
 ) : AuthenticationRepository {
-    override suspend fun signUp(parameter: SignInInputModel): DomainSignUpType =
+    override suspend fun signUp(parameter: SignUpInputModel): DomainSignUpType =
         datasource.signUp(parameter.toRequest()).mapLeft { it.toModel() }
 
-    override suspend fun signIn(parameter: SignUpInputModel): DomainSignInType =
+    override suspend fun signIn(parameter: SignInInputModel): DomainSignInType =
         datasource.signIn(parameter.toRequest())
             .map{
                 // TODO save token
