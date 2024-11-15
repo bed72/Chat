@@ -6,6 +6,8 @@ import arrow.core.left
 import arrow.core.right
 import arrow.core.Either
 
+import javax.inject.Inject
+
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
@@ -38,7 +40,7 @@ interface HttpClient {
     val http: KtorClient
 }
 
-class HttpClientImpl : HttpClient {
+class HttpClientImpl @Inject constructor() : HttpClient {
 
     private val timeout = 15000L
 
