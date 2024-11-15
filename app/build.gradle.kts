@@ -76,7 +76,6 @@ android {
 dependencies {
     // Others
     ksp(libs.hilt.compiler)
-    implementation(libs.hilt.android)
     implementation(libs.bundles.core)
     implementation(platform(libs.compose))
 

@@ -1,6 +1,7 @@
 package com.bed.chat.presentation.feature.signin
 
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 
 import androidx.compose.runtime.Composable
@@ -38,10 +39,8 @@ import com.bed.chat.presentation.feature.signin.state.SignInFormState
 
 @Composable
 fun SignInInitScreen(
-    onNavigateToSignUp: () -> Unit,
-    viewModel: SignInViewModel = viewModel {
-        SignInViewModel(SignInFormValidator())
-    }
+    viewModel: SignInViewModel = hiltViewModel(),
+    onNavigateToSignUp: () -> Unit
 ) {
     SignInScreen(
         formState = viewModel.formState,

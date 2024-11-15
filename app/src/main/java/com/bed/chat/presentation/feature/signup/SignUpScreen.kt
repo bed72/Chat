@@ -2,7 +2,7 @@ package com.bed.chat.presentation.feature.signup
 
 import kotlinx.coroutines.launch
 
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 
@@ -49,9 +49,7 @@ import com.bed.chat.presentation.shared.components.selector.PictureSelectorBotto
 @Composable
 fun SignUpInitScreen(
     onNavigateToSignIn: () -> Unit,
-    viewModel: SignUpViewModel = viewModel {
-        SignUpViewModel(SignUpFormValidator())
-    }
+    viewModel: SignUpViewModel = hiltViewModel()
 ) {
     SignUpScreen(
         formState = viewModel.formState,

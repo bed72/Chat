@@ -2,6 +2,8 @@ package com.bed.chat.presentation.feature.signup
 
 import android.net.Uri
 
+import javax.inject.Inject
+
 import androidx.lifecycle.ViewModel
 
 import androidx.compose.runtime.getValue
@@ -20,7 +22,7 @@ import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
 import com.bed.chat.presentation.feature.signup.state.SignUpFormState
 
 @HiltViewModel
-class SignUpViewModel(
+class SignUpViewModel  @Inject constructor(
     private val validator: SignUpFormValidator,
     private val repository: AuthenticationRepository,
 ) : ViewModel() {

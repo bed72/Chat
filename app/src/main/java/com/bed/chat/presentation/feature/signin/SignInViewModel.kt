@@ -1,5 +1,7 @@
 package com.bed.chat.presentation.feature.signin
 
+import javax.inject.Inject
+
 import androidx.lifecycle.ViewModel
 
 import androidx.compose.runtime.getValue
@@ -17,7 +19,7 @@ import com.bed.chat.presentation.feature.signin.state.SignInFormState
 import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
 
 @HiltViewModel
-class SignInViewModel(
+class SignInViewModel @Inject constructor(
     private val validator: SignInFormValidator,
     private val repository: AuthenticationRepository,
 ) : ViewModel() {

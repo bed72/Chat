@@ -16,9 +16,10 @@ lifecycle = "2.8.7"
 datastore = "1.1.1"
 leakcanary = "2.14"
 coroutines = "1.9.0"
+navigation = "2.8.4"
 ksp = "2.0.21-1.0.25"
-navigation = "2.8.3"
-compose = "2024.10.01"
+compose = "2024.11.00"
+hilt-navigation = "1.2.0"
 
 # Tests
 junit = "4.13.2"
@@ -50,6 +51,7 @@ ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-jso
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt"}
 hilt-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
 
 core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
@@ -110,6 +112,9 @@ android-test = [
 ]
 
 core = [
+    # Hilt
+    "hilt-android",
+    "hilt-navigation",
     # Others
     "coil",
     "core",

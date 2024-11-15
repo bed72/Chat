@@ -17,7 +17,7 @@ data class FailureResponse(
     val message: String
         get() = message()
 
-    @kotlin.Suppress("MagicNumber")
+    @Suppress("MagicNumber")
     private fun message() = when (code) {
         400 -> "Ops, um erro inesperado aconteceu."
         422 -> "Ops, algo deu errado com os dados enviados."
