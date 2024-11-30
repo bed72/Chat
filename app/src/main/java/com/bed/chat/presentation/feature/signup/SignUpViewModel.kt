@@ -4,6 +4,7 @@ import android.net.Uri
 
 import javax.inject.Inject
 
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 
 import androidx.compose.runtime.getValue
@@ -11,18 +12,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 
 import com.bed.chat.domain.models.input.SignUpInputModel
-import com.bed.chat.domain.models.output.FailureOutputModel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import com.bed.chat.domain.repositories.AuthenticationRepository
 
 import com.bed.chat.presentation.shared.extensions.launch
+import com.bed.chat.presentation.shared.image.ImageCompressor
 import com.bed.chat.presentation.feature.signup.state.SignUpFormEvent
 import com.bed.chat.presentation.feature.signup.state.SignUpFormState
 
 @HiltViewModel
 class SignUpViewModel  @Inject constructor(
+    private val compressor: ImageCompressor,
     private val validator: SignUpFormValidator,
     private val repository: AuthenticationRepository,
 ) : ViewModel() {
@@ -54,20 +56,18 @@ class SignUpViewModel  @Inject constructor(
                         password = formState.password,
                         picture = null,
                     )
-                )//.fold(::failure, ::success)
+                ).fold(::success, ::failure)
             }
         } else formState = formState.copy(isLoading = false, message = null)
     }
 
-    @Suppress("UnusedPrivateMember")
-    private fun failure(model: FailureOutputModel) {
+    private fun failure(model: Throwable) {
         formState = formState.copy(
             isLoading = false,
             message = model.message,
         )
     }
 
-    @Suppress("ForbiddenComment", "UnusedPrivateMember")
     private fun success(data: Unit) {
         // TODO: Navigate to login screen
     }
@@ -77,6 +77,8 @@ class SignUpViewModel  @Inject constructor(
 
     private fun pictureChanged(picture: Uri?) {
         formState = formState.copy(picture = picture)
+
+        picture?.let { compressImage(it) }
     }
 
     private fun openPictureSelectorBottomSheet() {
@@ -106,5 +108,14 @@ class SignUpViewModel  @Inject constructor(
             password = value,
             passwordMessage = if (value.isNotEmpty()) null else formState.passwordMessage
         )
+    }
+
+    private fun compressImage(uri: Uri) {
+        launch {
+            formState = formState.copy(isCompressingImage = true)
+
+            val file = compressor(uri)
+            formState = formState.copy(isCompressingImage = false, picture = file.toUri())
+        }
     }
 }

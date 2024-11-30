@@ -4,10 +4,13 @@ import android.util.Log
 
 import javax.inject.Inject
 
+import kotlinx.serialization.json.Json
+
+import android.accounts.NetworkErrorException
+
+import io.ktor.http.isSuccess
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-
-import kotlinx.serialization.json.Json
 
 import io.ktor.serialization.kotlinx.json.json
 
@@ -28,36 +31,39 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.HttpRequestRetry
+import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 
+import com.bed.chat.domain.models.exception.NetworkExceptionModel
 
 interface HttpClient {
     val http: KtorClient
 }
 
 class HttpClientImpl @Inject constructor() : HttpClient {
-
-    private val timeout = 15000L
-
-    private val configureJson get() = Json {
-        explicitNulls = false
-        encodeDefaults = false
-
-        isLenient = true
-        prettyPrint = true
-        ignoreUnknownKeys = true
-    }
-
     override val http get() = KtorClient(CIO) {
         expectSuccess = true
 
+        configureRetry()
         configureLogging()
         configureResponseTimeout()
         configureResponseObserver()
         configureContentNegotiation()
+        configureValidationResponse()
 
         defaultRequest { url(HttpUrl.API.value) }
+    }
+
+    private fun HttpClientConfig<CIOEngineConfig>.configureRetry() {
+        install(HttpRequestRetry) {
+            maxRetries = RETRY
+            delayMillis { it * DELAY_RETRY }
+            retryIf { _, response -> !response.status.isSuccess() }
+            retryOnExceptionIf { request, cause -> cause is NetworkErrorException }
+        }
     }
 
     private fun HttpClientConfig<CIOEngineConfig>.configureLogging() {
@@ -68,7 +74,6 @@ class HttpClientImpl @Inject constructor() : HttpClient {
             sanitizeHeader { it == HttpHeaders.Authorization }
         }
     }
-
 
     private fun HttpClientConfig<CIOEngineConfig>.configureResponseObserver() {
         install(ResponseObserver) {
@@ -81,35 +86,57 @@ class HttpClientImpl @Inject constructor() : HttpClient {
 
     private fun HttpClientConfig<CIOEngineConfig>.configureResponseTimeout() {
         install(HttpTimeout) {
-            socketTimeoutMillis = timeout
-            requestTimeoutMillis = timeout
-            connectTimeoutMillis = timeout
+            socketTimeoutMillis = TIMEOUT
+            requestTimeoutMillis = TIMEOUT
+            connectTimeoutMillis = TIMEOUT
         }
     }
 
     private fun HttpClientConfig<CIOEngineConfig>.configureContentNegotiation() {
         install(ContentNegotiation) {
-            json(configureJson)
+            json(
+                Json {
+                    explicitNulls = false
+                    encodeDefaults = false
+
+                    isLenient = true
+                    prettyPrint = true
+                    ignoreUnknownKeys = true
+                }
+            )
         }
+    }
+
+    private fun HttpClientConfig<CIOEngineConfig>.configureValidationResponse() {
+        HttpResponseValidator {
+            handleResponseExceptionWithRequest { cause, _ ->
+                val exception = cause as? ClientRequestException ?: return@handleResponseExceptionWithRequest
+
+                throw when (exception.response.status) {
+                    HttpStatusCode.NotFound -> NetworkExceptionModel.NotFoundExceptionModel(cause)
+                    HttpStatusCode.BadRequest -> NetworkExceptionModel.BadRequestExceptionModel(cause)
+                    HttpStatusCode.Unauthorized -> NetworkExceptionModel.UnauthorizedExceptionModel(cause)
+                    HttpStatusCode.InternalServerError -> NetworkExceptionModel.ServerErrorExceptionModel(cause)
+                    HttpStatusCode.UnprocessableEntity -> NetworkExceptionModel.UnprocessableEntityException(cause)
+                    else -> NetworkExceptionModel.UnknownExceptionModel(cause)
+                }
+            }
+        }
+    }
+
+    private companion object {
+        private const val RETRY = 2
+        private const val TIMEOUT = 15000L
+        private const val DELAY_RETRY = 2000L
     }
 }
 
-@Suppress("ThrowingExceptionsWithoutMessageOrCause")
-suspend inline fun <reified F : Any, reified S : Any> KtorClient.request(
+suspend inline fun <reified S : Any> KtorClient.request(
     crossinline block: HttpRequestBuilder.() -> Unit,
-): Result<S> {
-    return Result.failure(Exception())
-//    try {
-//        val response = request { block() }
-//
-//        close()
-//
-//        return when (response.status) {
-//            HttpStatusCode.OK, HttpStatusCode.Created -> response.body<S>().right()
-//            else -> response.body<F>().left()
-//        }
-//    } catch (exception: Exception) {
-//        exception.printStackTrace()
-//        return (defaultFailure().body as F).left()
-//    }
+): Result<S> = runCatching {
+    val response = request { block() }
+
+    close()
+
+    response.body<S>()
 }

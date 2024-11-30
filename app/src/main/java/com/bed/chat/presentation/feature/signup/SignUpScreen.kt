@@ -89,6 +89,7 @@ fun SignUpScreen(
 
             PictureSelector(
                 picture = formState.picture,
+                isCompressing = formState.isCompressingImage,
                 modifier = modifier
                     .align(Alignment.CenterHorizontally)
                     .clickable { onFormEvent(SignUpFormEvent.OpenPictureSelectorBottomSheet) }

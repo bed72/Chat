@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import com.bed.chat.domain.models.input.SignInInputModel
-import com.bed.chat.domain.models.output.FailureOutputModel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
@@ -46,12 +45,12 @@ class SignInViewModel @Inject constructor(
                         username = formState.email,
                         password = formState.password,
                     )
-                )//.fold(::failure, ::success)
+                ).fold(::success, ::failure)
             }
         } else formState = formState.copy(isLoading = false, message = null)
     }
-    @Suppress("UnusedPrivateMember")
-    private fun failure(model: FailureOutputModel) {
+
+    private fun failure(model: Throwable) {
         formState = formState.copy(
             isLoading = false,
             message = model.message,

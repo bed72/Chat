@@ -35,6 +35,7 @@
 
     <!-- Picture Selector Component -->
     <string name="picture_selector_title">Selecione uma imagem</string>
+    <string name="picture_selector_compressor">Otimizando imagem…</string>
     <string name="picture_selector_description">Ícone de uma câmera de fotos, para selecionar uma imagem.</string>
 
     <string name="picture_selector_bottom_sheet_camera_title">Câmera</string>

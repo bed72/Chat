@@ -74,6 +74,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.exifinterface)
     // Others
     ksp(libs.hilt.compiler)
     implementation(libs.bundles.core)
