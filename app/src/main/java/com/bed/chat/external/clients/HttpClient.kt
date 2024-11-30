@@ -2,13 +2,8 @@ package com.bed.chat.external.clients
 
 import android.util.Log
 
-import arrow.core.left
-import arrow.core.right
-import arrow.core.Either
-
 import javax.inject.Inject
 
-import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 
@@ -24,17 +19,18 @@ import io.ktor.client.HttpClient as KtorClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.engine.cio.CIOEngineConfig
 
-import io.ktor.client.request.header
-import io.ktor.client.request.headers
 import io.ktor.client.request.request
 import io.ktor.client.request.HttpRequestBuilder
 
 import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.DefaultRequest
-import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+
 
 interface HttpClient {
     val http: KtorClient
@@ -57,28 +53,22 @@ class HttpClientImpl @Inject constructor() : HttpClient {
         expectSuccess = true
 
         configureLogging()
-        configureRequestDefault()
         configureResponseTimeout()
         configureResponseObserver()
         configureContentNegotiation()
+
+        defaultRequest { url(HttpUrl.API.value) }
     }
 
     private fun HttpClientConfig<CIOEngineConfig>.configureLogging() {
         install(Logging) {
-            level = LogLevel.INFO
-            level = LogLevel.HEADERS
+            level = LogLevel.ALL
+            logger = Logger.DEFAULT
             filter { it.url.host.contains("http") }
+            sanitizeHeader { it == HttpHeaders.Authorization }
         }
     }
 
-    private fun HttpClientConfig<CIOEngineConfig>.configureRequestDefault() {
-        install(DefaultRequest) {
-            url(HttpUrl.API.value)
-            headers {
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
-            }
-        }
-    }
 
     private fun HttpClientConfig<CIOEngineConfig>.configureResponseObserver() {
         install(ResponseObserver) {
@@ -104,16 +94,22 @@ class HttpClientImpl @Inject constructor() : HttpClient {
     }
 }
 
-
+@Suppress("ThrowingExceptionsWithoutMessageOrCause")
 suspend inline fun <reified F : Any, reified S : Any> KtorClient.request(
     crossinline block: HttpRequestBuilder.() -> Unit,
-): Either<F, S> {
-    val response = request { block() }
-
-    close()
-
-    return when (response.status) {
-        HttpStatusCode.OK, HttpStatusCode.Created -> response.body<S>().right()
-        else -> response.body<F>().left()
-    }
+): Result<S> {
+    return Result.failure(Exception())
+//    try {
+//        val response = request { block() }
+//
+//        close()
+//
+//        return when (response.status) {
+//            HttpStatusCode.OK, HttpStatusCode.Created -> response.body<S>().right()
+//            else -> response.body<F>().left()
+//        }
+//    } catch (exception: Exception) {
+//        exception.printStackTrace()
+//        return (defaultFailure().body as F).left()
+//    }
 }

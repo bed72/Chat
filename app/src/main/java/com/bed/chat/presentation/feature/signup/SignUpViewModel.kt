@@ -33,12 +33,12 @@ class SignUpViewModel  @Inject constructor(
     fun onFormEvent(event: SignUpFormEvent) {
         when (event) {
             SignUpFormEvent.Submit -> { submit() }
-            is SignUpFormEvent.EmailChanged -> { emailChanged(event.email) }
-            is SignUpFormEvent.NameChanged -> { nameChanged(event.firstName) }
-            is SignUpFormEvent.PictureChanged -> { pictureChanged(event.picture) }
-            is SignUpFormEvent.PasswordChanged -> { passwordChanged(event.password) }
-            SignUpFormEvent.OpenPictureSelectorBottomSheet -> { openPictureSelectorBottomSheet() }
-            SignUpFormEvent.ClosePictureSelectorBottomSheet -> { closePictureSelectorBottomSheet() }
+            is SignUpFormEvent.EmailChanged -> emailChanged(event.email)
+            is SignUpFormEvent.NameChanged -> nameChanged(event.firstName)
+            is SignUpFormEvent.PictureChanged -> pictureChanged(event.picture)
+            is SignUpFormEvent.PasswordChanged -> passwordChanged(event.password)
+            SignUpFormEvent.OpenPictureSelectorBottomSheet -> openPictureSelectorBottomSheet()
+            SignUpFormEvent.ClosePictureSelectorBottomSheet -> closePictureSelectorBottomSheet()
         }
     }
 
@@ -54,11 +54,12 @@ class SignUpViewModel  @Inject constructor(
                         password = formState.password,
                         picture = null,
                     )
-                ).fold(::failure, ::success)
+                )//.fold(::failure, ::success)
             }
         } else formState = formState.copy(isLoading = false, message = null)
     }
 
+    @Suppress("UnusedPrivateMember")
     private fun failure(model: FailureOutputModel) {
         formState = formState.copy(
             isLoading = false,
@@ -66,7 +67,7 @@ class SignUpViewModel  @Inject constructor(
         )
     }
 
-    @Suppress("ForbiddenComment")
+    @Suppress("ForbiddenComment", "UnusedPrivateMember")
     private fun success(data: Unit) {
         // TODO: Navigate to login screen
     }

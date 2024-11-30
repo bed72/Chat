@@ -2,7 +2,6 @@ package com.bed.chat.data.repositories
 
 import javax.inject.Inject
 
-import com.bed.chat.external.clients.response.toModel
 import com.bed.chat.external.clients.request.toRequest
 
 import com.bed.chat.data.datasources.AuthenticationDatasource
@@ -17,12 +16,11 @@ class AuthenticationRepositoryImpl @Inject constructor(
     private val datasource: AuthenticationDatasource
 ) : AuthenticationRepository {
     override suspend fun signUp(parameter: SignUpInputModel): DomainSignUpType =
-        datasource.signUp(parameter.toRequest()).mapLeft { it.toModel() }
+        datasource.signUp(parameter.toRequest())
 
     override suspend fun signIn(parameter: SignInInputModel): DomainSignInType =
         datasource.signIn(parameter.toRequest())
             .map{
                 // TODO save token
             }
-            .mapLeft { it.toModel() }
 }

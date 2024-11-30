@@ -4,12 +4,15 @@ import org.junit.Test
 import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
+import com.bed.chat.domain.models.exception.ValidationMessagesModel
+import com.bed.chat.domain.models.exception.ValidationExceptionModel
+
 internal class EmailValueTest {
     @Test
     fun `Should return the Email when value is valid`() {
         val email = EmailValue("email@email.com")
 
-        assertTrue(email.isRight())
+        assertTrue(email.isSuccess)
         email.map { assertEquals("email@email.com", it()) }
     }
 
@@ -17,16 +20,22 @@ internal class EmailValueTest {
     fun `Should return failure message when value is null`() {
         val email = EmailValue(null)
 
-        assertTrue(email.isLeft())
-        email.mapLeft { message -> assertEquals("O e-mail não pode ser vazio.", message.first()) }
+        assertTrue(email.isFailure)
+        email.onFailure { failure ->
+            assertTrue(failure is ValidationExceptionModel.EmailEmpty)
+            assertEquals(ValidationMessagesModel.EMAIL_EMPTY.message, failure.message)
+        }
     }
 
     @Test
     fun `Should return failure message when value is empty`() {
         val email = EmailValue("")
 
-        assertTrue(email.isLeft())
-        email.mapLeft { message -> assertEquals("O e-mail não pode ser vazio.", message.first()) }
+        assertTrue(email.isFailure)
+        email.onFailure { failure ->
+            assertTrue(failure is ValidationExceptionModel.EmailEmpty)
+            assertEquals(ValidationMessagesModel.EMAIL_EMPTY.message, failure.message)
+        }
     }
 
     @Test
@@ -34,8 +43,11 @@ internal class EmailValueTest {
         listOf("email@email", "email@email.", "emailemail.com", "email@emailcom").forEach {
             val email = EmailValue(it)
 
-            assertTrue(email.isLeft())
-            email.mapLeft { message -> assertEquals("E-mail inválido.", message.first()) }
+            assertTrue(email.isFailure)
+            email.onFailure { failure ->
+                assertTrue(failure is ValidationExceptionModel.EmailInvalid)
+                assertEquals(ValidationMessagesModel.EMAIL_INVALID.message, failure.message)
+            }
         }
     }
 }

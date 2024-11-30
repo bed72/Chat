@@ -1,10 +1,8 @@
 package com.bed.chat.domain.values
 
-import arrow.core.right
-import arrow.core.leftNel
-import arrow.core.EitherNel
-
 import kotlin.text.isNullOrEmpty
+
+import com.bed.chat.domain.models.exception.ValidationExceptionModel
 
 @JvmInline
 value class NameValue private constructor(private val value: String) {
@@ -12,14 +10,18 @@ value class NameValue private constructor(private val value: String) {
     operator fun invoke() = value
 
     companion object {
-        private const val  MIN_LENGTH = 3
-        private const val EMPTY = "O nome não pode ser vazio."
-        private const val LENGTH = "O nome deve ter pelo menos 3 caracteres."
+        private const val MIN_LENGTH = 2
+        private const val MAX_LENGTH = 12
+        private const val PATTERN = "[^a-zA-Z\\s]"
 
-        operator fun invoke(value: String?): EitherNel<String, NameValue> = when {
-            value.isNullOrEmpty() -> EMPTY.leftNel()
-            value.length < MIN_LENGTH -> LENGTH.leftNel()
-            else -> NameValue(value).right()
+        operator fun invoke(value: String?): Result<NameValue> = when {
+            value.isNullOrEmpty() -> Result.failure(ValidationExceptionModel.NameEmpty())
+            isValid(value) -> Result.failure(ValidationExceptionModel.NameInvalid())
+            value.length < MIN_LENGTH -> Result.failure(ValidationExceptionModel.NameMinLength())
+            value.length > MAX_LENGTH -> Result.failure(ValidationExceptionModel.NameMaxLength())
+            else -> Result.success(NameValue(value))
         }
+
+        private fun isValid(value: String) = PATTERN.toRegex().matches(value)
     }
 }

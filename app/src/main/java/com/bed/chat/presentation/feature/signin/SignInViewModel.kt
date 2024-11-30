@@ -29,9 +29,9 @@ class SignInViewModel @Inject constructor(
 
     fun onFormEvent(event: SignInFormEvent) {
         when (event) {
-            SignInFormEvent.Submit -> { submit() }
-            is SignInFormEvent.EmailChanged -> { emailChanged(event.email) }
-            is SignInFormEvent.PasswordChanged -> { passwordChanged(event.password) }
+            SignInFormEvent.Submit -> submit()
+            is SignInFormEvent.EmailChanged -> emailChanged(event.email)
+            is SignInFormEvent.PasswordChanged -> passwordChanged(event.password)
         }
     }
 
@@ -46,11 +46,11 @@ class SignInViewModel @Inject constructor(
                         username = formState.email,
                         password = formState.password,
                     )
-                ).fold(::failure, ::success)
+                )//.fold(::failure, ::success)
             }
         } else formState = formState.copy(isLoading = false, message = null)
     }
-
+    @Suppress("UnusedPrivateMember")
     private fun failure(model: FailureOutputModel) {
         formState = formState.copy(
             isLoading = false,
@@ -58,7 +58,7 @@ class SignInViewModel @Inject constructor(
         )
     }
 
-    @Suppress("ForbiddenComment")
+    @Suppress("ForbiddenComment", "UnusedPrivateMember")
     private fun success(data: Unit) {
         // TODO: Navigate to login screen
     }

@@ -5,8 +5,8 @@ import com.bed.chat.domain.values.EmailValue
 class EmailValidator : Validator<String> {
     override fun invoke(value: String): Pair<String?, String?> =
         EmailValue(value).fold(
-            { messages -> messages.firstOrNull() to null },
-            { email -> null to email() },
+            { success -> null to success() },
+            { failure -> failure.message to null },
         )
 }
 

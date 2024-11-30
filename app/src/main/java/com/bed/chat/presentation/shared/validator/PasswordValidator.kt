@@ -5,7 +5,7 @@ import com.bed.chat.domain.values.PasswordValue
 class PasswordValidator : Validator<String> {
     override fun invoke(value: String): Pair<String?, String?> =
         PasswordValue(value).fold(
-            { messages -> messages.firstOrNull() to null },
-            { password -> null to password() }
+            { success -> null to success() },
+            { failure -> failure.message to null }
         )
 }

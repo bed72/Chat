@@ -6,7 +6,7 @@ hilt = "2.52"
 coil = "2.7.0"
 ktor = "3.0.1"
 core = "1.15.0"
-arrow = "1.2.4"
+slf4j = "1.7.36"
 splash = "1.0.1"
 kotlin = "2.0.21"
 detekt = "1.23.7"
@@ -55,7 +55,7 @@ hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", v
 
 core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
-arrow = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
+slf4j = { group = "org.slf4j", name = "slf4j-android", version.ref = "slf4j" }
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 compose = { group = "androidx.compose", name = "compose-bom", version.ref = "compose" }
 splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash" }
@@ -83,8 +83,8 @@ leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", v
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
 application = { id = "com.android.application", version.ref = "agp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
@@ -118,7 +118,7 @@ core = [
     # Others
     "coil",
     "core",
-    "arrow",
+    "slf4j",
     "splash",
     "activity",
     "datastore",
