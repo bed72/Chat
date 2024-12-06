@@ -136,8 +136,6 @@ fun SignUpScreen(
                 })
             )
 
-            Spacer(modifier = modifier.height(16.dp))
-
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryButton(
