@@ -49,19 +49,34 @@ class SignUpViewModel  @Inject constructor(
 
         if (validateForm()) {
             launch {
-                repository.signUp(
-                    SignUpInputModel(
-                        username = formState.name,
-                        email = formState.email,
-                        password = formState.password,
-                        picture = null,
-                    )
-                ).fold(::success, ::failure)
+                val id = uploadImage()
+                signUp(id)
             }
         } else formState = formState.copy(isLoading = false, message = null)
     }
 
-    private fun failure(model: Throwable) {
+    private suspend fun uploadImage(): Int? {
+        var id: Int? = null
+
+        formState.picture?.path?.let { path ->
+            repository.uploadProfilePicture(path).onSuccess { id = it.id }
+        }
+
+        return id
+    }
+
+    private suspend fun signUp(id: Int? = null) {
+        repository.signUp(
+            SignUpInputModel(
+                picture = id,
+                email = formState.email,
+                username = formState.name,
+                password = formState.password,
+            )
+        ).fold(::signUpSuccess, ::signUpFailure)
+    }
+
+    private fun signUpFailure(model: Throwable) {
         formState = formState.copy(
             isLoading = false,
             message = model.message,
@@ -69,7 +84,7 @@ class SignUpViewModel  @Inject constructor(
     }
 
     @Suppress("ForbiddenComment")
-    private fun success(data: Unit) {
+    private fun signUpSuccess(data: Unit) {
         // TODO: Navigate to login screen
     }
 

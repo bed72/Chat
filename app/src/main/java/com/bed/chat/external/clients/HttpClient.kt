@@ -10,6 +10,7 @@ import android.accounts.NetworkErrorException
 
 import io.ktor.http.isSuccess
 import io.ktor.http.HttpHeaders
+import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 
 import io.ktor.serialization.kotlinx.json.json
@@ -22,6 +23,8 @@ import io.ktor.client.HttpClient as KtorClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.engine.cio.CIOEngineConfig
 
+import io.ktor.client.request.header
+import io.ktor.client.request.headers
 import io.ktor.client.request.request
 import io.ktor.client.request.HttpRequestBuilder
 
@@ -54,7 +57,10 @@ class HttpClientImpl @Inject constructor() : HttpClient {
         configureContentNegotiation()
         configureValidationResponse()
 
-        defaultRequest { url(HttpUrl.API.value) }
+        defaultRequest {
+            url(HttpUrl.API.value)
+            headers { header(HttpHeaders.ContentType, ContentType.Application.Json) }
+        }
     }
 
     private fun HttpClientConfig<CIOEngineConfig>.configureRetry() {

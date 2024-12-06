@@ -18,18 +18,21 @@ import androidx.compose.material3.MaterialTheme
 @Composable
 fun Container(
     modifier: Modifier = Modifier,
+    snackbar: @Composable (() -> Unit) = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
-    Scaffold { paddingValues ->
-        Box(
-            modifier = modifier
-                .imePadding()
-                .fillMaxSize()
-                .safeDrawingPadding()
-                .consumeWindowInsets(paddingValues)
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            content(paddingValues)
-        }
-    }
+    Scaffold(
+        modifier = modifier,
+        content = { paddingValues ->
+            Box(
+                modifier = Modifier
+                    .imePadding()
+                    .fillMaxSize()
+                    .safeDrawingPadding()
+                    .consumeWindowInsets(paddingValues)
+                    .background(MaterialTheme.colorScheme.background)
+            ) { content(paddingValues) }
+        },
+        snackbarHost = snackbar,
+    )
 }

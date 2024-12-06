@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.interaction.MutableInteractionSource
 
 import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
@@ -131,8 +132,11 @@ private fun PictureSelectorOption(
         modifier = Modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 48.dp)
-            .clickable { onClick() }
             .padding(horizontal = 16.dp)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) { onClick() }
     ) {
         Icon(
             painter = painterResource(id = icon),
