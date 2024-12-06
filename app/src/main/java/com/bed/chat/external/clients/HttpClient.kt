@@ -37,7 +37,7 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 
-import com.bed.chat.domain.models.exception.NetworkExceptionModel
+import com.bed.chat.domain.exception.NetworkException
 
 interface HttpClient {
     val http: KtorClient
@@ -113,12 +113,12 @@ class HttpClientImpl @Inject constructor() : HttpClient {
                 val exception = cause as? ClientRequestException ?: return@handleResponseExceptionWithRequest
 
                 throw when (exception.response.status) {
-                    HttpStatusCode.NotFound -> NetworkExceptionModel.NotFoundExceptionModel(cause)
-                    HttpStatusCode.BadRequest -> NetworkExceptionModel.BadRequestExceptionModel(cause)
-                    HttpStatusCode.Unauthorized -> NetworkExceptionModel.UnauthorizedExceptionModel(cause)
-                    HttpStatusCode.InternalServerError -> NetworkExceptionModel.ServerErrorExceptionModel(cause)
-                    HttpStatusCode.UnprocessableEntity -> NetworkExceptionModel.UnprocessableEntityException(cause)
-                    else -> NetworkExceptionModel.UnknownExceptionModel(cause)
+                    HttpStatusCode.NotFound -> NetworkException.NotFoundException(cause)
+                    HttpStatusCode.BadRequest -> NetworkException.BadRequestException(cause)
+                    HttpStatusCode.Unauthorized -> NetworkException.UnauthorizedException(cause)
+                    HttpStatusCode.InternalServerError -> NetworkException.ServerErrorException(cause)
+                    HttpStatusCode.UnprocessableEntity -> NetworkException.UnprocessableEntityException(cause)
+                    else -> NetworkException.UnknownException(cause)
                 }
             }
         }

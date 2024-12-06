@@ -13,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface CoroutinesDispatcherModule {
+object CoroutinesDispatcherModule {
     @Provides
     @Singleton
     @IoDispatcher

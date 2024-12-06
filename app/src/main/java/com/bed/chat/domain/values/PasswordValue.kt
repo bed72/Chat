@@ -1,6 +1,6 @@
 package com.bed.chat.domain.values
 
-import com.bed.chat.domain.models.exception.ValidationExceptionModel
+import com.bed.chat.domain.exception.ValidationException
 
 @JvmInline
 value class PasswordValue private constructor(private val value: String) {
@@ -15,11 +15,11 @@ value class PasswordValue private constructor(private val value: String) {
         private const val HAS_CAPITAL_LETTER = ".*[A-Z].*"
 
         operator fun invoke(value: String?): Result<PasswordValue> = when {
-            value.isNullOrEmpty() -> Result.failure(ValidationExceptionModel.PasswordEmpty())
-            hasMaxLength(value) -> Result.failure(ValidationExceptionModel.PasswordMaxLength())
-            hasNumbers(value) -> Result.failure(ValidationExceptionModel.PasswordContainNumber())
-            hasMinimalLength(value) -> Result.failure(ValidationExceptionModel.PasswordMinLength())
-            hasCapitalLetter(value) -> Result.failure(ValidationExceptionModel.PasswordContainCapitalLetter())
+            value.isNullOrEmpty() -> Result.failure(ValidationException.PasswordEmpty())
+            hasMaxLength(value) -> Result.failure(ValidationException.PasswordMaxLength())
+            hasNumbers(value) -> Result.failure(ValidationException.PasswordContainNumber())
+            hasMinimalLength(value) -> Result.failure(ValidationException.PasswordMinLength())
+            hasCapitalLetter(value) -> Result.failure(ValidationException.PasswordContainCapitalLetter())
             else -> Result.success(PasswordValue(value))
         }
 

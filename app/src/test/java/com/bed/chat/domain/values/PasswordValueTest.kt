@@ -4,10 +4,10 @@ import org.junit.Test
 import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
-import com.bed.chat.domain.models.exception.ValidationMessagesModel
-import com.bed.chat.domain.models.exception.ValidationExceptionModel
+import com.bed.chat.domain.exception.ValidationMessage
+import com.bed.chat.domain.exception.ValidationException
 
-class PasswordValueTest {
+internal class PasswordValueTest {
     @Test
     fun `Should return the Password when value is valid`() {
         val password = PasswordValue("PassW0rd")
@@ -22,8 +22,8 @@ class PasswordValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.PasswordEmpty)
-            assertEquals(ValidationMessagesModel.PASSWORD_EMPTY.message, failure.message)
+            assertTrue(failure is ValidationException.PasswordEmpty)
+            assertEquals(ValidationMessage.PASSWORD_EMPTY.message, failure.message)
         }
     }
 
@@ -33,8 +33,8 @@ class PasswordValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.PasswordEmpty)
-            assertEquals(ValidationMessagesModel.PASSWORD_EMPTY.message, failure.message)
+            assertTrue(failure is ValidationException.PasswordEmpty)
+            assertEquals(ValidationMessage.PASSWORD_EMPTY.message, failure.message)
         }
     }
 
@@ -44,8 +44,8 @@ class PasswordValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.PasswordMinLength)
-            assertEquals(ValidationMessagesModel.PASSWORD_MIN_LENGTH.message, failure.message)
+            assertTrue(failure is ValidationException.PasswordMinLength)
+            assertEquals(ValidationMessage.PASSWORD_MIN_LENGTH.message, failure.message)
         }
     }
 
@@ -55,8 +55,8 @@ class PasswordValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.PasswordMaxLength)
-            assertEquals(ValidationMessagesModel.PASSWORD_MAX_LENGTH.message, failure.message)
+            assertTrue(failure is ValidationException.PasswordMaxLength)
+            assertEquals(ValidationMessage.PASSWORD_MAX_LENGTH.message, failure.message)
         }
     }
 
@@ -66,8 +66,8 @@ class PasswordValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.PasswordContainNumber)
-            assertEquals(ValidationMessagesModel.PASSWORD_CONTAIN_NUMBER.message, failure.message)
+            assertTrue(failure is ValidationException.PasswordContainNumber)
+            assertEquals(ValidationMessage.PASSWORD_CONTAIN_NUMBER.message, failure.message)
         }
     }
 
@@ -77,8 +77,8 @@ class PasswordValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.PasswordContainCapitalLetter)
-            assertEquals(ValidationMessagesModel.PASSWORD_CONTAIN_CAPITAL_LETTER.message, failure.message)
+            assertTrue(failure is ValidationException.PasswordContainCapitalLetter)
+            assertEquals(ValidationMessage.PASSWORD_CONTAIN_CAPITAL_LETTER.message, failure.message)
         }
     }
 }

@@ -2,7 +2,7 @@ package com.bed.chat.domain.values
 
 import kotlin.text.isNullOrEmpty
 
-import com.bed.chat.domain.models.exception.ValidationExceptionModel
+import com.bed.chat.domain.exception.ValidationException
 
 @JvmInline
 value class NameValue private constructor(private val value: String) {
@@ -15,10 +15,10 @@ value class NameValue private constructor(private val value: String) {
         private const val PATTERN = "[^a-zA-Z\\s]"
 
         operator fun invoke(value: String?): Result<NameValue> = when {
-            value.isNullOrEmpty() -> Result.failure(ValidationExceptionModel.NameEmpty())
-            isValid(value) -> Result.failure(ValidationExceptionModel.NameInvalid())
-            value.length < MIN_LENGTH -> Result.failure(ValidationExceptionModel.NameMinLength())
-            value.length > MAX_LENGTH -> Result.failure(ValidationExceptionModel.NameMaxLength())
+            value.isNullOrEmpty() -> Result.failure(ValidationException.NameEmpty())
+            isValid(value) -> Result.failure(ValidationException.NameInvalid())
+            value.length < MIN_LENGTH -> Result.failure(ValidationException.NameMinLength())
+            value.length > MAX_LENGTH -> Result.failure(ValidationException.NameMaxLength())
             else -> Result.success(NameValue(value))
         }
 

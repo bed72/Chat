@@ -4,8 +4,8 @@ import org.junit.Test
 import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
-import com.bed.chat.domain.models.exception.ValidationMessagesModel
-import com.bed.chat.domain.models.exception.ValidationExceptionModel
+import com.bed.chat.domain.exception.ValidationMessage
+import com.bed.chat.domain.exception.ValidationException
 
 internal class EmailValueTest {
     @Test
@@ -22,8 +22,8 @@ internal class EmailValueTest {
 
         assertTrue(email.isFailure)
         email.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.EmailEmpty)
-            assertEquals(ValidationMessagesModel.EMAIL_EMPTY.message, failure.message)
+            assertTrue(failure is ValidationException.EmailEmpty)
+            assertEquals(ValidationMessage.EMAIL_EMPTY.message, failure.message)
         }
     }
 
@@ -33,8 +33,8 @@ internal class EmailValueTest {
 
         assertTrue(email.isFailure)
         email.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.EmailEmpty)
-            assertEquals(ValidationMessagesModel.EMAIL_EMPTY.message, failure.message)
+            assertTrue(failure is ValidationException.EmailEmpty)
+            assertEquals(ValidationMessage.EMAIL_EMPTY.message, failure.message)
         }
     }
 
@@ -45,8 +45,8 @@ internal class EmailValueTest {
 
             assertTrue(email.isFailure)
             email.onFailure { failure ->
-                assertTrue(failure is ValidationExceptionModel.EmailInvalid)
-                assertEquals(ValidationMessagesModel.EMAIL_INVALID.message, failure.message)
+                assertTrue(failure is ValidationException.EmailInvalid)
+                assertEquals(ValidationMessage.EMAIL_INVALID.message, failure.message)
             }
         }
     }

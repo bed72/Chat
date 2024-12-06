@@ -6,6 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
+import dagger.hilt.android.AndroidEntryPoint
+
 import androidx.compose.ui.Modifier
 
 import androidx.compose.material3.Surface
@@ -23,6 +25,7 @@ import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.theme.systemBarStyle
 import com.bed.chat.presentation.shared.navigation.Navigation
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

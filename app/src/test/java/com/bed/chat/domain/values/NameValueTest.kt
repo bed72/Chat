@@ -4,8 +4,8 @@ import org.junit.Test
 import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
-import com.bed.chat.domain.models.exception.ValidationMessagesModel
-import com.bed.chat.domain.models.exception.ValidationExceptionModel
+import com.bed.chat.domain.exception.ValidationMessage
+import com.bed.chat.domain.exception.ValidationException
 
 internal class NameValueTest {
     @Test
@@ -22,8 +22,8 @@ internal class NameValueTest {
 
         assertTrue(email.isFailure)
         email.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.NameEmpty)
-            assertEquals(ValidationMessagesModel.NAME_EMPTY.message, failure.message)
+            assertTrue(failure is ValidationException.NameEmpty)
+            assertEquals(ValidationMessage.NAME_EMPTY.message, failure.message)
         }
     }
 
@@ -33,8 +33,8 @@ internal class NameValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.NameEmpty)
-            assertEquals(ValidationMessagesModel.NAME_EMPTY.message, failure.message)
+            assertTrue(failure is ValidationException.NameEmpty)
+            assertEquals(ValidationMessage.NAME_EMPTY.message, failure.message)
         }
     }
 
@@ -44,8 +44,8 @@ internal class NameValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.NameMinLength)
-            assertEquals(ValidationMessagesModel.NAME_MIN_LENGTH.message, failure.message)
+            assertTrue(failure is ValidationException.NameMinLength)
+            assertEquals(ValidationMessage.NAME_MIN_LENGTH.message, failure.message)
         }
     }
 
@@ -55,8 +55,8 @@ internal class NameValueTest {
 
         assertTrue(password.isFailure)
         password.onFailure { failure ->
-            assertTrue(failure is ValidationExceptionModel.NameMaxLength)
-            assertEquals(ValidationMessagesModel.NAME_MAX_LENGTH.message, failure.message)
+            assertTrue(failure is ValidationException.NameMaxLength)
+            assertEquals(ValidationMessage.NAME_MAX_LENGTH.message, failure.message)
         }
     }
 }

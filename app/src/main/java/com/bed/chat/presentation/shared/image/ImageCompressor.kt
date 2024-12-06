@@ -11,12 +11,14 @@ import android.graphics.Matrix
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineDispatcher
 
 import androidx.exifinterface.media.ExifInterface
 
 import dagger.hilt.android.qualifiers.ApplicationContext
+
+import com.bed.chat.external.modules.IoDispatcher
 
 interface ImageCompressor {
     suspend operator fun invoke(
@@ -30,6 +32,7 @@ interface ImageCompressor {
 
 class ImageCompressorImpl @Inject constructor(
     @ApplicationContext private val context: Context,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ImageCompressor {
     override suspend operator fun invoke(
         image: Uri,
@@ -37,7 +40,7 @@ class ImageCompressorImpl @Inject constructor(
         maxWidth: Int,
         maxHeight: Int,
         type: Pair<String, Bitmap.CompressFormat>
-    ): File = withContext(Dispatchers.IO)  {
+    ): File = withContext(dispatcher)  {
         // Carrega o Bitmap a partir do Uri
         val original = uriToBitmap(image)
             ?.let { bitmap ->
@@ -49,7 +52,6 @@ class ImageCompressorImpl @Inject constructor(
         val resized = if (original.width > maxWidth || original.height > maxHeight) {
             resizeBitmap(original, maxWidth, maxHeight)
         } else original
-
 
         // Salva o bitmap comprimido em um arquivo temporário
         val compressed = File(context.cacheDir, "${System.currentTimeMillis()}${type.first}")
@@ -67,11 +69,7 @@ class ImageCompressorImpl @Inject constructor(
      */
     private fun uriToBitmap(uri: Uri): Bitmap? = try {
             BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
-        } catch (exception: Exception) {
-            exception.printStackTrace()
-
-            null
-        }
+        } catch (_: Exception) { null }
 
     /**
      * Redimensiona o Bitmap mantendo a proporção.
@@ -105,12 +103,14 @@ class ImageCompressorImpl @Inject constructor(
         ) ?: ExifInterface.ORIENTATION_NORMAL
 
         val matrix = Matrix()
+
+        @Suppress("MagicNumber")
         when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90f)
             ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180f)
             ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270f)
-            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.postScale(-1f, 1f)
             ExifInterface.ORIENTATION_FLIP_VERTICAL -> matrix.postScale(1f, -1f)
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.postScale(-1f, 1f)
         }
 
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)

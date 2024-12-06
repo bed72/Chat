@@ -68,6 +68,7 @@ class SignUpViewModel  @Inject constructor(
         )
     }
 
+    @Suppress("ForbiddenComment")
     private fun success(data: Unit) {
         // TODO: Navigate to login screen
     }
