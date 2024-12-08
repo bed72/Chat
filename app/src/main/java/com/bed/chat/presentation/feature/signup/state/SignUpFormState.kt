@@ -22,5 +22,6 @@ data class SignUpFormState(
     val isLoading: Boolean = false,
     val formIsValid: Boolean = false,
     val isCompressingImage: Boolean = false,
+    val successfulRegistration: Boolean = false,
     val isPictureSelectorBottomSheetOpen: Boolean = false
 )

@@ -80,12 +80,17 @@ class SignUpViewModel  @Inject constructor(
         formState = formState.copy(
             isLoading = false,
             message = model.message,
+            successfulRegistration = false,
         )
     }
 
     @Suppress("ForbiddenComment")
     private fun signUpSuccess(data: Unit) {
-        // TODO: Navigate to login screen
+        formState = formState.copy(
+            picture = null,
+            isLoading = false,
+            successfulRegistration = true,
+        )
     }
 
     private fun validateForm(): Boolean =

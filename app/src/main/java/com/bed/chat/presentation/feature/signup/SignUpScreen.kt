@@ -68,8 +68,8 @@ fun SignUpInitScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun SignUpScreen(
     formState: SignUpFormState,
     onNavigateToSignIn: () -> Unit,
@@ -81,10 +81,12 @@ fun SignUpScreen(
     val sheetState = rememberModalBottomSheetState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(key1 = formState.message) {
+    LaunchedEffect(key1 = formState.message, key2 = formState.successfulRegistration) {
         formState.message?.let {
             hostState.showSnackbar(it, duration = SnackbarDuration.Short).apply {
-                if (this == SnackbarResult.Dismissed) Log.d("[SIGN_UP]", "Navigate to Home")
+                if (this == SnackbarResult.Dismissed && formState.successfulRegistration) {
+                    onNavigateToSignIn()
+                }
             }
         }
     }
