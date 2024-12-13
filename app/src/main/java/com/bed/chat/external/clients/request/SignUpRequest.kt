@@ -14,19 +14,19 @@ data class SignUpRequest(
     val password: String,
 
     @SerialName("firstName")
-    val name: String,
+    val firstName: String,
 
     @SerialName("lastName")
-    val lastname: String,
+    val lastName: String,
 
     @SerialName("profilePictureId")
-    val picture: Int?,
+    val profilePictureId: Int?,
 )
 
 fun SignUpInputModel.toRequest() = SignUpRequest(
-    name = email,
-    picture = picture,
-    username = username,
-    lastname = username,
+    username = email,
+    lastName = username,
     password = password,
+    firstName = username,
+    profilePictureId = picture,
 )

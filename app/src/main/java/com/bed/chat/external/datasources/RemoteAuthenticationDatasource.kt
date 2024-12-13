@@ -52,14 +52,14 @@ class RemoteAuthenticationDatasource @Inject constructor(
 
         return if (!file.exists()) Result.failure(FileNotFoundException("Imagem não encontrada."))
         else client.http.request<ImageResponse> {
-            method = HttpMethod.Patch
+            method = HttpMethod.Post
             url(HttpUrl.UPLOADING.value)
             contentType(ContentType.MultiPart.FormData)
             setBody(
                 MultiPartFormDataContent(
                     formData {
                         append(
-                            "avatar",
+                            "profilePicture",
                             file.readBytes(),
                             Headers.build {
                                 append(HttpHeaders.ContentType, "image/${file.extension}")
