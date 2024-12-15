@@ -1,7 +1,5 @@
 package com.bed.chat.presentation.feature.signup
 
-import android.util.Log
-
 import kotlinx.coroutines.launch
 
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -81,12 +79,16 @@ fun SignUpScreen(
     val sheetState = rememberModalBottomSheetState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(key1 = formState.message, key2 = formState.successfulRegistration) {
-        formState.message?.let {
+    LaunchedEffect(key1 = formState.messageFailure) {
+        formState.messageFailure?.let {
+            hostState.showSnackbar(it, duration = SnackbarDuration.Short)
+        }
+    }
+
+    LaunchedEffect(key1 = formState.successfulRegistration, key2 = formState.messageSuccess) {
+        formState.messageSuccess?.let {
             hostState.showSnackbar(it, duration = SnackbarDuration.Short).apply {
-                if (this == SnackbarResult.Dismissed && formState.successfulRegistration) {
-                    onNavigateToSignIn()
-                }
+                if (this == SnackbarResult.Dismissed) onNavigateToSignIn()
             }
         }
     }

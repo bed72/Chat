@@ -29,47 +29,50 @@ class SignInViewModel @Inject constructor(
     fun onFormEvent(event: SignInFormEvent) {
         when (event) {
             SignInFormEvent.Submit -> submit()
-            is SignInFormEvent.EmailChanged -> emailChanged(event.email)
+            is SignInFormEvent.UsernameChanged -> usernameChanged(event.username)
             is SignInFormEvent.PasswordChanged -> passwordChanged(event.password)
         }
     }
 
     @Suppress("ForbiddenComment")
     private fun submit() {
-        formState = formState.copy(isLoading = true, message = null)
+        formState = formState.copy(isLoading = true, messageSuccess = null, messageFailure = null)
 
         if (validateForm()) {
             launch {
                 repository.signIn(
                     SignInInputModel(
-                        username = formState.email,
+                        username = formState.username,
                         password = formState.password,
                     )
                 ).fold(::success, ::failure)
             }
-        } else formState = formState.copy(isLoading = false, message = null)
+        } else formState = formState.copy(isLoading = false, messageFailure = null)
     }
 
     private fun failure(model: Throwable) {
         formState = formState.copy(
             isLoading = false,
-            message = model.message,
+            messageFailure = model.message,
         )
     }
 
-    @Suppress("ForbiddenComment", "UnusedPrivateMember")
+    @Suppress("ForbiddenComment")
     private fun success(data: Unit) {
-        // TODO: Navigate to login screen
+        formState = formState.copy(
+            isLoading = false,
+            messageSuccess = "Bem vindo!",
+        )
     }
 
     private fun validateForm(): Boolean =
         validator(formState).also { formState = it }.formIsValid
 
 
-    private fun emailChanged(value: String) {
+    private fun usernameChanged(value: String) {
         formState = formState.copy(
-            email = value,
-            emailMessage = if (value.isNotEmpty()) null else formState.emailMessage
+            username = value,
+            usernameMessage = if (value.isNotEmpty()) null else formState.usernameMessage
         )
     }
 

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.interaction.MutableInteractionSource
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -142,8 +143,11 @@ private fun IconTextField(
         Icon(
             handleIcon(iconIsVisible),
             tint = MaterialTheme.colorScheme.outline,
-            modifier = modifier.clickable { setIconIsVisible(!iconIsVisible) },
-            contentDescription = stringResource(handleIconDescription(iconIsVisible))
+            contentDescription = stringResource(handleIconDescription(iconIsVisible)),
+            modifier = modifier.clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) { setIconIsVisible(!iconIsVisible) }
         )
     else Spacer(modifier.size(0.dp))
 }

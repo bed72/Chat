@@ -45,14 +45,14 @@ class SignUpViewModel  @Inject constructor(
     }
 
     private fun submit() {
-        formState = formState.copy(isLoading = true, message = null)
+        formState = formState.copy(isLoading = true, messageSuccess = null, messageFailure = null)
 
         if (validateForm()) {
             launch {
                 val id = uploadImage()
                 signUp(id)
             }
-        } else formState = formState.copy(isLoading = false, message = null)
+        } else formState = formState.copy(isLoading = false, messageFailure = null)
     }
 
     private suspend fun uploadImage(): Int? {
@@ -73,23 +73,24 @@ class SignUpViewModel  @Inject constructor(
                 username = formState.name,
                 password = formState.password,
             )
-        ).fold(::signUpSuccess, ::signUpFailure)
+        ).fold(::success, ::failure)
     }
 
-    private fun signUpFailure(model: Throwable) {
+    private fun failure(model: Throwable) {
         formState = formState.copy(
             isLoading = false,
-            message = model.message,
+            messageFailure = model.message,
             successfulRegistration = false,
         )
     }
 
     @Suppress("ForbiddenComment")
-    private fun signUpSuccess(data: Unit) {
+    private fun success(data: Unit) {
         formState = formState.copy(
             picture = null,
             isLoading = false,
             successfulRegistration = true,
+            messageSuccess = "Conta criada com sucesso!",
         )
     }
 

@@ -66,8 +66,14 @@ fun SignInScreen(
     val hostState = remember { SnackbarHostState() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(key1 = formState.message) {
-        formState.message?.let {
+    LaunchedEffect(key1 = formState.messageFailure) {
+        formState.messageFailure?.let {
+            hostState.showSnackbar(it, duration = SnackbarDuration.Short)
+        }
+    }
+
+    LaunchedEffect(key1 = formState.messageSuccess) {
+        formState.messageSuccess?.let {
             hostState.showSnackbar(it, duration = SnackbarDuration.Short).apply {
                 if (this == SnackbarResult.Dismissed) Log.d("[SIGN_IN]", "Navigate to Home")
             }
@@ -92,12 +98,12 @@ fun SignInScreen(
                 Spacer(modifier = modifier.height(32.dp))
 
                 PrimaryTextField(
-                    value = formState.email,
-                    message = formState.emailMessage,
-                    keyboardType = KeyboardType.Email,
-                    label = stringResource(id = R.string.label_email_input),
-                    placeholder = stringResource(id = R.string.placeholder_email_input),
-                    onValueChange = { onFormEvent(SignInFormEvent.EmailChanged(it)) }
+                    value = formState.username,
+                    keyboardType = KeyboardType.Text,
+                    message = formState.usernameMessage,
+                    label = stringResource(id = R.string.label_first_name_input),
+                    placeholder = stringResource(id = R.string.placeholder_first_name_input),
+                    onValueChange = { onFormEvent(SignInFormEvent.UsernameChanged(it)) }
                 )
 
                 Spacer(modifier = modifier.height(16.dp))

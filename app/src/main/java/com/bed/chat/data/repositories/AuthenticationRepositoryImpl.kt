@@ -1,5 +1,6 @@
 package com.bed.chat.data.repositories
 
+import android.util.Log
 import javax.inject.Inject
 
 import kotlinx.coroutines.withContext
@@ -29,9 +30,11 @@ class AuthenticationRepositoryImpl @Inject constructor(
     override suspend fun signIn(parameter: SignInInputModel): Result<Unit> =
         withContext(ioDispatcher) {
            runCatching {
-               datasource.signIn(parameter.toRequest())
+               datasource.signIn(parameter.toRequest()).map {
+                   Log.d("[TOKEN]", "Token: ${it.token}")
 
-               Unit
+                   Unit
+               }.getOrThrow()
            }
         }
 

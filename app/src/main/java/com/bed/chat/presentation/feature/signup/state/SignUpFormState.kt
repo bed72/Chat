@@ -17,7 +17,8 @@ data class SignUpFormState(
     val passwordMessage: String? = null,
     val passwordIsValid: Boolean = false,
 
-    val message: String? = null,
+    val messageSuccess: String? = null,
+    val messageFailure: String? = null,
 
     val isLoading: Boolean = false,
     val formIsValid: Boolean = false,
