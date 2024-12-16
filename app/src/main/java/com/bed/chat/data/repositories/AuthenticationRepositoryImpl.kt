@@ -1,6 +1,5 @@
 package com.bed.chat.data.repositories
 
-import android.util.Log
 import javax.inject.Inject
 
 import kotlinx.coroutines.withContext
@@ -20,6 +19,15 @@ class AuthenticationRepositoryImpl @Inject constructor(
     private val datasource: AuthenticationDatasource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
+    override suspend fun validateToken(token: String): Result<Unit> =
+        withContext(ioDispatcher) {
+            runCatching {
+                val response = datasource.validateToken(token)
+
+                // TODO: persistir dados do usuário.
+            }
+        }
+
     override suspend fun signUp(parameter: SignUpInputModel): Result<Unit> =
         withContext(ioDispatcher) {
             runCatching {
@@ -30,18 +38,14 @@ class AuthenticationRepositoryImpl @Inject constructor(
     override suspend fun signIn(parameter: SignInInputModel): Result<Unit> =
         withContext(ioDispatcher) {
            runCatching {
-               datasource.signIn(parameter.toRequest()).map {
-                   Log.d("[TOKEN]", "Token: ${it.token}")
-
-                   Unit
-               }.getOrThrow()
+               val response =datasource.signIn(parameter.toRequest())
            }
         }
 
-    override suspend fun uploadProfilePicture(filePath: String): Result<ImageOutputModel> =
+    override suspend fun uploadProfilePicture(parameter: String): Result<ImageOutputModel> =
         withContext(ioDispatcher) {
             runCatching {
-                datasource.uploadProfilePicture(filePath).map {
+                datasource.uploadProfilePicture(parameter).map {
                     ImageOutputModel(
                         id = it.id,
                         url = it.url,

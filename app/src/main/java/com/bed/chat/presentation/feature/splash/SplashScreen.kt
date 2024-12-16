@@ -1,7 +1,5 @@
 package com.bed.chat.presentation.feature.splash
 
-import kotlinx.coroutines.delay
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 
@@ -20,16 +18,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.fillMaxSize
 
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleStartEffect
+
 import com.bed.chat.R
 
 @Composable
 fun SplashInitScreen(
+    onNavigateToHome: () -> Unit,
     onNavigateToSignIn: () -> Unit,
+    viewModel: SplashViewModel = hiltViewModel(),
 ) {
+    LifecycleStartEffect(Unit) {
+        viewModel.hasSession()
+
+        onStopOrDispose {  }
+    }
+
     LaunchedEffect(Unit) {
-        @Suppress("MagicNumber")
-        delay(2000)
-        onNavigateToSignIn()
+        viewModel.state.collect { state ->
+            when (state) {
+                SplashViewModel.AuthenticationState.UserAuthenticated -> onNavigateToHome()
+                SplashViewModel.AuthenticationState.UserNotAuthenticated -> onNavigateToSignIn()
+            }
+        }
     }
 
     SplashScreen()

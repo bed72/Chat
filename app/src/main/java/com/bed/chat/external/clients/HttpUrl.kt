@@ -5,4 +5,5 @@ enum class HttpUrl(val value: String) {
     SIGN_IN("/signin"),
     SIGN_UP("/signup"),
     UPLOADING("/profile-picture"),
+    VALIDATE_TOKEN("/authenticate"),
 }

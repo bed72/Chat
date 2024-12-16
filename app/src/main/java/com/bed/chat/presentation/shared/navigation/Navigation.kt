@@ -20,14 +20,17 @@ import com.bed.chat.presentation.feature.signup.SignUpInitScreen
 fun Navigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = SplashDestination) {
         composable<SplashDestination> {
-            SplashInitScreen {
-                navController.navigate(
-                    route = SignInDestination,
-                    navOptions = navOptions {
-                        popUpTo(SplashDestination) { inclusive = true }
-                    }
-                )
-            }
+            SplashInitScreen(
+                onNavigateToHome = {},
+                onNavigateToSignIn = {
+                    navController.navigate(
+                        route = SignInDestination,
+                        navOptions = navOptions {
+                            popUpTo(SplashDestination) { inclusive = true }
+                        }
+                    )
+                }
+            )
         }
         composable<SignInDestination>(
             enterTransition = { slideInTo(AnimatedContentTransitionScope.SlideDirection.Right) },
