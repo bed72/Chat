@@ -1,5 +1,6 @@
 package com.bed.chat.data.repositories
 
+import android.util.Log
 import javax.inject.Inject
 
 import kotlinx.coroutines.withContext
@@ -19,10 +20,15 @@ class AuthenticationRepositoryImpl @Inject constructor(
     private val datasource: AuthenticationDatasource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
+    @Suppress("ForbiddenComment")
     override suspend fun validateToken(token: String): Result<Unit> =
         withContext(ioDispatcher) {
             runCatching {
                 val response = datasource.validateToken(token)
+
+                Log.d("[VALIDATE TOKEN]", response.toString())
+
+                Unit
 
                 // TODO: persistir dados do usuário.
             }

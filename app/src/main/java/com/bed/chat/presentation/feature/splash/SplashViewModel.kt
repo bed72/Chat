@@ -30,7 +30,11 @@ class SplashViewModel @Inject constructor(
     }
 
     private suspend fun validateToken(token: String) {
-        if (token.isNotEmpty()) return _state.emit(AuthenticationState.UserNotAuthenticated)
+        if (token.isEmpty()) {
+            _state.emit(AuthenticationState.UserNotAuthenticated)
+
+            return
+        }
 
         authenticationRepository.validateToken(token).fold(
             onSuccess = { _state.emit(AuthenticationState.UserAuthenticated) },
