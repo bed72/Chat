@@ -1,8 +1,8 @@
-package com.bed.chat.data.datasources
+package com.bed.chat.data.datasources.storage
 
 import kotlinx.coroutines.flow.Flow
 
-interface DataStoreDatasource {
+interface StorageDatasource {
     suspend fun delete(value: String)
 
     suspend fun get(value: String): Flow<String>

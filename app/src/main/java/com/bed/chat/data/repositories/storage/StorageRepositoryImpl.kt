@@ -1,4 +1,4 @@
-package com.bed.chat.data.repositories
+package com.bed.chat.data.repositories.storage
 
 import javax.inject.Inject
 
@@ -7,15 +7,15 @@ import kotlinx.coroutines.flow.Flow
 
 import com.bed.chat.domain.Constants
 
-import com.bed.chat.data.datasources.DataStoreDatasource
+import com.bed.chat.data.datasources.storage.StorageDatasource
 import com.bed.chat.data.datasources.CryptographyDatasource
 
-import com.bed.chat.domain.repositories.DataStoreRepository
+import com.bed.chat.domain.repositories.storage.StorageRepository
 
-class DataStoreRepositoryImpl @Inject constructor(
-    private val storageDatasource: DataStoreDatasource,
+class StorageRepositoryImpl @Inject constructor(
+    private val storageDatasource: StorageDatasource,
     private val cryptographyDatasource: CryptographyDatasource
-) : DataStoreRepository {
+) : StorageRepository {
     override suspend fun delete(data: String) {
         storageDatasource.delete(data)
     }

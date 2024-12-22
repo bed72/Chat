@@ -1,4 +1,4 @@
-package com.bed.chat.external.datasources.local
+package com.bed.chat.external.datasources.local.storage
 
 import javax.inject.Inject
 
@@ -11,11 +11,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 
-import com.bed.chat.data.datasources.DataStoreDatasource
+import com.bed.chat.data.datasources.storage.StorageDatasource
 
-class LocalDataStoreDatasource @Inject constructor(
+class LocalStorageDatasource @Inject constructor(
     private val datastore: DataStore<Preferences>
-) : DataStoreDatasource {
+) : StorageDatasource {
     override suspend fun delete(value: String) {
         datastore.edit { preferences -> preferences.remove(buildKey(value)) }
     }

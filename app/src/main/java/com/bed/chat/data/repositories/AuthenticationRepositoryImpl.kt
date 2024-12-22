@@ -1,11 +1,9 @@
 package com.bed.chat.data.repositories
 
-import android.util.Log
 import javax.inject.Inject
 
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.CoroutineDispatcher
-
 
 import com.bed.chat.domain.Constants
 import com.bed.chat.external.modules.IoDispatcher
@@ -17,25 +15,29 @@ import com.bed.chat.domain.models.input.SignInInputModel
 import com.bed.chat.domain.models.input.SignUpInputModel
 import com.bed.chat.domain.models.output.ImageOutputModel
 
-import com.bed.chat.domain.repositories.DataStoreRepository
 import com.bed.chat.domain.repositories.AuthenticationRepository
+import com.bed.chat.domain.repositories.storage.StorageRepository
+import com.bed.chat.domain.repositories.storage.SelfUserStorageRepository
 
 class AuthenticationRepositoryImpl @Inject constructor(
-    private val dataStoreRepository: DataStoreRepository,
+    private val storageRepository: StorageRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val userStorageRepository: SelfUserStorageRepository,
     private val authenticationDatasource: AuthenticationDatasource
 ) : AuthenticationRepository {
-    @Suppress("ForbiddenComment")
     override suspend fun validateToken(token: String): Result<Unit> =
         withContext(ioDispatcher) {
             runCatching {
-                val response = authenticationDatasource.validateToken(token)
-
-                Log.d("[VALIDATE TOKEN]", response.toString())
+               authenticationDatasource.validateToken(token).onSuccess {
+                   userStorageRepository.save(
+                       username = it.username,
+                       lastName = it.lastName,
+                       firstName = it.firstName,
+                       pictureUrl = it.profilePicture ?: ""
+                   )
+               }
 
                 Unit
-
-                // TODO: persistir dados do usuário.
             }
         }
 
@@ -51,7 +53,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
            runCatching {
                val response = authenticationDatasource.signIn(parameter.toRequest()).getOrDefault(null)
 
-               if (response != null) dataStoreRepository.save(Constants.USER_TOKEN to response.token)
+               if (response != null) storageRepository.save(Constants.USER_TOKEN to response.token)
            }
         }
 

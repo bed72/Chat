@@ -12,12 +12,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import com.bed.chat.presentation.shared.extensions.launch
 
 import com.bed.chat.domain.Constants
-import com.bed.chat.domain.repositories.DataStoreRepository
+import com.bed.chat.domain.repositories.storage.StorageRepository
 import com.bed.chat.domain.repositories.AuthenticationRepository
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val dataStoreRepository: DataStoreRepository,
+    private val storageRepository: StorageRepository,
     private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
     private val _state = MutableSharedFlow<AuthenticationState>()
@@ -26,7 +26,7 @@ class SplashViewModel @Inject constructor(
     fun hasSession() { hasSavedToken() }
 
     private fun hasSavedToken() {
-        launch { dataStoreRepository.get(Constants.USER_TOKEN.value).collect { validateToken(it) } }
+        launch { storageRepository.get(Constants.USER_TOKEN.value).collect { validateToken(it) } }
     }
 
     private suspend fun validateToken(token: String) {
