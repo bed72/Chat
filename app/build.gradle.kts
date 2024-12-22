@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlin)
     alias(libs.plugins.compiler)
+    alias(libs.plugins.protobuf)
     alias(libs.plugins.application)
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
@@ -122,5 +123,22 @@ afterEvaluate {
 tasks.detekt.configure {
     reports {
         sarif.required.set(true)
+    }
+}
+
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.24.4"
+    }
+
+    generateProtoTasks {
+        all().configureEach {
+            builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
     }
 }
