@@ -29,11 +29,15 @@ class SelfUserStorageRepositoryImpl @Inject constructor(
     }
 
     override suspend fun save(
+        id: Int,
         username: String,
         lastName: String,
         firstName: String,
         pictureUrl: String
     ) {
-        datasource.save(username, lastName, firstName, pictureUrl)
+        with (datasource) {
+            delete()
+            save(id, username, lastName, firstName, pictureUrl)
+        }
     }
 }
