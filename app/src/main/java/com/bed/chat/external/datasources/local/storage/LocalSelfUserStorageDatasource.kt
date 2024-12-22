@@ -27,6 +27,7 @@ class LocalSelfUserStorageDatasource @Inject constructor(
     }
 
     override suspend fun save(
+        id: Int,
         username: String,
         lastName: String,
         firstName: String,
@@ -34,6 +35,7 @@ class LocalSelfUserStorageDatasource @Inject constructor(
     ) {
         datastore.updateData {
             it.toBuilder()
+                .setId(id)
                 .setUsername(username)
                 .setLastName(lastName)
                 .setFirstName(firstName)

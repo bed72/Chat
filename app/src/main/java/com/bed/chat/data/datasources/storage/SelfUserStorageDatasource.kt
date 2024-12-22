@@ -10,6 +10,7 @@ interface SelfUserStorageDatasource {
     suspend fun delete()
 
     suspend fun save(
+        id: Int,
         username: String,
         lastName: String,
         firstName: String,
