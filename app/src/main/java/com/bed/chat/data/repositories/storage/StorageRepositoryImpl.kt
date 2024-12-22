@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 import com.bed.chat.domain.Constants
 
-import com.bed.chat.data.datasources.storage.StorageDatasource
 import com.bed.chat.data.datasources.CryptographyDatasource
+import com.bed.chat.data.datasources.storage.StorageDatasource
 
 import com.bed.chat.domain.repositories.storage.StorageRepository
 
@@ -24,7 +24,10 @@ class StorageRepositoryImpl @Inject constructor(
         val key = data.first.value
         val value = cryptographyDatasource.encrypt(data.second)
 
-        storageDatasource.save(key to value)
+        with (storageDatasource) {
+            delete(key)
+            save(key to value)
+        }
     }
 
     override suspend fun get(data: String): Flow<String> =

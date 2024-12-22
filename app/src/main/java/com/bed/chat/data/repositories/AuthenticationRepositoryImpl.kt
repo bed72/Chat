@@ -30,6 +30,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             runCatching {
                authenticationDatasource.validateToken(token).onSuccess {
                    userStorageRepository.save(
+                       id = it.id,
                        username = it.username,
                        lastName = it.lastName,
                        firstName = it.firstName,
