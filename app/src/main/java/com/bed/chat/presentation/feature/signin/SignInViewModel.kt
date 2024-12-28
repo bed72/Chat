@@ -34,7 +34,6 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    @Suppress("ForbiddenComment")
     private fun submit() {
         formState = formState.copy(isLoading = true, messageSuccess = null, messageFailure = null)
 

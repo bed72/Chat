@@ -21,10 +21,6 @@ android {
         applicationId = "com.bed.chat"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -66,16 +62,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_19
         targetCompatibility = JavaVersion.VERSION_19
     }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
-    implementation(libs.exifinterface)
+//    implementation(libs.exifinterface)
     // Others
     ksp(libs.hilt.compiler)
     implementation(libs.bundles.core)
@@ -125,7 +115,6 @@ tasks.detekt.configure {
         sarif.required.set(true)
     }
 }
-
 
 protobuf {
     protoc {
