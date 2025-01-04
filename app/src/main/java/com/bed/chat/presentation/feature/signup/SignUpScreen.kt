@@ -55,7 +55,7 @@ import com.bed.chat.presentation.shared.components.selector.PictureSelector
 import com.bed.chat.presentation.shared.components.selector.PictureSelectorBottomSheet
 
 @Composable
-fun SignUpInitScreen(
+fun SignUpRoute(
     onNavigateToSignIn: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {

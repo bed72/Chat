@@ -24,8 +24,8 @@ import androidx.lifecycle.compose.LifecycleStartEffect
 import com.bed.chat.R
 
 @Composable
-fun SplashInitScreen(
-    onNavigateToHome: () -> Unit,
+fun SplashRoute(
+    onNavigateToChats: () -> Unit,
     onNavigateToSignIn: () -> Unit,
     viewModel: SplashViewModel = hiltViewModel(),
 ) {
@@ -38,7 +38,7 @@ fun SplashInitScreen(
     LaunchedEffect(Unit) {
         viewModel.state.collect { state ->
             when (state) {
-                SplashViewModel.AuthenticationState.UserAuthenticated -> onNavigateToHome()
+                SplashViewModel.AuthenticationState.UserAuthenticated -> onNavigateToChats()
                 SplashViewModel.AuthenticationState.UserNotAuthenticated -> onNavigateToSignIn()
             }
         }

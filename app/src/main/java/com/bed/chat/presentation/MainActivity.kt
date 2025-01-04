@@ -23,7 +23,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.theme.systemBarStyle
-import com.bed.chat.presentation.shared.navigation.Navigation
+import com.bed.chat.presentation.shared.routes.Router
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background),
                 ) {
-                    Navigation(navController = rememberNavController())
+                    Router(navController = rememberNavController())
                 }
             }
         }

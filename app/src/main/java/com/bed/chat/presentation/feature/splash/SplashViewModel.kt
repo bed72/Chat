@@ -12,8 +12,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import com.bed.chat.presentation.shared.extensions.launch
 
 import com.bed.chat.domain.Constants
-import com.bed.chat.domain.repositories.storage.StorageRepository
 import com.bed.chat.domain.repositories.AuthenticationRepository
+import com.bed.chat.domain.repositories.storage.StorageRepository
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(

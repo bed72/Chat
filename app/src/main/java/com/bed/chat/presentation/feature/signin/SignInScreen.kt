@@ -1,7 +1,5 @@
 package com.bed.chat.presentation.feature.signin
 
-import android.util.Log
-
 import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.compose.runtime.remember
@@ -45,13 +43,15 @@ import com.bed.chat.presentation.feature.signin.state.SignInFormEvent
 import com.bed.chat.presentation.feature.signin.state.SignInFormState
 
 @Composable
-fun SignInInitScreen(
-    viewModel: SignInViewModel = hiltViewModel(),
-    onNavigateToSignUp: () -> Unit
+fun SignInRoute(
+    onNavigateToChats: () -> Unit,
+    onNavigateToSignUp: () -> Unit,
+    viewModel: SignInViewModel = hiltViewModel()
 ) {
     SignInScreen(
         formState = viewModel.formState,
         onFormEvent = viewModel::onFormEvent,
+        onNavigateToChats = onNavigateToChats,
         onNavigateToSignUp = onNavigateToSignUp
     )
 }
@@ -59,6 +59,7 @@ fun SignInInitScreen(
 @Composable
 fun SignInScreen(
     formState: SignInFormState,
+    onNavigateToChats: () -> Unit,
     onNavigateToSignUp: () -> Unit,
     onFormEvent: (SignInFormEvent) -> Unit,
     modifier: Modifier = Modifier,
@@ -75,7 +76,7 @@ fun SignInScreen(
     LaunchedEffect(key1 = formState.messageSuccess) {
         formState.messageSuccess?.let {
             hostState.showSnackbar(it, duration = SnackbarDuration.Short).apply {
-                if (this == SnackbarResult.Dismissed) Log.d("[SIGN_IN]", "Navigate to Home")
+                if (this == SnackbarResult.Dismissed) onNavigateToChats()
             }
         }
     }
@@ -158,6 +159,7 @@ private fun SignInScreenPreview() {
     ChatTheme {
         SignInScreen(
             onFormEvent = {},
+            onNavigateToChats = {},
             onNavigateToSignUp = {},
             formState = SignInFormState()
         )
