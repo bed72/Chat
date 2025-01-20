@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.feature.chats
+package com.bed.chat.presentation.feature.profile
 
 import androidx.compose.runtime.Composable
 
@@ -16,13 +16,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import com.bed.chat.presentation.shared.theme.ChatTheme
 
 @Composable
-fun ChatsRoute() {
-    ChatsScreen()
+fun ProfileRoute() {
+    ProfileScreen()
 }
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun ChatsScreen(
+fun ProfileScreen(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -30,7 +30,7 @@ fun ChatsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Olá Bed")
+                    Text(text = "Profile")
                 }
             )
         },
@@ -55,6 +55,6 @@ fun ChatsScreen(
 )
 private fun ChatsScreenPreview() {
     ChatTheme {
-        ChatsScreen()
+        ProfileScreen()
     }
 }

@@ -17,13 +17,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.isSystemInDarkTheme
 
-import androidx.navigation.compose.rememberNavController
 
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.theme.systemBarStyle
-import com.bed.chat.presentation.shared.routes.Router
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -34,20 +32,14 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            val isDarkTheme = isSystemInDarkTheme()
-
-            enableEdgeToEdge(
-                navigationBarStyle = systemBarStyle(isDarkTheme),
-            )
+            enableEdgeToEdge(navigationBarStyle = systemBarStyle(isSystemInDarkTheme()))
 
             ChatTheme {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background),
-                ) {
-                    Router(navController = rememberNavController())
-                }
+                ) { App() }
             }
         }
     }
