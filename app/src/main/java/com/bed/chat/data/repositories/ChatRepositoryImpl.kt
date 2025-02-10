@@ -24,20 +24,17 @@ class ChatRepositoryImpl @Inject constructor(
     private val selfUserRepository: SelfUserStorageRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ChatRepository {
-    override suspend fun getChats(parameter: Pair<Int, Int>): Result<List<ChatOutputModel>> {
+    override suspend fun getChats(limit: Int, offset: Int): Result<List<ChatOutputModel>> {
         return withContext(ioDispatcher) {
             runCatching {
                 val token = tokenRepository.get().firstOrNull()  ?: ""
                 val selfId = selfUserRepository.user.firstOrNull()?.id
-                val response = chatDatasource.getChats(token, toRequest(parameter))
+                val response = chatDatasource.getChats(token, toRequest(limit, offset))
 
                 response.map { it.toModel(selfId) }.getOrThrow().conversations
             }
         }
     }
 
-    private fun toRequest(parameter: Pair<Int, Int>) = PaginationRequest(
-        limit = parameter.first,
-        offset = parameter.second
-    )
+    private fun toRequest(limit: Int, offset: Int) = PaginationRequest(limit, offset)
 }

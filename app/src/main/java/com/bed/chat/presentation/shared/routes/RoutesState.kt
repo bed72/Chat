@@ -5,22 +5,30 @@ import android.annotation.SuppressLint
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 
 import androidx.navigation.navOptions
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.NavDestination.Companion.hasRoute
-
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.NavDestination.Companion.hasRoute
 
 @Stable
 class RoutesState(val navController: NavHostController) {
+    private val previousRoute = mutableStateOf<NavDestination?>(null)
+
     val topLevelRoutes: List<TopLevelRoutes> = TopLevelRoutes.entries
 
     val currentRoute: NavDestination?
         @Composable
-        get() = navController.currentBackStackEntryAsState().value?.destination
+        get() {
+            val current = navController.currentBackStackEntryFlow.collectAsState(initial = null)
+
+            return current.value?.destination.also {
+                if (it != null) previousRoute.value = it
+            } ?: previousRoute.value
+        }
 
     val currentTopLevelRoute: TopLevelRoutes?
         @Composable
@@ -30,7 +38,7 @@ class RoutesState(val navController: NavHostController) {
         val navOptions = navOptions {
             restoreState = true
             launchSingleTop = true
-            popUpTo(navController.graph.startDestinationId) { saveState = true }
+            popUpTo(Routes.Chat) { saveState = true }
         }
 
         when (route) {

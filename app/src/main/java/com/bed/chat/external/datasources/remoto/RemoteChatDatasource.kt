@@ -13,15 +13,14 @@ import com.bed.chat.external.clients.request
 import com.bed.chat.external.clients.HttpUrl
 import com.bed.chat.external.clients.HttpClient
 import com.bed.chat.external.clients.request.PaginationRequest
-
-import com.bed.chat.domain.models.output.PaginatedChatsOutputModel
+import com.bed.chat.external.clients.response.PaginatedChatsResponse
 
 class RemoteChatDatasource @Inject constructor(private val client: HttpClient) : ChatDatasource {
     override suspend fun getChats(
         token: String,
         parameter: PaginationRequest
-    ): Result<PaginatedChatsOutputModel> =
-        client.http.request<PaginatedChatsOutputModel> {
+    ): Result<PaginatedChatsResponse> =
+        client.http.request<PaginatedChatsResponse> {
             method = HttpMethod.Get
             header(HttpHeaders.Authorization, "Bearer $parameter")
             url {

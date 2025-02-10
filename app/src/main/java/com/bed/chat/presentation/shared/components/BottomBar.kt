@@ -113,11 +113,7 @@ private fun RowScope.NavigationBarItemComponent(
         modifier = modifier,
         selected = isSelected,
         alwaysShowLabel = true,
-        onClick = {
-            if (isSelected) return@NavigationBarItem
-
-            state.navigateToTopLevel(routes)
-        },
+        onClick = { state.navigateToTopLevel(routes) },
         label = {
             routes.title?.let { LabelBarItemComponent(title = it, isSelected = isSelected) }
         },

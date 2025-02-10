@@ -2,29 +2,11 @@
     <string name="empty" />
     <string name="app_name">chat</string>
 
-    <!-- Splash Screen -->
-    <string name="app_icon_description">Ícone da aplicação, um megafone.</string>
-
-    <!-- SignIn Screen -->
-    <string name="sign_in_title">Bem vindo!</string>
-    <string name="sign_in_title_button">Entrar</string>
-    <string name="sign_in_description_create_account_link">Criar conta</string>">
-    <string name="sign_in_description_create_account">Não possui uma conta?</string>
-    <string name="sign_in_sub_title">Olá.\nAcesse sua conta e converse com quem quiser</string>
-
-    <!-- SignUp Screen -->
-    <string name="sign_up_title">Criar conta</string>
-    <string name="sign_up_title_button">Criar</string>
-    <string name="sign_up_sub_title">Entre com seu nome, e-mail e senha.</string>
-    <string name="sign_up_description_create_account_link">Acessar conta</string>">
-    <string name="sign_up_description_create_account">Já possui uma conta?</string>
-
     <!-- Bottom Navigation -->
     <string name="bottom_navigation_item_chat">Conversas</string>
     <string name="bottom_navigation_item_profile">Perfil</string>
     <string name="bottom_navigation_item_plus">Ícone de mais</string>
     <string name="bottom_navigation_item_icon">Icone da barra de navegação</string>
-
 
     <!-- Inputs Component -->
     <string name="label_email_input">E-mail</string>
@@ -51,5 +33,26 @@
     <string name="picture_selector_bottom_sheet_title">De onde deseja selecionar a imagem?</string>
     <string name="picture_selector_bottom_sheet_camera_description">Ícone de uma câmera de fotos</string>
     <string name="picture_selector_bottom_sheet_gallery_description">Ícone de uma galeria de fotos</string>
+
+    <!-- Splash Screen -->
+    <string name="app_icon_description">Ícone da aplicação, um megafone.</string>
+
+    <!-- SignIn Screen -->
+    <string name="sign_in_title">Bem vindo!</string>
+    <string name="sign_in_title_button">Entrar</string>
+    <string name="sign_in_description_create_account_link">Criar conta</string>">
+    <string name="sign_in_description_create_account">Não possui uma conta?</string>
+    <string name="sign_in_sub_title">Olá.\nAcesse sua conta e converse com quem quiser</string>
+
+    <!-- SignUp Screen -->
+    <string name="sign_up_title">Criar conta</string>
+    <string name="sign_up_title_button">Criar</string>
+    <string name="sign_up_sub_title">Entre com seu nome, e-mail e senha.</string>
+    <string name="sign_up_description_create_account_link">Acessar conta</string>">
+    <string name="sign_up_description_create_account">Já possui uma conta?</string>
+
+
+    <!-- Chat Screen -->
+    <string name="chat_greeting"><![CDATA[Olá, <b>%1$s</b>]]></string>
 
 </resources>
