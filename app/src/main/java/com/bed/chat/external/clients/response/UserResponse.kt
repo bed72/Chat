@@ -10,6 +10,9 @@ data class UserResponse(
     @SerialName("id")
     val id: Int,
 
+    @SerialName("self")
+    val self: Boolean,
+
     @SerialName("username")
     val username: String,
 
@@ -23,8 +26,9 @@ data class UserResponse(
     val profilePicture: String?,
 )
 
-fun UserResponse.toModel() = UserOutputModel(
+fun UserResponse.toModel(self: Boolean) = UserOutputModel(
     id = id,
+    self = self,
     username = username,
     lastName = lastName,
     firstName = firstName,

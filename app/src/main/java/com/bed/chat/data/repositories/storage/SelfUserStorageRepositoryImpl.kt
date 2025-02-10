@@ -17,6 +17,7 @@ class SelfUserStorageRepositoryImpl @Inject constructor(
     override val user: Flow<UserOutputModel> get() = datasource.user.map {
         UserOutputModel(
             id = it.id,
+            self = false,
             username = it.username,
             lastName = it.lastName,
             firstName = it.firstName,

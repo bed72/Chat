@@ -9,16 +9,13 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import com.bed.chat.presentation.shared.extensions.launch
+import com.bed.chat.domain.repositories.TokenRepository
 
-import com.bed.chat.domain.Constants
-import com.bed.chat.domain.repositories.AuthenticationRepository
-import com.bed.chat.domain.repositories.storage.StorageRepository
+import com.bed.chat.presentation.shared.extensions.launch
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val storageRepository: StorageRepository,
-    private val authenticationRepository: AuthenticationRepository
+    private val tokenRepository: TokenRepository,
 ) : ViewModel() {
     private val _state = MutableSharedFlow<AuthenticationState>()
     val state = _state.asSharedFlow()
@@ -26,7 +23,7 @@ class SplashViewModel @Inject constructor(
     fun hasSession() { hasSavedToken() }
 
     private fun hasSavedToken() {
-        launch { storageRepository.get(Constants.USER_TOKEN.value).collect { validateToken(it) } }
+        launch { tokenRepository.get().collect { validateToken(it) } }
     }
 
     private suspend fun validateToken(token: String) {
@@ -36,7 +33,7 @@ class SplashViewModel @Inject constructor(
             return
         }
 
-        authenticationRepository.validateToken(token).fold(
+        tokenRepository.validate(token).fold(
             onSuccess = { _state.emit(AuthenticationState.UserAuthenticated) },
             onFailure = { _state.emit(AuthenticationState.UserNotAuthenticated) }
         )

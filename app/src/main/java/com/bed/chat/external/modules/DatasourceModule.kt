@@ -7,14 +7,19 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+import com.bed.chat.data.datasources.ChatDatasource
+import com.bed.chat.data.datasources.TokenDatasource
 import com.bed.chat.data.datasources.CryptographyDatasource
 import com.bed.chat.data.datasources.AuthenticationDatasource
 import com.bed.chat.data.datasources.storage.StorageDatasource
 import com.bed.chat.data.datasources.storage.SelfUserStorageDatasource
 
+import com.bed.chat.external.datasources.remoto.RemoteChatDatasource
+import com.bed.chat.external.datasources.remoto.RemoteTokenDatasource
+import com.bed.chat.external.datasources.remoto.RemoteAuthenticationDatasource
+
 import com.bed.chat.external.datasources.local.LocalCryptographyDatasource
 import com.bed.chat.external.datasources.local.storage.LocalStorageDatasource
-import com.bed.chat.external.datasources.remoto.RemoteAuthenticationDatasource
 import com.bed.chat.external.datasources.local.storage.LocalSelfUserStorageDatasource
 
 @Module
@@ -22,7 +27,16 @@ import com.bed.chat.external.datasources.local.storage.LocalSelfUserStorageDatas
 interface DatasourceModule {
     @Binds
     @Singleton
-    fun bindLocalDataStoreDatasource(datasource: LocalStorageDatasource): StorageDatasource
+    fun bindRemoteChatsDatasource(datasource: RemoteChatDatasource): ChatDatasource
+
+    @Binds
+    @Singleton
+    fun bindRemoteTokenDatasource(datasource: RemoteTokenDatasource): TokenDatasource
+
+    @Binds
+    @Singleton
+    fun bindRemoteAuthenticationDatasource(datasource: RemoteAuthenticationDatasource): AuthenticationDatasource
+
 
     @Binds
     @Singleton
@@ -30,7 +44,7 @@ interface DatasourceModule {
 
     @Binds
     @Singleton
-    fun bindRemoteAuthenticationDatasource(datasource: RemoteAuthenticationDatasource): AuthenticationDatasource
+    fun bindLocalDataStoreDatasource(datasource: LocalStorageDatasource): StorageDatasource
 
     @Binds
     @Singleton

@@ -16,13 +16,13 @@ class StorageRepositoryImpl @Inject constructor(
     private val storageDatasource: StorageDatasource,
     private val cryptographyDatasource: CryptographyDatasource
 ) : StorageRepository {
-    override suspend fun delete(data: String) {
-        storageDatasource.delete(data)
+    override suspend fun delete(parameter: Constants) {
+        storageDatasource.delete(parameter.value)
     }
 
-    override suspend fun save(data: Pair<Constants, String>) {
-        val key = data.first.value
-        val value = cryptographyDatasource.encrypt(data.second)
+    override suspend fun save(parameter: Pair<Constants, String>) {
+        val key = parameter.first.value
+        val value = cryptographyDatasource.encrypt(parameter.second)
 
         with (storageDatasource) {
             delete(key)
@@ -30,8 +30,8 @@ class StorageRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun get(data: String): Flow<String> =
-        storageDatasource.get(data).map {
+    override suspend fun get(parameter: Constants): Flow<String> =
+        storageDatasource.get(parameter.value).map {
             cryptographyDatasource.decrypt(it)
         }
 }

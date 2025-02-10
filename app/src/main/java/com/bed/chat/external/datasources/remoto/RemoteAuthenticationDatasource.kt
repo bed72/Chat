@@ -12,7 +12,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 
-import io.ktor.client.request.header
 import io.ktor.client.plugins.onUpload
 
 import io.ktor.client.request.url
@@ -24,7 +23,6 @@ import com.bed.chat.external.clients.request
 import com.bed.chat.external.clients.HttpUrl
 import com.bed.chat.external.clients.HttpClient
 
-import com.bed.chat.external.clients.response.UserResponse
 import com.bed.chat.external.clients.request.SignInRequest
 import com.bed.chat.external.clients.request.SignUpRequest
 import com.bed.chat.external.clients.response.TokenResponse
@@ -35,11 +33,6 @@ import com.bed.chat.data.datasources.AuthenticationDatasource
 class RemoteAuthenticationDatasource @Inject constructor(
     private val client: HttpClient
 ) : AuthenticationDatasource {
-    override suspend fun validateToken(parameter: String): Result<UserResponse> =
-        client.http.request<UserResponse> {
-            url(HttpUrl.VALIDATE_TOKEN.value)
-            header(HttpHeaders.Authorization, "Bearer $parameter")
-        }
 
     override suspend fun signUp(parameter: SignUpRequest): Result<Unit> =
         client.http.request<Unit> {
