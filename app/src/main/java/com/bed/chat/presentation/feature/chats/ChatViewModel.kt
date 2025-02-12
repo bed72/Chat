@@ -3,6 +3,7 @@ package com.bed.chat.presentation.feature.chats
 import javax.inject.Inject
 import androidx.lifecycle.ViewModel
 
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -25,11 +26,13 @@ class ChatViewModel @Inject constructor(
         getChats()
     }
 
-    private fun getChats() {
+    fun getChats() {
         launch {
+            _state.update { CheatUiState.Loading }
+
             repository.getChats(limit = 10, offset = 0).fold(
-                onSuccess = { _state.value = CheatUiState.Success(it) },
-                onFailure = { _state.value = CheatUiState.Failure }
+                onSuccess = { success -> _state.update { CheatUiState.Success(success) } },
+                onFailure = { _state.update { CheatUiState.Failure } }
             )
         }
     }

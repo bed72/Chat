@@ -2,6 +2,11 @@
     <string name="empty" />
     <string name="app_name">chat</string>
 
+    <!-- Errors -->
+    <string name="common_generic_error_title">Alguma coisa deu errado</string>
+    <string name="common_generic_error_message">Tente novamente mais tarde</string>
+    <string name="common_generic_error_button_retry">Tente novamente</string>
+
     <!-- Bottom Navigation -->
     <string name="bottom_navigation_item_chat">Conversas</string>
     <string name="bottom_navigation_item_profile">Perfil</string>

@@ -1,79 +1,62 @@
-package com.bed.chat.presentation.shared.components.chat
+package com.bed.chat.presentation.shared.components.skeleton
 
-import coil.compose.AsyncImage
+import com.valentinilk.shimmer.shimmer
 
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
-
-import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.fillMaxWidth
 
 import androidx.constraintlayout.compose.Dimension
-import androidx.constraintlayout.compose.Visibility
 import androidx.constraintlayout.compose.ConstraintLayout
-
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-
-import com.bed.chat.R
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 
-import com.bed.chat.domain.models.output.ChatOutputModel
-import com.bed.chat.presentation.shared.preview.provider.ChatPreviewParameterProvider
-
 @Composable
-fun ChatItem(
-    chat: ChatOutputModel,
-    modifier: Modifier = Modifier
-) {
-    val receiver = remember (chat.members) {
-        chat.members.first { it.self.not() }
-    }
-
+fun ChatItemSkeleton(modifier: Modifier = Modifier) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
+            .shimmer()
     ) {
+
         val (
             avatarRef,
             firstNameRef,
             lastMessageRef,
-            unreadCountRef,
             lastMessageTimeRef,
+            unreadCountRef
         ) = createRefs()
 
-        AsyncImage(
-            model = receiver.profilePicture,
-            contentDescription = null,
+        Box(
             modifier = Modifier
                 .clip(CircleShape)
                 .size(60.dp)
+                .background(Color.Gray)
                 .constrainAs(avatarRef) {
                     top.linkTo(parent.top, margin = 16.dp)
                     start.linkTo(parent.start)
                     bottom.linkTo(parent.bottom, margin = 16.dp)
                 },
-            error = painterResource(R.drawable.ic_profile),
-            fallback = painterResource(R.drawable.ic_profile),
-            placeholder = painterResource(R.drawable.ic_profile),
         )
 
-        Text(
-            text = receiver.firstName,
+        Box(
             modifier = Modifier
+                .height(16.dp)
+                .background(Color.Gray)
                 .constrainAs(firstNameRef) {
                     top.linkTo(avatarRef.top)
                     start.linkTo(avatarRef.end, margin = 16.dp)
@@ -81,14 +64,12 @@ fun ChatItem(
                     bottom.linkTo(lastMessageRef.top)
                     width = Dimension.fillToConstraints
                 },
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.titleMedium
         )
 
-        Text(
-            text = chat.lastMessage ?: "",
+        Box(
             modifier = Modifier
+                .height(16.dp)
+                .background(Color.Gray)
                 .constrainAs(lastMessageRef) {
                     top.linkTo(firstNameRef.bottom)
                     start.linkTo(avatarRef.end, margin = 16.dp)
@@ -96,53 +77,40 @@ fun ChatItem(
                     bottom.linkTo(avatarRef.bottom)
                     width = Dimension.fillToConstraints
                 },
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodyMedium,
         )
 
-        Text(
-            text = chat.timestamp,
+        Box(
             modifier = Modifier
+                .size(width = 15.dp, height = 16.dp)
+                .background(Color.Gray)
                 .constrainAs(lastMessageTimeRef) {
                     top.linkTo(firstNameRef.top)
                     end.linkTo(parent.end)
                     bottom.linkTo(firstNameRef.bottom)
                     width = Dimension.wrapContent
                 },
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontWeight = FontWeight.Medium,
-            style = MaterialTheme.typography.bodySmall,
         )
 
-        Text(
-            text = chat.unreadCount.toString(),
+        Box(
             modifier = Modifier
+                .size(width = 15.dp, height = 16.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .background(Color.Gray)
                 .padding(horizontal = 4.dp)
                 .constrainAs(unreadCountRef) {
                     top.linkTo(lastMessageTimeRef.bottom)
                     end.linkTo(parent.end)
                     bottom.linkTo(lastMessageRef.bottom)
                     width = Dimension.wrapContent
-                    visibility = if (chat.unreadCount > 0) Visibility.Visible
-                    else Visibility.Gone
                 },
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Medium,
-            style = MaterialTheme.typography.bodySmall,
         )
     }
 }
 
 @Preview
 @Composable
-private fun ChatItemPreview(
-    @PreviewParameter(ChatPreviewParameterProvider::class) chat: ChatOutputModel
-) {
+private fun ChatItemShimmerPreview() {
     ChatTheme {
-        ChatItem(
-            chat = chat
-        )
+        ChatItemSkeleton()
     }
 }
