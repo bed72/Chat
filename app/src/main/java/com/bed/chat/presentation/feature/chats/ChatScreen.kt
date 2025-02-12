@@ -38,13 +38,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bed.chat.R
 
 import com.bed.chat.domain.models.output.ChatOutputModel
-import com.bed.chat.presentation.shared.components.AnimatedContent
-import com.bed.chat.presentation.shared.components.FailureContent
-import com.bed.chat.presentation.shared.components.PrimaryButton
-import com.bed.chat.presentation.shared.components.chat.ChatItem
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
+
+import com.bed.chat.presentation.shared.components.EmptyContent
+import com.bed.chat.presentation.shared.components.chat.ChatItem
+import com.bed.chat.presentation.shared.components.PrimaryButton
+import com.bed.chat.presentation.shared.components.FailureContent
+import com.bed.chat.presentation.shared.components.AnimatedContent
 import com.bed.chat.presentation.shared.components.skeleton.ChatItemSkeleton
+
 import com.bed.chat.presentation.shared.preview.provider.ChatsPreviewParameterProvider
 
 @Composable
@@ -143,16 +146,27 @@ private fun Failure(onTryAgainClick: () -> Unit,) {
 
 @Composable
 private fun Success(data: List<ChatOutputModel>) {
-    LazyColumn(
-        contentPadding = PaddingValues(horizontal = 16.dp)
-    ) {
-        @Suppress("MagicNumber")
-        itemsIndexed(data) { index, model ->
-            ChatItem(model)
+    when (data.isNotEmpty()) {
+        false -> EmptyContent(
+            message = R.string.common_generic_error_empty,
+            resource = {
+                AnimatedContent(
+                    modifier = Modifier.size(272.dp),
+                    resId = R.raw.animation_empty_list
+                )
+            }
+        )
+        true -> LazyColumn(
+            contentPadding = PaddingValues(horizontal = 16.dp)
+        ) {
+            @Suppress("MagicNumber")
+            itemsIndexed(data) { index, model ->
+                ChatItem(model)
 
-            if (index > data.lastIndex) return@itemsIndexed
+                if (index > data.lastIndex) return@itemsIndexed
 
-            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
+                HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
+            }
         }
     }
 }
