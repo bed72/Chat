@@ -42,11 +42,11 @@ import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.observer.ResponseObserver
+import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 
 import com.bed.chat.domain.exception.NetworkException
 import com.bed.chat.domain.repositories.TokenRepository
-import io.ktor.client.plugins.auth.providers.BearerTokens
 
 interface HttpClient {
     val http: KtorClient
@@ -55,6 +55,7 @@ interface HttpClient {
 class HttpClientImpl @Inject constructor(
     private val repository: TokenRepository
 ) : HttpClient {
+
     override val http get() = KtorClient(CIO) {
         expectSuccess = true
 
@@ -76,7 +77,9 @@ class HttpClientImpl @Inject constructor(
         install(Auth) {
             bearer {
                 loadTokens {
-                    repository.get().firstOrNull()?.let { token -> BearerTokens(token, "") }
+                    repository.get().firstOrNull()?.let { token ->
+                        BearerTokens(token, "")
+                    }
                 }
             }
         }
@@ -155,6 +158,7 @@ class HttpClientImpl @Inject constructor(
         private const val DELAY_RETRY = 2000L
     }
 }
+
 
 suspend inline fun <reified S : Any> KtorClient.request(
     crossinline block: HttpRequestBuilder.() -> Unit,
