@@ -8,6 +8,8 @@ import kotlinx.serialization.json.Json
 
 import android.accounts.NetworkErrorException
 
+import kotlinx.coroutines.flow.firstOrNull
+
 import io.ktor.http.isSuccess
 import io.ktor.http.HttpHeaders
 import io.ktor.http.ContentType
@@ -28,6 +30,7 @@ import io.ktor.client.request.headers
 import io.ktor.client.request.request
 import io.ktor.client.request.HttpRequestBuilder
 
+import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.Logger
@@ -35,21 +38,27 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.HttpRequestRetry
+import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 
 import com.bed.chat.domain.exception.NetworkException
+import com.bed.chat.domain.repositories.TokenRepository
+import io.ktor.client.plugins.auth.providers.BearerTokens
 
 interface HttpClient {
     val http: KtorClient
 }
 
-class HttpClientImpl @Inject constructor() : HttpClient {
+class HttpClientImpl @Inject constructor(
+    private val repository: TokenRepository
+) : HttpClient {
     override val http get() = KtorClient(CIO) {
         expectSuccess = true
 
+        configureAuth()
         configureRetry()
         configureLogging()
         configureResponseTimeout()
@@ -63,12 +72,22 @@ class HttpClientImpl @Inject constructor() : HttpClient {
         }
     }
 
+    private fun HttpClientConfig<CIOEngineConfig>.configureAuth() {
+        install(Auth) {
+            bearer {
+                loadTokens {
+                    repository.get().firstOrNull()?.let { token -> BearerTokens(token, "") }
+                }
+            }
+        }
+    }
+
     private fun HttpClientConfig<CIOEngineConfig>.configureRetry() {
         install(HttpRequestRetry) {
             maxRetries = RETRY
             delayMillis { it * DELAY_RETRY }
             retryIf { _, response -> !response.status.isSuccess() }
-            retryOnExceptionIf { request, cause -> cause is NetworkErrorException }
+            retryOnExceptionIf { _, cause -> cause is NetworkErrorException }
         }
     }
 

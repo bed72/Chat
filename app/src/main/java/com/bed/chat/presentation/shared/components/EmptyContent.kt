@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Arrangement
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontWeight
 
 import com.bed.chat.R
 
@@ -62,8 +63,10 @@ fun EmptyContent(
             text = stringResource(id = message),
             textAlign = TextAlign.Center,
             fontStyle = FontStyle.Italic,
-            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.outline
+            )
         )
     }
 }

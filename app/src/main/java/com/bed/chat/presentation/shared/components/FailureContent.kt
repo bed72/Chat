@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.text.font.FontWeight
 
 import com.bed.chat.R
 
@@ -62,8 +63,11 @@ fun FailureContent(
         Text(
             text = stringResource(id = title),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontWeight = FontWeight.W500
+            ),
+
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -72,8 +76,10 @@ fun FailureContent(
             text = stringResource(id = message),
             textAlign = TextAlign.Center,
             fontStyle = FontStyle.Italic,
-            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.outline
+            )
         )
 
         action?.let { component ->

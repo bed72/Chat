@@ -15,21 +15,18 @@ import com.bed.chat.external.clients.request.PaginationRequest
 import com.bed.chat.domain.models.output.ChatOutputModel
 
 import com.bed.chat.domain.repositories.ChatRepository
-import com.bed.chat.domain.repositories.TokenRepository
-import com.bed.chat.domain.repositories.storage.SelfUserStorageRepository
+import com.bed.chat.domain.repositories.storage.SelfUserRepository
 
 class ChatRepositoryImpl @Inject constructor(
     private val chatDatasource: ChatDatasource,
-    private val tokenRepository: TokenRepository,
-    private val selfUserRepository: SelfUserStorageRepository,
+    private val selfUserRepository: SelfUserRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ChatRepository {
     override suspend fun getChats(limit: Int, offset: Int): Result<List<ChatOutputModel>> {
         return withContext(ioDispatcher) {
             runCatching {
-                val token = tokenRepository.get().firstOrNull()  ?: ""
                 val selfId = selfUserRepository.user.firstOrNull()?.id
-                val response = chatDatasource.getChats(token, toRequest(limit, offset))
+                val response = chatDatasource.getChats(toRequest(limit, offset))
 
                 response.map { it.toModel(selfId) }.getOrThrow().conversations
             }

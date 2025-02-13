@@ -9,7 +9,7 @@ import androidx.datastore.core.DataStore
 import com.bed.chat.SelfUser
 import com.bed.chat.data.datasources.storage.SelfUserStorageDatasource
 
-class LocalSelfUserStorageDatasource @Inject constructor(
+class LocalSelfUserDatasource @Inject constructor(
     private val datastore: DataStore<SelfUser>,
 ) : SelfUserStorageDatasource {
     override val user: Flow<SelfUser> get() = datastore.data

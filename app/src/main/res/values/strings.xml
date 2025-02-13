@@ -48,7 +48,7 @@
     <string name="sign_in_title_button">Entrar</string>
     <string name="sign_in_description_create_account_link">Criar conta</string>">
     <string name="sign_in_description_create_account">Não possui uma conta?</string>
-    <string name="sign_in_sub_title">Olá.\nAcesse sua conta e converse com quem quiser</string>
+    <string name="sign_in_sub_title">Acesse sua conta e converse com quem quiser</string>
 
     <!-- SignUp Screen -->
     <string name="sign_up_title">Criar conta</string>

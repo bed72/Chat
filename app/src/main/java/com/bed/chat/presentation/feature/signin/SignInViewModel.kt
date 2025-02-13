@@ -44,7 +44,7 @@ class SignInViewModel @Inject constructor(
                         username = formState.username,
                         password = formState.password,
                     )
-                ).fold(::success, ::failure)
+                ).fold(onSuccess = ::success, onFailure = ::failure)
             }
         } else formState = formState.copy(isLoading = false, messageFailure = null)
     }

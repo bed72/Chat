@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 import com.bed.chat.domain.models.output.UserOutputModel
 
-interface SelfUserStorageRepository {
+interface SelfUserRepository {
     val user: Flow<UserOutputModel>
 
     suspend fun delete()

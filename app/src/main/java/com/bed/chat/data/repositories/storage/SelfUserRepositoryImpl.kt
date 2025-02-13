@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 import com.bed.chat.data.datasources.storage.SelfUserStorageDatasource
 
 import com.bed.chat.domain.models.output.UserOutputModel
-import com.bed.chat.domain.repositories.storage.SelfUserStorageRepository
+import com.bed.chat.domain.repositories.storage.SelfUserRepository
 
-class SelfUserStorageRepositoryImpl @Inject constructor(
+class SelfUserRepositoryImpl @Inject constructor(
     private val datasource: SelfUserStorageDatasource,
-) : SelfUserStorageRepository {
+) : SelfUserRepository {
 
     override val user: Flow<UserOutputModel> get() = datasource.user.map {
         UserOutputModel(

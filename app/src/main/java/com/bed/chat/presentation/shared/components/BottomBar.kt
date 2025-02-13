@@ -84,8 +84,8 @@ private fun RowScope.NavigationBarItemCenterComponent(
         modifier = modifier,
         shape = CircleShape,
         onClick = { state.navigateToTopLevel(routes) },
-        contentColor = MaterialTheme.colorScheme.onSurface,
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.primaryContainer,
         elevation = FloatingActionButtonDefaults.elevation(
             defaultElevation = 0.dp,
             pressedElevation = 0.dp,

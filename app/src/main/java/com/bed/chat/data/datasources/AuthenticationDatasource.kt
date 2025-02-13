@@ -7,6 +7,7 @@ import com.bed.chat.external.clients.response.ImageResponse
 import com.bed.chat.external.clients.response.TokenResponse
 
 interface AuthenticationDatasource {
+    suspend fun authenticate(): Result<UserResponse>
     suspend fun signUp(parameter: SignUpRequest): Result<Unit>
     suspend fun signIn(parameter: SignInRequest): Result<TokenResponse>
     suspend fun uploadProfilePicture(filePath: String): Result<ImageResponse>

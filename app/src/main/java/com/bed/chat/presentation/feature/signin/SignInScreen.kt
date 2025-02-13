@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 
@@ -67,17 +66,13 @@ fun SignInScreen(
     val hostState = remember { SnackbarHostState() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    LaunchedEffect(key1 = formState.messageSuccess) {
+        formState.messageSuccess?.let { onNavigateToChats() }
+    }
+
     LaunchedEffect(key1 = formState.messageFailure) {
         formState.messageFailure?.let {
             hostState.showSnackbar(it, duration = SnackbarDuration.Short)
-        }
-    }
-
-    LaunchedEffect(key1 = formState.messageSuccess) {
-        formState.messageSuccess?.let {
-            hostState.showSnackbar(it, duration = SnackbarDuration.Short).apply {
-                if (this == SnackbarResult.Dismissed) onNavigateToChats()
-            }
         }
     }
 

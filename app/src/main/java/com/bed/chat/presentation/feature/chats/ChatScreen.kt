@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 
@@ -73,13 +74,14 @@ fun ChatScreen(
                 title = {
                     Text(
                         text = AnnotatedString.fromHtml(stringResource(R.string.chat_greeting, "Gabriel")),
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.W500
+                        )
                     )
                 },
-                expandedHeight = 100.dp,
+                expandedHeight = 72.dp,
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.background,
                 ),
             )
         },
@@ -138,7 +140,7 @@ private fun Failure(onTryAgainClick: () -> Unit,) {
         },
         resource = {
             AnimatedContent(
-                modifier = Modifier.size(272.dp),
+                modifier = Modifier.size(200.dp),
             )
         }
     )
@@ -151,7 +153,7 @@ private fun Success(data: List<ChatOutputModel>) {
             message = R.string.common_generic_error_empty,
             resource = {
                 AnimatedContent(
-                    modifier = Modifier.size(272.dp),
+                    modifier = Modifier.size(200.dp),
                     resId = R.raw.animation_empty_list
                 )
             }

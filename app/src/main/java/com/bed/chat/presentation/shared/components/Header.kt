@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.text.font.FontStyle
 
 import com.bed.chat.R
 
@@ -54,6 +55,7 @@ fun Header(
 
         Text(
             text = stringResource(id = subtitle),
+            fontStyle = FontStyle.Italic,
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.outline
             )

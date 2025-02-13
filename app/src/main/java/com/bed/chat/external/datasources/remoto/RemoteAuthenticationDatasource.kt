@@ -25,6 +25,7 @@ import com.bed.chat.external.clients.HttpClient
 
 import com.bed.chat.external.clients.request.SignInRequest
 import com.bed.chat.external.clients.request.SignUpRequest
+import com.bed.chat.external.clients.response.UserResponse
 import com.bed.chat.external.clients.response.TokenResponse
 import com.bed.chat.external.clients.response.ImageResponse
 
@@ -33,6 +34,11 @@ import com.bed.chat.data.datasources.AuthenticationDatasource
 class RemoteAuthenticationDatasource @Inject constructor(
     private val client: HttpClient
 ) : AuthenticationDatasource {
+
+    override suspend fun authenticate(): Result<UserResponse> =
+        client.http.request<UserResponse> {
+            url(HttpUrl.AUTHENTICATE.value)
+        }
 
     override suspend fun signUp(parameter: SignUpRequest): Result<Unit> =
         client.http.request<Unit> {

@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -79,17 +78,13 @@ fun SignUpScreen(
     val sheetState = rememberModalBottomSheetState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    LaunchedEffect(key1 = formState.successfulRegistration, key2 = formState.messageSuccess) {
+        formState.messageSuccess?.let { onNavigateToSignIn() }
+    }
+
     LaunchedEffect(key1 = formState.messageFailure) {
         formState.messageFailure?.let {
             hostState.showSnackbar(it, duration = SnackbarDuration.Short)
-        }
-    }
-
-    LaunchedEffect(key1 = formState.successfulRegistration, key2 = formState.messageSuccess) {
-        formState.messageSuccess?.let {
-            hostState.showSnackbar(it, duration = SnackbarDuration.Short).apply {
-                if (this == SnackbarResult.Dismissed) onNavigateToSignIn()
-            }
         }
     }
 
@@ -180,6 +175,8 @@ fun SignUpScreen(
                         keyboardController?.hide()
                     }
                 )
+
+                Spacer(modifier = modifier.height(16.dp))
 
                 if (formState.isPictureSelectorBottomSheetOpen)
                     PictureSelectorBottomSheet(
