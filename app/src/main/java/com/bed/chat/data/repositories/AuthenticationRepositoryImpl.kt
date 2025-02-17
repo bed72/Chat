@@ -5,13 +5,13 @@ import javax.inject.Inject
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.CoroutineDispatcher
 
+import com.bed.chat.data.datasources.AuthenticationDatasource
+
 import com.bed.chat.external.modules.IoDispatcher
 
-import com.bed.chat.external.clients.response.chat.toModel
+import com.bed.chat.external.clients.response.toModel
 import com.bed.chat.external.clients.request.toRequest
 import com.bed.chat.external.clients.response.user.UserResponse
-
-import com.bed.chat.data.datasources.AuthenticationDatasource
 
 import com.bed.chat.domain.models.input.SignInInputModel
 import com.bed.chat.domain.models.input.SignUpInputModel
