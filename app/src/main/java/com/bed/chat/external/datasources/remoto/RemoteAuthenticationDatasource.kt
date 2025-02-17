@@ -31,10 +31,6 @@ import com.bed.chat.external.clients.response.ImageResponse
 
 import com.bed.chat.data.datasources.AuthenticationDatasource
 
-import io.ktor.client.plugins.plugin
-import io.ktor.client.plugins.auth.Auth
-import io.ktor.client.plugins.auth.providers.BearerAuthProvider
-
 class RemoteAuthenticationDatasource @Inject constructor(
     private val client: HttpClient
 ) : AuthenticationDatasource {
