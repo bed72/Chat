@@ -20,7 +20,7 @@ import com.bed.chat.external.clients.response.user.UserResponse
 class UserRepositoryImpl @Inject constructor(
     private val paging: UserPagingSource
 ) : UserRepository {
-    override suspend fun invoke(parameter: Int): Flow<PagingData<UserOutputModel>> =
+    override fun invoke(parameter: Int): Flow<PagingData<UserOutputModel>> =
         Pager(
             config = buildConfig(parameter),
             pagingSourceFactory = { paging }

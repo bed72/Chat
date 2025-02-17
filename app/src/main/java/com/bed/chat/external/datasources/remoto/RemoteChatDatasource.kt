@@ -16,6 +16,6 @@ class RemoteChatDatasource @Inject constructor(private val client: HttpClient) :
     override suspend fun invoke(parameter: PaginationRequest): Result<PaginatedChatResponse> =
         client.http.request<PaginatedChatResponse> {
             method = HttpMethod.Get
-            url { configurePaginationParameter(HttpUrl.USERS, parameter) }
+            url { configurePaginationParameter(HttpUrl.CONVERSATIONS, parameter) }
         }
 }

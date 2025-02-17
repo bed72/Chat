@@ -18,15 +18,15 @@ import com.bed.chat.domain.repositories.ChatRepository
 import com.bed.chat.domain.repositories.storage.SelfUserRepository
 
 class ChatRepositoryImpl @Inject constructor(
-    private val chatDatasource: ChatDatasource,
-    private val selfUserRepository: SelfUserRepository,
+    private val datasource: ChatDatasource,
+    private val repository: SelfUserRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ChatRepository {
     override suspend fun invoke(limit: Int, offset: Int): Result<List<ChatOutputModel>> {
         return withContext(ioDispatcher) {
             runCatching {
-                val selfId = selfUserRepository.user.firstOrNull()?.id
-                val response = chatDatasource(toRequest(limit, offset))
+                val selfId = repository.user.firstOrNull()?.id
+                val response = datasource(toRequest(limit, offset))
 
                 response.map { it.toModel(selfId) }.getOrThrow().conversations
             }
