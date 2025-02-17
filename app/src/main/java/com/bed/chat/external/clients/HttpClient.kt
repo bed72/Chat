@@ -60,7 +60,7 @@ class HttpClientImpl @Inject constructor(
         expectSuccess = true
 
         configureAuth()
-        configureRetry()
+//        configureRetry()
         configureLogging()
         configureResponseTimeout()
         configureResponseObserver()
@@ -72,6 +72,17 @@ class HttpClientImpl @Inject constructor(
             headers { header(HttpHeaders.ContentType, ContentType.Application.Json) }
         }
     }
+//        .apply {
+//        plugin(HttpSend).intercept { request ->
+//            repository.get().firstOrNull()?.let { token ->
+//                request.headers {
+//                    append("Authorization", "Bearer $token")
+//                }
+//            }
+//
+//            execute(request)
+//        }
+//    }
 
     private fun HttpClientConfig<CIOEngineConfig>.configureAuth() {
         install(Auth) {
@@ -84,7 +95,7 @@ class HttpClientImpl @Inject constructor(
             }
         }
     }
-
+    @Suppress("UnusedPrivateMember")
     private fun HttpClientConfig<CIOEngineConfig>.configureRetry() {
         install(HttpRequestRetry) {
             maxRetries = RETRY
