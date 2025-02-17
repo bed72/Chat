@@ -1,13 +1,17 @@
-package com.bed.chat.external.clients.response
+package com.bed.chat.external.clients.response.chat
+
+import java.time.ZoneId
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-import com.bed.chat.domain.models.output.ChatOutputModel
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import com.bed.chat.domain.models.output.chat.ChatOutputModel
+
+import com.bed.chat.external.clients.response.user.toModel
+import com.bed.chat.external.clients.response.user.UserResponse
 
 @Serializable
 data class ChatResponse(

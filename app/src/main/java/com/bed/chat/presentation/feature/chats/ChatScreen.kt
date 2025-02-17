@@ -38,7 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 import com.bed.chat.R
 
-import com.bed.chat.domain.models.output.ChatOutputModel
+import com.bed.chat.domain.models.output.chat.ChatOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 

@@ -1,6 +1,6 @@
 package com.bed.chat.presentation.shared.preview.fake
 
-import com.bed.chat.domain.models.output.ChatOutputModel
+import com.bed.chat.domain.models.output.chat.ChatOutputModel
 
 val chatOneFake = ChatOutputModel(
     id = 0,

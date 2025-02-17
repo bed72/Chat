@@ -2,7 +2,7 @@ package com.bed.chat.presentation.shared.preview.provider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 
-import com.bed.chat.domain.models.output.ChatOutputModel
+import com.bed.chat.domain.models.output.chat.ChatOutputModel
 import com.bed.chat.presentation.shared.preview.fake.chatOneFake
 import com.bed.chat.presentation.shared.preview.fake.chatTwoFake
 import com.bed.chat.presentation.shared.preview.fake.chatThreeFake

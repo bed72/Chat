@@ -9,6 +9,7 @@ core = "1.15.0"
 slf4j = "1.7.36"
 lottie = "6.6.2"
 splash = "1.0.1"
+paging = "3.3.6"
 kotlin = "2.0.21"
 detekt = "1.23.7"
 shimmer = "1.3.2"
@@ -56,9 +57,11 @@ ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation"
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 # Others
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
+
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt"}
-#hilt-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
 
 core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
@@ -126,6 +129,9 @@ android-test = [
 ]
 
 core = [
+    #Paging
+    "paging-runtime",
+    "paging-compose",
     # Hilt
     "hilt-android",
     "hilt-navigation",

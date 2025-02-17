@@ -1,6 +1,6 @@
-package com.bed.chat.domain.models.output
+package com.bed.chat.domain.models.output.chat
 
-data class PaginatedChatsOutputModel(
+data class PaginatedChatOutputModel(
     val total: Int,
     val hasMore: Boolean,
     val conversations: List<ChatOutputModel>,

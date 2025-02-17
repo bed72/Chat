@@ -30,7 +30,7 @@ import com.bed.chat.R
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 
-import com.bed.chat.domain.models.output.ChatOutputModel
+import com.bed.chat.domain.models.output.chat.ChatOutputModel
 import com.bed.chat.presentation.shared.preview.provider.ChatPreviewParameterProvider
 
 @Composable

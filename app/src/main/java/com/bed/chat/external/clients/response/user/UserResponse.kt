@@ -1,9 +1,9 @@
-package com.bed.chat.external.clients.response
+package com.bed.chat.external.clients.response.user
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-import com.bed.chat.domain.models.output.UserOutputModel
+import com.bed.chat.domain.models.output.user.UserOutputModel
 
 @Serializable
 data class UserResponse(

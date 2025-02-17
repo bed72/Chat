@@ -1,12 +1,12 @@
-package com.bed.chat.external.clients.response
+package com.bed.chat.external.clients.response.chat
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-import com.bed.chat.domain.models.output.PaginatedChatsOutputModel
+import com.bed.chat.domain.models.output.chat.PaginatedChatOutputModel
 
 @Serializable
-data class PaginatedChatsResponse(
+data class PaginatedChatResponse(
     @SerialName("total")
     val total: Int,
 
@@ -17,7 +17,7 @@ data class PaginatedChatsResponse(
     val conversations: List<ChatResponse>,
 )
 
-fun PaginatedChatsResponse.toModel(selfId: Int?) = PaginatedChatsOutputModel(
+fun PaginatedChatResponse.toModel(selfId: Int?) = PaginatedChatOutputModel(
     total = total,
     hasMore = hasMore,
     conversations = conversations.map { it.toModel(selfId) }

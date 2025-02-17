@@ -1,8 +1,8 @@
 package com.bed.chat.data.datasources
 
 import com.bed.chat.external.clients.request.PaginationRequest
-import com.bed.chat.external.clients.response.PaginatedChatsResponse
+import com.bed.chat.external.clients.response.chat.PaginatedChatResponse
 
 interface ChatDatasource {
-    suspend fun getChats(parameter: PaginationRequest): Result<PaginatedChatsResponse>
+    suspend operator fun invoke(parameter: PaginationRequest): Result<PaginatedChatResponse>
 }
