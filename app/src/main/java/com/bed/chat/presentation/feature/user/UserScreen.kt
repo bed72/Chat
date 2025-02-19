@@ -4,30 +4,44 @@ import kotlinx.coroutines.flow.flowOf
 
 import androidx.hilt.navigation.compose.hiltViewModel
 
+import androidx.compose.runtime.Composable
+
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 
-import androidx.compose.runtime.Composable
-
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 
 import androidx.compose.material3.Text
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ExperimentalMaterial3Api
+
+import com.bed.chat.R
 
 import com.bed.chat.domain.models.output.user.UserOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
+import com.bed.chat.presentation.shared.components.TopBar
+import com.bed.chat.presentation.shared.components.UserItem
+import com.bed.chat.presentation.shared.components.ChatScaffold
 import com.bed.chat.presentation.shared.preview.fake.userOneFake
+import com.bed.chat.presentation.shared.components.PrimaryButton
+import com.bed.chat.presentation.shared.components.FailureContent
+import com.bed.chat.presentation.shared.components.AnimatedContent
+import com.bed.chat.presentation.shared.components.skeleton.UserItemSkeleton
 
 @Composable
 fun UserRoute(
@@ -42,33 +56,79 @@ fun UserRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 fun UserScreen(
     users: LazyPagingItems<UserOutputModel>,
-    modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        modifier = modifier,
+    ChatScaffold(
         topBar = {
-            TopAppBar(
+            TopBar(
                 title = {
-                    Text(text = "User")
+                    Text(
+                        text = stringResource(R.string.user_title),
+                        style = MaterialTheme.typography.titleSmall
+                    )
                 }
             )
         },
-        content = { padding ->
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                contentPadding = padding,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(users.itemCount) { index ->
-                    val user = users[index]
-
-
-                }
+        content = {
+            when (users.loadState.refresh) {
+                LoadState.Loading -> Loading()
+                is LoadState.Error -> Failure { users.refresh() }
+                is LoadState.NotLoading -> Success(users)
             }
         }
     )
+}
+
+@Composable
+private fun Loading() {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp)
+    ) {
+        repeat(6) {
+            UserItemSkeleton()
+
+            if (it < 6) HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
+        }
+    }
+}
+
+@Composable
+private fun Failure(
+    onClick: () -> Unit,
+) {
+    FailureContent(
+        title = R.string.common_generic_error_title,
+        message = R.string.common_generic_error_message,
+        resource = { AnimatedContent(modifier = Modifier.size(200.dp),) },
+        action = {
+            PrimaryButton(
+                text = R.string.common_generic_error_button_retry,
+                onClick = onClick
+            )
+        }
+    )
+}
+
+@Composable
+private fun Success(
+    users: LazyPagingItems<UserOutputModel>,
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .background(MaterialTheme.colorScheme.surface),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(users.itemCount) { index ->
+            users[index]?.let {
+                UserItem(it)
+
+                if (index > users.itemCount) return@items
+
+                HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
+            }
+        }
+    }
 }
 
 @Composable
@@ -81,8 +141,6 @@ private fun ChatsScreenPreview() {
         val users =
             flowOf(PagingData.from(listOf(userOneFake))).collectAsLazyPagingItems()
 
-        UserScreen(
-            users = users
-        )
+        UserScreen(users = users)
     }
 }

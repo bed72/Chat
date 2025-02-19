@@ -99,7 +99,7 @@ private fun FailurePreview() {
             message = R.string.common_generic_error_message,
             action = {
                 PrimaryButton(
-                    text = stringResource(id = R.string.common_generic_error_button_retry),
+                    text = R.string.common_generic_error_button_retry,
                     onClick = {}
                 )
             },

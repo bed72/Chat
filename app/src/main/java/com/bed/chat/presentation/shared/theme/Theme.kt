@@ -1,9 +1,16 @@
 package com.bed.chat.presentation.shared.theme
 
 import android.os.Build
+import android.app.Activity
+import androidx.core.view.WindowCompat
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalContext
+
 import androidx.compose.foundation.isSystemInDarkTheme
 
 import androidx.compose.material3.MaterialTheme
@@ -78,25 +85,37 @@ private val darkScheme = darkColorScheme(
 
 @Composable
 fun ChatTheme(
-    isDarkTheme: Boolean = isSystemInDarkTheme(),
-    isDynamicColor: Boolean = true,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val scheme = schemeColor(isDarkTheme, isDynamicColor)
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+
+        darkTheme -> darkScheme
+        else -> lightScheme
+    }
+
+    val view = LocalView.current
+    val context = LocalContext.current
+
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb()
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+
+            val controller = WindowCompat.getInsetsController(window, view)
+            controller.isAppearanceLightStatusBars = darkTheme
+        }
+    }
 
     MaterialTheme(
         content = content,
-        colorScheme = scheme,
-        typography = Typography
+        typography = Typography,
+        colorScheme = colorScheme
     )
 }
-
-@Composable
-private fun schemeColor(isDarkTheme: Boolean, isDynamicColor: Boolean) =
-    when {
-        isDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ->
-            if (isDarkTheme) dynamicDarkColorScheme(LocalContext.current)
-            else dynamicLightColorScheme(LocalContext.current)
-        isDarkTheme -> darkScheme
-        else -> lightScheme
-    }

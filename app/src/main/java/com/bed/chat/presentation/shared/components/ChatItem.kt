@@ -1,6 +1,4 @@
-package com.bed.chat.presentation.shared.components.chat
-
-import coil.compose.AsyncImage
+package com.bed.chat.presentation.shared.components
 
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
@@ -9,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,16 +18,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 
-import com.bed.chat.R
+import com.bed.chat.domain.models.output.chat.ChatOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
-
-import com.bed.chat.domain.models.output.chat.ChatOutputModel
 import com.bed.chat.presentation.shared.preview.provider.ChatPreviewParameterProvider
 
 @Composable
@@ -55,20 +49,14 @@ fun ChatItem(
             lastMessageTimeRef,
         ) = createRefs()
 
-        AsyncImage(
-            model = receiver.profilePicture,
-            contentDescription = null,
+        RoundedAvatar(
+            receiver.profilePicture,
             modifier = Modifier
-                .clip(CircleShape)
-                .size(60.dp)
                 .constrainAs(avatarRef) {
                     top.linkTo(parent.top, margin = 16.dp)
                     start.linkTo(parent.start)
                     bottom.linkTo(parent.bottom, margin = 16.dp)
                 },
-            error = painterResource(R.drawable.ic_profile),
-            fallback = painterResource(R.drawable.ic_profile),
-            placeholder = painterResource(R.drawable.ic_profile),
         )
 
         Text(

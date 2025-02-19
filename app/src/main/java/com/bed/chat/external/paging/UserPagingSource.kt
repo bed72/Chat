@@ -9,11 +9,9 @@ import com.bed.chat.data.datasources.UserDatasource
 import com.bed.chat.external.clients.request.PaginationRequest
 import com.bed.chat.external.clients.response.user.UserResponse
 
-abstract class UserPagingSource : PagingSource<Int, UserResponse>()
-
-class UserPagingSourceImpl @Inject constructor(
+class UserPagingSource @Inject constructor(
     private val datasource: UserDatasource
-) : UserPagingSource() {
+) : PagingSource<Int, UserResponse>() {
     override fun getRefreshKey(state: PagingState<Int, UserResponse>): Int? =
         state.anchorPosition?.let { position ->
             state.closestPageToPosition(position)?.run {

@@ -6,7 +6,10 @@
     <string name="common_generic_error_empty">Não há nada aqui</string>
     <string name="common_generic_error_button_retry">Tente novamente</string>
     <string name="common_generic_error_title">Alguma coisa deu errado</string>
-    <string name="common_generic_error_message">Tente novamente mais tarde</string>
+    <string name="common_generic_error_message">Um erro occoreu ao tentar carregar as informações, tente mais tarde!</string>
+
+    <!-- Redound Avatar -->
+    <string name="default_redound_avatar_description">Imagem do avatar do usuario.</string>
 
     <!-- Bottom Navigation -->
     <string name="bottom_navigation_item_chat">Conversas</string>
@@ -57,8 +60,13 @@
     <string name="sign_up_description_create_account_link">Acessar conta</string>">
     <string name="sign_up_description_create_account">Já possui uma conta?</string>
 
-
     <!-- Chat Screen -->
-    <string name="chat_greeting"><![CDATA[Olá, <b>%1$s</b>]]></string>
+    <string name="chat_title"><![CDATA[Olá, <b>%1$s</b>]]></string>
+
+    <!-- User Screen -->
+    <string name="user_title">Comunidade</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_title">Configurações</string>
 
 </resources>

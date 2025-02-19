@@ -5,32 +5,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.PaddingValues
 
 import androidx.compose.material3.Text
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ExperimentalMaterial3Api
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 
@@ -42,8 +33,10 @@ import com.bed.chat.domain.models.output.chat.ChatOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 
+import com.bed.chat.presentation.shared.components.TopBar
+import com.bed.chat.presentation.shared.components.ChatItem
 import com.bed.chat.presentation.shared.components.EmptyContent
-import com.bed.chat.presentation.shared.components.chat.ChatItem
+import com.bed.chat.presentation.shared.components.ChatScaffold
 import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.FailureContent
 import com.bed.chat.presentation.shared.components.AnimatedContent
@@ -57,7 +50,9 @@ fun ChatRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    ChatScreen(state = state, onTryAgainClick = { viewModel.getChats() })
+    ChatScreen(
+        state = state,
+        onTryAgainClick = { viewModel.getChats() })
 }
 
 @Composable
@@ -67,48 +62,23 @@ fun ChatScreen(
     state: ChatViewModel.CheatUiState,
     onTryAgainClick: () -> Unit,
 ) {
-    Scaffold(
+    ChatScaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(
+            TopBar(
                 title = {
                     Text(
-                        text = AnnotatedString.fromHtml(stringResource(R.string.chat_greeting, "Gabriel")),
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.W500
-                        )
+                        text = AnnotatedString.fromHtml(stringResource(R.string.chat_title, "Gabriel")),
+                        style = MaterialTheme.typography.titleSmall
                     )
-                },
-                expandedHeight = 72.dp,
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                ),
+                }
             )
         },
-        content = { padding ->
-            Box(
-                modifier
-                    .padding(padding)
-                    .background(
-                        color = MaterialTheme.colorScheme.surface,
-                        shape = MaterialTheme.shapes.extraLarge.copy(
-                            bottomEnd = CornerSize(0.dp),
-                            bottomStart = CornerSize(0.dp),
-                        )
-                    )
-                    .clip(
-                        shape = MaterialTheme.shapes.extraLarge.copy(
-                            bottomEnd = CornerSize(0.dp),
-                            bottomStart = CornerSize(0.dp),
-                        )
-                    )
-                    .fillMaxSize(),
-            ) {
-                when (state) {
-                    ChatViewModel.CheatUiState.Loading -> Loading()
-                    ChatViewModel.CheatUiState.Failure -> Failure(onTryAgainClick)
-                    is ChatViewModel.CheatUiState.Success -> Success(state.data)
-                }
+        content = {
+            when (state) {
+                ChatViewModel.CheatUiState.Loading -> Loading()
+                ChatViewModel.CheatUiState.Failure -> Failure(onTryAgainClick)
+                is ChatViewModel.CheatUiState.Success -> Success(state.data)
             }
         }
     )
@@ -132,17 +102,15 @@ private fun Failure(onTryAgainClick: () -> Unit,) {
     FailureContent(
         title = R.string.common_generic_error_title,
         message = R.string.common_generic_error_message,
+        resource = {
+            AnimatedContent(modifier = Modifier.size(200.dp))
+        },
         action = {
             PrimaryButton(
-                text = stringResource(id = R.string.common_generic_error_button_retry),
+                text = R.string.common_generic_error_button_retry,
                 onClick = onTryAgainClick
             )
         },
-        resource = {
-            AnimatedContent(
-                modifier = Modifier.size(200.dp),
-            )
-        }
     )
 }
 

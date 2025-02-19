@@ -10,9 +10,6 @@ data class UserResponse(
     @SerialName("id")
     val id: Int,
 
-    @SerialName("self")
-    val self: Boolean,
-
     @SerialName("username")
     val username: String,
 

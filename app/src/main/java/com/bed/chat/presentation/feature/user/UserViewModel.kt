@@ -13,7 +13,7 @@ import com.bed.chat.domain.repositories.UserRepository
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    userRepository: UserRepository
 ) : ViewModel() {
-    val users get() = userRepository().cachedIn(viewModelScope)
+    val users= userRepository().cachedIn(viewModelScope)
 }

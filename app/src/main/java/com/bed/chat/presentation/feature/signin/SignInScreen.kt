@@ -122,7 +122,7 @@ fun SignInScreen(
 
                 PrimaryButton(
                     isLoading = formState.isLoading,
-                    text = stringResource(id = R.string.sign_in_title_button),
+                    text = R.string.sign_in_title_button,
                     onClick = {
                         keyboardController?.hide()
                         onFormEvent(SignInFormEvent.Submit)
