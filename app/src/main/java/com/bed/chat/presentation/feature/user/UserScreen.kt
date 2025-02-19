@@ -41,6 +41,7 @@ import com.bed.chat.presentation.shared.preview.fake.userOneFake
 import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.FailureContent
 import com.bed.chat.presentation.shared.components.AnimatedContent
+import com.bed.chat.presentation.shared.components.EmptyContent
 import com.bed.chat.presentation.shared.components.skeleton.UserItemSkeleton
 
 @Composable
@@ -93,7 +94,7 @@ private fun Loading() {
 
 @Composable
 private fun Failure(
-    onClick: () -> Unit,
+    onTryAgainClick: () -> Unit,
 ) {
     FailureContent(
         title = R.string.common_generic_error_title,
@@ -102,7 +103,7 @@ private fun Failure(
         action = {
             PrimaryButton(
                 text = R.string.common_generic_error_button_retry,
-                onClick = onClick
+                onClick = onTryAgainClick
             )
         }
     )
@@ -112,23 +113,34 @@ private fun Failure(
 private fun Success(
     users: LazyPagingItems<UserOutputModel>,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 8.dp, horizontal = 16.dp)
-            .background(MaterialTheme.colorScheme.surface),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(users.itemCount) { index ->
-            users[index]?.let {
-                UserItem(it)
+    if (users.itemCount == 0)
+        EmptyContent(
+            message = R.string.common_generic_error_empty,
+            resource = {
+                AnimatedContent(
+                    modifier = Modifier.size(200.dp),
+                    resId = R.raw.animation_empty_list
+                )
+            }
+        )
+    else
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 8.dp, horizontal = 16.dp)
+                .background(MaterialTheme.colorScheme.surface),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(users.itemCount) { index ->
+                users[index]?.let {
+                    UserItem(it)
 
-                if (index > users.itemCount) return@items
+                    if (index > users.itemCount) return@items
 
-                HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
+                    HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
+                }
             }
         }
-    }
 }
 
 @Composable
