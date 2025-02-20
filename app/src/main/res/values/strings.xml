@@ -6,6 +6,7 @@
     <string name="common_generic_error_button_retry">Tente novamente</string>
     <string name="common_generic_error_title">Alguma coisa deu errado</string>
     <string name="common_generic_error_empty">Opps, não há nada por aqui</string>
+    <string name="common_generic_error_load_more">Erro ao carregar mais informações</string>
     <string name="common_generic_error_message">Um erro occoreu ao tentar carregar as informações, tente mais tarde!</string>
 
     <!-- Redound Avatar -->
