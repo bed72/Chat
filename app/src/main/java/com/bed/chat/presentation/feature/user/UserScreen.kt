@@ -182,7 +182,7 @@ private fun LoadFailure(onTryAgainClick: () -> Unit) {
         PrimaryButton(
             text = R.string.common_generic_error_button_retry,
             onClick = onTryAgainClick,
-            modifier = Modifier.padding(horizontal = 30.dp).height(46.dp)
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 30.dp).height(46.dp)
         )
     }
 }
