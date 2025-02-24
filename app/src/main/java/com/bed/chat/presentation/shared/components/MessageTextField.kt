@@ -28,7 +28,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -49,6 +48,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import com.bed.chat.R
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
+import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 
 @Composable
 fun MessageTextField(
@@ -149,7 +149,7 @@ private fun Diver() {
         modifier = Modifier
             .height(32.dp)
             .width(1.dp)
-            .background(color = MaterialTheme.colorScheme.outline,)
+            .background(color = MaterialTheme.colorScheme.outline)
     )
 }
 
@@ -158,10 +158,7 @@ fun Button(onSendMessage: () -> Unit) {
     Surface(
         modifier = Modifier
             .size(32.dp)
-            .clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) { onSendMessage() },
+            .then(noRippleClickable(onSendMessage)),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primaryContainer
     ) {

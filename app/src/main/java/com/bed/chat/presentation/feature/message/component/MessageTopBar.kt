@@ -1,6 +1,5 @@
 package com.bed.chat.presentation.feature.message.component
 
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
 
 import androidx.compose.ui.unit.dp
@@ -20,17 +19,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.interaction.MutableInteractionSource
 
 import com.bed.chat.R
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.components.TopBar
 import com.bed.chat.presentation.shared.components.RoundedAvatar
+import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,10 +73,7 @@ fun MessageTopBar(
                 contentDescription = stringResource(R.string.common_go_back_icon_description),
                 modifier = Modifier
                     .padding(end = 8.dp)
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() }
-                    ) { goBack() }
+                    .then(noRippleClickable(goBack))
             )
         }
     )

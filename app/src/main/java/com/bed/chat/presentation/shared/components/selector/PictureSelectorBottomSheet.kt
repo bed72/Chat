@@ -24,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.height
@@ -35,7 +34,6 @@ import androidx.compose.foundation.layout.defaultMinSize
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.foundation.interaction.MutableInteractionSource
 
 import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
@@ -48,8 +46,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 
 import com.bed.chat.R
+
 import com.bed.chat.data.providers.ChatFileProvider
+
 import com.bed.chat.presentation.shared.theme.ChatTheme
+import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -133,10 +134,7 @@ private fun PictureSelectorOption(
             .fillMaxWidth()
             .defaultMinSize(minHeight = 48.dp)
             .padding(horizontal = 16.dp)
-            .clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) { onClick() }
+            .then(noRippleClickable(onClick))
     ) {
         Icon(
             painter = painterResource(id = icon),

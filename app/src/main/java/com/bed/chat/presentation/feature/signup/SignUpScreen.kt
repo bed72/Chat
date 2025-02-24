@@ -11,6 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -26,18 +36,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.interaction.MutableInteractionSource
-
 import com.bed.chat.R
 
 import com.bed.chat.presentation.feature.signup.state.SignUpFormState
@@ -49,6 +47,7 @@ import com.bed.chat.presentation.shared.components.Header
 import com.bed.chat.presentation.shared.components.Container
 import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.TextLinkButton
+import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 import com.bed.chat.presentation.shared.components.PrimaryTextField
 import com.bed.chat.presentation.shared.components.selector.PictureSelector
 import com.bed.chat.presentation.shared.components.selector.PictureSelectorBottomSheet
@@ -111,10 +110,7 @@ fun SignUpScreen(
                     isCompressing = formState.isCompressingImage,
                     modifier = modifier
                         .align(Alignment.CenterHorizontally)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { onFormEvent(SignUpFormEvent.OpenPictureSelectorBottomSheet) }
+                        .then(noRippleClickable { SignUpFormEvent.OpenPictureSelectorBottomSheet })
                 )
 
                 Spacer(modifier = modifier.height(16.dp))

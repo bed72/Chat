@@ -9,12 +9,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.interaction.MutableInteractionSource
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -38,7 +36,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 import com.bed.chat.R
+
 import com.bed.chat.presentation.shared.theme.ChatTheme
+import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 
 @Composable
 fun PrimaryTextField(
@@ -144,10 +144,7 @@ private fun IconTextField(
             handleIcon(iconIsVisible),
             tint = MaterialTheme.colorScheme.outline,
             contentDescription = stringResource(handleIconDescription(iconIsVisible)),
-            modifier = modifier.clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) { setIconIsVisible(!iconIsVisible) }
+            modifier = modifier.then(noRippleClickable { setIconIsVisible(!iconIsVisible) })
         )
     else Spacer(modifier.size(0.dp))
 }

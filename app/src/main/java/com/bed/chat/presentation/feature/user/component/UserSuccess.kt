@@ -7,7 +7,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
 
 import androidx.compose.ui.unit.dp
@@ -16,12 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 
-import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.CircularProgressIndicator
-
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -32,7 +25,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.interaction.MutableInteractionSource
+
+
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.CircularProgressIndicator
 
 import com.bed.chat.R
 
@@ -45,6 +43,8 @@ import com.bed.chat.presentation.shared.components.UserItem
 import com.bed.chat.presentation.shared.components.EmptyContent
 import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.AnimatedContent
+
+import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 
 @Composable
 fun UserSuccess(
@@ -73,10 +73,10 @@ fun UserSuccess(
         ) {
             items(users.itemCount) { index ->
                 users[index]?.let {
-                    UserItem(it, modifier = Modifier.clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() }
-                    ) { onClicked(it.id) })
+                    UserItem(
+                        it,
+                        modifier = Modifier.then(noRippleClickable { onClicked(it.id) })
+                    )
 
                     if (index > users.itemCount) return@items
 
@@ -93,9 +93,7 @@ fun UserSuccess(
 @Composable
 private fun LoadMore() {
     Box(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
+        modifier = Modifier.padding(16.dp).fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
@@ -105,9 +103,7 @@ private fun LoadMore() {
 @Composable
 private fun LoadFailure(onTryAgainClick: () -> Unit) {
     Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
+        modifier = Modifier.padding(16.dp).fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
