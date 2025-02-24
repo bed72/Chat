@@ -23,6 +23,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.Color
 
 import com.bed.chat.R
 import com.bed.chat.presentation.shared.theme.ChatTheme
@@ -32,14 +33,16 @@ fun RoundedAvatar(
     model: Any?,
     size: Dp = 60.dp,
     modifier: Modifier = Modifier,
+    iconColor: Color = MaterialTheme.colorScheme.onSurface,
     @DrawableRes defaultAvatar: Int = R.drawable.ic_profile,
+    backgroundColor: Color = MaterialTheme.colorScheme.primary,
     @StringRes description: Int = R.string.default_redound_avatar_description
 ) {
     Box(
         modifier = modifier
             .clip(CircleShape)
             .size(size)
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
+            .background(backgroundColor.copy(alpha = 0.1f)),
         contentAlignment = Alignment.Center
     ) {
         AsyncImage(
@@ -48,7 +51,7 @@ fun RoundedAvatar(
             error = painterResource(defaultAvatar),
             fallback = painterResource(defaultAvatar),
             placeholder = painterResource(defaultAvatar),
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
+            colorFilter = ColorFilter.tint(iconColor.copy(alpha = 0.6f))
         )
     }
 

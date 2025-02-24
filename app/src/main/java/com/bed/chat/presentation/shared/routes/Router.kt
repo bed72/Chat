@@ -14,6 +14,7 @@ import com.bed.chat.presentation.feature.splash.SplashRoute
 import com.bed.chat.presentation.feature.signin.SignInRoute
 import com.bed.chat.presentation.feature.signup.SignUpRoute
 import com.bed.chat.presentation.feature.profile.ProfileRoute
+import com.bed.chat.presentation.feature.message.MessageRoute
 
 import com.bed.chat.presentation.shared.extensions.slideInTo
 import com.bed.chat.presentation.shared.extensions.slideOutTo
@@ -75,11 +76,22 @@ fun Router(state: RoutesState) {
         }
 
         composable<Routes.User> {
-            UserRoute()
+            UserRoute(
+                navigateToChat = { navController.navigate(Routes.Message(it)) }
+            )
         }
 
         composable<Routes.Profile> {
             ProfileRoute()
+        }
+
+        composable<Routes.Message>(
+            enterTransition = { slideInTo(AnimatedContentTransitionScope.SlideDirection.Left) },
+            exitTransition = { slideOutTo(AnimatedContentTransitionScope.SlideDirection.Right) }
+        )  {
+            MessageRoute(
+                goBack = { navController.popBackStack() }
+            )
         }
     }
 }

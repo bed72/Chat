@@ -66,7 +66,7 @@ private fun RowScope.LabelBarItemComponent(
     Text(
         modifier = modifier,
         text = stringResource(id = title),
-        style = MaterialTheme.typography.bodyLarge.copy(
+        style = MaterialTheme.typography.bodySmall.copy(
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.W700,
             color = if (isSelected) MaterialTheme.colorScheme.onSurface
             else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4F)

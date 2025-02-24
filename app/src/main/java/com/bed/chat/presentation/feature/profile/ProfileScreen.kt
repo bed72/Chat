@@ -37,7 +37,7 @@ fun ProfileScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.profile_title),
-                        style = MaterialTheme.typography.titleSmall
+                        style = MaterialTheme.typography.headlineSmall
                     )
                 }
             )

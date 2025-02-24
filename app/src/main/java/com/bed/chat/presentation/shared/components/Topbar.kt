@@ -30,7 +30,7 @@ import com.bed.chat.presentation.shared.theme.ChatTheme
 @OptIn(ExperimentalMaterial3Api::class)
 fun TopBar(
     modifier: Modifier = Modifier,
-    expandedHeight: Dp = 100.dp,
+    expandedHeight: Dp = 72.dp,
     title: @Composable () -> Unit,
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},

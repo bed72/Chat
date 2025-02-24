@@ -2,6 +2,9 @@
     <string name="empty" />
     <string name="app_name">chat</string>
 
+    <!-- Icons -->
+    <string name="common_go_back_icon_description">Ícone do botão de voltar</string>
+
     <!-- Errors -->
     <string name="common_generic_error_button_retry">Tente novamente</string>
     <string name="common_generic_error_title">Alguma coisa deu errado</string>
@@ -32,6 +35,9 @@
     <string name="placeholder_password_input">Entre com sua senha</string>
     <string name="show_password_input">Ícone para mostrar a senha.</string>
     <string name="hide_password_input">Ícone para esconder a senha.</string>
+
+    <string name="message_text_field_button_description">Enviar mensagem</string>
+    <string name="message_text_field_placeholder_description">Mensagem …</string>
 
     <!-- Picture Selector Component -->
     <string name="picture_selector_title">Selecione uma imagem</string>

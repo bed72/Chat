@@ -27,6 +27,9 @@ sealed interface Routes {
 
     @Serializable
     object Profile
+
+    @Serializable
+    data class Message(val userId: Int)
 }
 
 enum class TopLevelRoutes(
