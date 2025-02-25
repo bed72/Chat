@@ -22,7 +22,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 
-import com.bed.chat.domain.models.output.user.UserOutputModel
+import com.bed.chat.domain.models.output.UserOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.preview.fake.userOneFake

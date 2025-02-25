@@ -1,6 +1,4 @@
-package com.bed.chat.domain.models.output.chat
-
-import com.bed.chat.domain.models.output.user.UserOutputModel
+package com.bed.chat.domain.models.output
 
 data class ChatOutputModel(
     val id: Int,

@@ -9,6 +9,7 @@ import dagger.hilt.components.SingletonComponent
 
 import com.bed.chat.data.datasources.ChatDatasource
 import com.bed.chat.data.datasources.UserDatasource
+import com.bed.chat.data.datasources.MessageDatasource
 import com.bed.chat.data.datasources.CryptographyDatasource
 import com.bed.chat.data.datasources.AuthenticationDatasource
 import com.bed.chat.data.datasources.storage.StorageDatasource
@@ -16,6 +17,7 @@ import com.bed.chat.data.datasources.storage.SelfUserStorageDatasource
 
 import com.bed.chat.external.datasources.remoto.RemoteChatDatasource
 import com.bed.chat.external.datasources.remoto.RemoteUserDatasource
+import com.bed.chat.external.datasources.remoto.RemoteMessageDatasource
 import com.bed.chat.external.datasources.remoto.RemoteAuthenticationDatasource
 
 import com.bed.chat.external.datasources.local.LocalCryptographyDatasource
@@ -32,6 +34,10 @@ interface DatasourceModule {
     @Binds
     @Singleton
     fun bindRemoteUserDatasource(datasource: RemoteUserDatasource): UserDatasource
+
+    @Binds
+    @Singleton
+    fun bindRemoteMessageDatasource(datasource: RemoteMessageDatasource): MessageDatasource
 
     @Binds
     @Singleton

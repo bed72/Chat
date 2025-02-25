@@ -7,7 +7,7 @@ import androidx.paging.PagingSource
 
 import com.bed.chat.data.datasources.UserDatasource
 import com.bed.chat.external.clients.request.PaginationRequest
-import com.bed.chat.external.clients.response.user.UserResponse
+import com.bed.chat.external.clients.response.UserResponse
 
 class UserPagingSource @Inject constructor(
     private val datasource: UserDatasource
@@ -22,12 +22,12 @@ class UserPagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserResponse> = try {
         val limit = params.loadSize
         val offset = params.key ?: 0
-        val response = getUsers(limit, offset).getOrThrow()
+        val (_, hasMore, data) = getUsers(limit, offset).getOrThrow()
 
         LoadResult.Page(
+            data = data,
             prevKey = null,
-            data = response.users,
-            nextKey = if (!response.hasMore) null else limit + offset
+            nextKey = if (!hasMore) null else limit + offset
         )
     } catch (exception: Exception) {
         LoadResult.Error(exception)

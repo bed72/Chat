@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import com.bed.chat.domain.repositories.ChatRepository
-import com.bed.chat.domain.models.output.chat.ChatOutputModel
+import com.bed.chat.domain.models.output.ChatOutputModel
 
 import com.bed.chat.presentation.shared.extensions.launch
 

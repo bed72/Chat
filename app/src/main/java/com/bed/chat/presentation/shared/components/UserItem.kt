@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 
-import com.bed.chat.domain.models.output.user.UserOutputModel
+import com.bed.chat.domain.models.output.UserOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.preview.fake.userOneFake

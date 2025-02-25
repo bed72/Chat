@@ -2,7 +2,7 @@ package com.bed.chat.domain.repositories.storage
 
 import kotlinx.coroutines.flow.Flow
 
-import com.bed.chat.domain.models.output.user.UserOutputModel
+import com.bed.chat.domain.models.output.UserOutputModel
 
 interface SelfUserRepository {
     val user: Flow<UserOutputModel>

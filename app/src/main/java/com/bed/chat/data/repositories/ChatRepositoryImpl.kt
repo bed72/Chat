@@ -9,10 +9,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import com.bed.chat.data.datasources.ChatDatasource
 
 import com.bed.chat.external.modules.IoDispatcher
-import com.bed.chat.external.clients.response.chat.toModel
+import com.bed.chat.external.clients.response.toModel
 import com.bed.chat.external.clients.request.PaginationRequest
 
-import com.bed.chat.domain.models.output.chat.ChatOutputModel
+import com.bed.chat.domain.models.output.ChatOutputModel
 
 import com.bed.chat.domain.repositories.ChatRepository
 import com.bed.chat.domain.repositories.storage.SelfUserRepository
@@ -28,7 +28,7 @@ class ChatRepositoryImpl @Inject constructor(
                 val selfId = repository.user.firstOrNull()?.id
                 val response = datasource(toRequest(limit, offset))
 
-                response.map { it.toModel(selfId) }.getOrThrow().conversations
+                response.map { it.toModel(selfId) }.getOrThrow().data
             }
         }
     }

@@ -9,14 +9,15 @@ import androidx.paging.map
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.PagingConfig
+
 import com.bed.chat.data.datasources.UserDatasource
 
 import com.bed.chat.domain.repositories.UserRepository
-import com.bed.chat.domain.models.output.user.UserOutputModel
+import com.bed.chat.domain.models.output.UserOutputModel
 
 import com.bed.chat.external.paging.UserPagingSource
-import com.bed.chat.external.clients.response.user.toModel
-import com.bed.chat.external.clients.response.user.UserResponse
+import com.bed.chat.external.clients.response.toModel
+import com.bed.chat.external.clients.response.UserResponse
 
 class UserRepositoryImpl @Inject constructor(
     private val datasource: UserDatasource

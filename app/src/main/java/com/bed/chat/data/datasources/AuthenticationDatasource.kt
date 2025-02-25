@@ -2,7 +2,7 @@ package com.bed.chat.data.datasources
 
 import com.bed.chat.external.clients.request.SignInRequest
 import com.bed.chat.external.clients.request.SignUpRequest
-import com.bed.chat.external.clients.response.user.UserResponse
+import com.bed.chat.external.clients.response.UserResponse
 import com.bed.chat.external.clients.response.ImageResponse
 import com.bed.chat.external.clients.response.TokenResponse
 

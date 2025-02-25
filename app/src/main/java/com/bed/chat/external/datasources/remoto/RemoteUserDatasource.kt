@@ -9,12 +9,13 @@ import com.bed.chat.data.datasources.UserDatasource
 import com.bed.chat.external.clients.request
 import com.bed.chat.external.clients.HttpUrl
 import com.bed.chat.external.clients.HttpClient
+import com.bed.chat.external.clients.response.UserResponse
 import com.bed.chat.external.clients.request.PaginationRequest
-import com.bed.chat.external.clients.response.user.PaginatedUserResponse
+import com.bed.chat.external.clients.response.PaginatedResponse
 
 class RemoteUserDatasource @Inject constructor(private val client: HttpClient) : UserDatasource {
-    override suspend fun invoke(parameter: PaginationRequest): Result<PaginatedUserResponse> =
-        client.http.request<PaginatedUserResponse> {
+    override suspend fun invoke(parameter: PaginationRequest): Result<PaginatedResponse<UserResponse>> =
+        client.http.request<PaginatedResponse<UserResponse>> {
             method = HttpMethod.Get
             url { configurePaginationParameter(HttpUrl.USERS, parameter) }
         }

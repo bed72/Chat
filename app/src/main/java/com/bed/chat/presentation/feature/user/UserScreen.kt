@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 
 import androidx.compose.ui.tooling.preview.Preview
 
-import com.bed.chat.domain.models.output.user.UserOutputModel
+import com.bed.chat.domain.models.output.UserOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.components.ChatScaffold

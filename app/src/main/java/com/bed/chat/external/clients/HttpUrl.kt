@@ -5,7 +5,8 @@ enum class HttpUrl(val value: String) {
     USERS("/users"),
     SIGN_IN("/signin"),
     SIGN_UP("/signup"),
+    MESSAGES("/messages"),
     AUTHENTICATE("/authenticate"),
     UPLOADING("/profile-picture"),
-    CONVERSATIONS("/conversations"),
+    CONVERSATIONS("/conversations")
 }

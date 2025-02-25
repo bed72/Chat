@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
-import com.bed.chat.domain.models.output.chat.ChatOutputModel
+import com.bed.chat.domain.models.output.ChatOutputModel
 
 import com.bed.chat.presentation.feature.chats.component.ChatTopBar
 import com.bed.chat.presentation.feature.chats.component.ChatLoading
