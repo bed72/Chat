@@ -26,7 +26,7 @@ import com.bed.chat.presentation.shared.preview.fake.messageFiveFake
 import com.bed.chat.presentation.shared.preview.fake.messageThreeFake
 
 @Composable
-fun ChatMessageBubble(
+fun MessageBubble(
     message: MessageOutputModel,
     previousMessage: MessageOutputModel?,
     modifier: Modifier = Modifier
@@ -34,7 +34,7 @@ fun ChatMessageBubble(
     val isCurrentMessage = message.isSelf
     val isSamePrevious = previousMessage?.senderId == message.senderId
 
-    val surfaceColor = if  (isCurrentMessage) MaterialTheme.colorScheme.tertiary
+    val surfaceColor = if  (isCurrentMessage) MaterialTheme.colorScheme.primary
     else MaterialTheme.colorScheme.secondary
 
     val horizontalAlignment = if (isCurrentMessage) Alignment.End else Alignment.Start
@@ -45,7 +45,7 @@ fun ChatMessageBubble(
     ) {
         Surface(
             modifier = Modifier.wrapContentWidth(),
-            color = surfaceColor,
+            color = surfaceColor.copy(alpha = 0.2f),
             shape =  RoundedCornerShape(100.dp),
         ) {
             Text(
@@ -55,21 +55,21 @@ fun ChatMessageBubble(
             )
         }
 
-        if (!isSamePrevious) {
+        if (!isSamePrevious)
             Text(
+                modifier = Modifier.padding(start = 4.dp, top = 4.dp),
                 text = message.date,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-        }
     }
 }
 
 @Composable
 @Preview(showBackground = true)
-private fun ChatBubblePreview() {
+private fun MessageBubblePreview() {
     ChatTheme {
-        ChatMessageBubble(
+        MessageBubble(
             message = messageFiveFake,
             previousMessage = messageFourFake
         )
@@ -78,9 +78,9 @@ private fun ChatBubblePreview() {
 
 @Composable
 @Preview(showBackground = true)
-private fun ChatBubbleSenderPreview() {
+private fun MessageBubbleSenderPreview() {
     ChatTheme {
-        ChatMessageBubble(
+        MessageBubble(
             message = messageOneFake,
             previousMessage = messageThreeFake
         )

@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.shared.components
+package com.bed.chat.presentation.shared.components.empty
 
 import androidx.annotation.StringRes
 
@@ -25,9 +25,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Arrangement
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.font.FontWeight
 
 import com.bed.chat.R
+import com.bed.chat.presentation.shared.components.AnimatedContent
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 

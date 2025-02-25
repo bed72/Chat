@@ -160,12 +160,12 @@ fun Button(onSendMessage: () -> Unit) {
             .size(32.dp)
             .then(noRippleClickable(onSendMessage)),
         shape = CircleShape,
-        color = MaterialTheme.colorScheme.primaryContainer
+        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
     ) {
         Icon(
             modifier = Modifier.padding(8.dp),
+            tint = MaterialTheme.colorScheme.secondary,
             imageVector = Icons.AutoMirrored.Default.Send,
-            tint = MaterialTheme.colorScheme.onPrimaryContainer,
             contentDescription = stringResource(R.string.message_text_field_button_description)
         )
     }

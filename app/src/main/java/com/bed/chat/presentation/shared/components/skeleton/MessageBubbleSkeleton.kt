@@ -25,7 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import com.bed.chat.presentation.shared.theme.ChatTheme
 
 @Composable
-fun ChatMessageBubbleSkeleton(
+fun MessageBubbleSkeleton(
     isSender: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -56,13 +56,13 @@ fun ChatMessageBubbleSkeleton(
 
 @Composable
 @Preview(showBackground = true)
-private fun ChatMessageBubbleSkeletonPreview() {
+private fun MessageBubbleSkeletonPreview() {
     ChatTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
         ) {
             repeat(8) {
-                ChatMessageBubbleSkeleton(
+                MessageBubbleSkeleton(
                     isSender = it %2 == 0
                 )
             }

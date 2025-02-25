@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.feature.chats.component
+package com.bed.chat.presentation.feature.message.component
 
 import androidx.compose.runtime.Composable
 
@@ -15,9 +15,8 @@ import com.bed.chat.presentation.shared.components.PrimaryButton
 import com.bed.chat.presentation.shared.components.FailureContent
 import com.bed.chat.presentation.shared.components.AnimatedContent
 
-
 @Composable
-fun ChatFailure(
+fun MessageFailure(
     onTryAgainClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -39,9 +38,9 @@ fun ChatFailure(
 
 @Preview
 @Composable
-private fun ChatFailurePreview() {
+private fun MessageFailurePreview() {
     ChatTheme {
-        ChatFailure(
+        MessageFailure(
             onTryAgainClick = {}
         )
     }

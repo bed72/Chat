@@ -1,35 +1,51 @@
 package com.bed.chat.presentation.feature.message.component
 
-import androidx.compose.runtime.Composable
+import kotlinx.coroutines.flow.Flow
 
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+
+import androidx.compose.runtime.Composable
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+
 import com.bed.chat.R
+import com.bed.chat.domain.models.MessageOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.components.MessageTextField
+import com.bed.chat.presentation.shared.preview.provider.MessagePreviewParameterProvider
 
 @Composable
 fun MessageContent(
     message: String,
     onSendMessage: () -> Unit,
     onMessageChange: (String) -> Unit,
+    messages: LazyPagingItems<MessageOutputModel>,
 ) {
+
     Column {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-
+            when (messages.loadState.refresh) {
+                LoadState.Loading -> MessageLoading()
+                is LoadState.Error -> MessageFailure({ messages.refresh() })
+                is LoadState.NotLoading -> MessageSuccess(messages)
+            }
         }
 
         MessageTextField(
@@ -44,12 +60,15 @@ fun MessageContent(
 
 @Preview
 @Composable
-private fun MessageContentPreview() {
+private fun MessageContentPreview(
+    @PreviewParameter(MessagePreviewParameterProvider::class) messages: Flow<PagingData<MessageOutputModel>>
+) {
     ChatTheme {
         MessageContent(
             message = "Olá, tudo bem?",
             onSendMessage = {},
-            onMessageChange = {}
+            onMessageChange = {},
+            messages = messages.collectAsLazyPagingItems()
         )
     }
 }
