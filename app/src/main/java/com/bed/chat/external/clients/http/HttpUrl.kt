@@ -1,4 +1,4 @@
-package com.bed.chat.external.clients
+package com.bed.chat.external.clients.http
 
 enum class HttpUrl(val value: String) {
     API("https://chat-api.androidmoderno.com.br"),

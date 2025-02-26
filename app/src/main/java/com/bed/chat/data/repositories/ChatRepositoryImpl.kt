@@ -9,8 +9,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import com.bed.chat.data.datasources.ChatDatasource
 
 import com.bed.chat.external.modules.IoDispatcher
-import com.bed.chat.external.clients.response.toModel
-import com.bed.chat.external.clients.request.PaginationRequest
+import com.bed.chat.external.clients.http.response.toModel
+import com.bed.chat.external.clients.http.request.PaginationRequest
 
 import com.bed.chat.domain.models.output.ChatOutputModel
 

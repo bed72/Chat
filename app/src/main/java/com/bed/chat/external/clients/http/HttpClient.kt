@@ -1,4 +1,4 @@
-package com.bed.chat.external.clients
+package com.bed.chat.external.clients.http
 
 import android.util.Log
 

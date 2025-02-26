@@ -1,4 +1,4 @@
-package com.bed.chat.external.paging
+package com.bed.chat.external.clients.paging
 
 import javax.inject.Inject
 
@@ -6,8 +6,8 @@ import androidx.paging.PagingState
 import androidx.paging.PagingSource
 
 import com.bed.chat.data.datasources.UserDatasource
-import com.bed.chat.external.clients.request.PaginationRequest
-import com.bed.chat.external.clients.response.UserResponse
+import com.bed.chat.external.clients.http.request.PaginationRequest
+import com.bed.chat.external.clients.http.response.UserResponse
 
 class UserPagingSource @Inject constructor(
     private val datasource: UserDatasource

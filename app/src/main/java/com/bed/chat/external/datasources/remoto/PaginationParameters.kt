@@ -3,8 +3,8 @@ package com.bed.chat.external.datasources.remoto
 import io.ktor.http.path
 import io.ktor.http.URLBuilder
 
-import com.bed.chat.external.clients.HttpUrl
-import com.bed.chat.external.clients.request.PaginationRequest
+import com.bed.chat.external.clients.http.HttpUrl
+import com.bed.chat.external.clients.http.request.PaginationRequest
 
 fun URLBuilder.configurePaginationParameter(path: HttpUrl, parameter: PaginationRequest, arguments: Any? = null) {
     path(if (arguments == null) path.value else "${path.value}/$arguments")

@@ -19,15 +19,15 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.MultiPartFormDataContent
 
-import com.bed.chat.external.clients.request
-import com.bed.chat.external.clients.HttpUrl
-import com.bed.chat.external.clients.HttpClient
+import com.bed.chat.external.clients.http.request
+import com.bed.chat.external.clients.http.HttpUrl
+import com.bed.chat.external.clients.http.HttpClient
 
-import com.bed.chat.external.clients.request.SignInRequest
-import com.bed.chat.external.clients.request.SignUpRequest
-import com.bed.chat.external.clients.response.UserResponse
-import com.bed.chat.external.clients.response.TokenResponse
-import com.bed.chat.external.clients.response.ImageResponse
+import com.bed.chat.external.clients.http.request.SignInRequest
+import com.bed.chat.external.clients.http.request.SignUpRequest
+import com.bed.chat.external.clients.http.response.UserResponse
+import com.bed.chat.external.clients.http.response.TokenResponse
+import com.bed.chat.external.clients.http.response.ImageResponse
 
 import com.bed.chat.data.datasources.AuthenticationDatasource
 

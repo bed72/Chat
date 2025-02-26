@@ -1,4 +1,4 @@
-package com.bed.chat.external.clients.request
+package com.bed.chat.external.clients.http.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

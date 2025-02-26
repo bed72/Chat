@@ -15,9 +15,9 @@ import com.bed.chat.data.datasources.UserDatasource
 import com.bed.chat.domain.repositories.UserRepository
 import com.bed.chat.domain.models.output.UserOutputModel
 
-import com.bed.chat.external.paging.UserPagingSource
-import com.bed.chat.external.clients.response.toModel
-import com.bed.chat.external.clients.response.UserResponse
+import com.bed.chat.external.clients.paging.UserPagingSource
+import com.bed.chat.external.clients.http.response.toModel
+import com.bed.chat.external.clients.http.response.UserResponse
 
 class UserRepositoryImpl @Inject constructor(
     private val datasource: UserDatasource

@@ -20,6 +20,7 @@ import com.bed.chat.external.datasources.remoto.RemoteUserDatasource
 import com.bed.chat.external.datasources.remoto.RemoteMessageDatasource
 import com.bed.chat.external.datasources.remoto.RemoteAuthenticationDatasource
 
+import com.bed.chat.external.datasources.local.LocalMessageDatasource
 import com.bed.chat.external.datasources.local.LocalCryptographyDatasource
 import com.bed.chat.external.datasources.local.storage.LocalStorageDatasource
 import com.bed.chat.external.datasources.local.storage.LocalSelfUserDatasource
@@ -47,6 +48,10 @@ interface DatasourceModule {
     @Binds
     @Singleton
     fun bindCryptographyDatasource(datasource: LocalCryptographyDatasource): CryptographyDatasource
+
+    @Binds
+    @Singleton
+    fun bindLocalMessageDatasource(datasource: LocalMessageDatasource): MessageDatasource
 
     @Binds
     @Singleton

@@ -6,12 +6,12 @@ import io.ktor.http.HttpMethod
 
 import com.bed.chat.data.datasources.UserDatasource
 
-import com.bed.chat.external.clients.request
-import com.bed.chat.external.clients.HttpUrl
-import com.bed.chat.external.clients.HttpClient
-import com.bed.chat.external.clients.response.UserResponse
-import com.bed.chat.external.clients.request.PaginationRequest
-import com.bed.chat.external.clients.response.PaginatedResponse
+import com.bed.chat.external.clients.http.request
+import com.bed.chat.external.clients.http.HttpUrl
+import com.bed.chat.external.clients.http.HttpClient
+import com.bed.chat.external.clients.http.response.UserResponse
+import com.bed.chat.external.clients.http.request.PaginationRequest
+import com.bed.chat.external.clients.http.response.PaginatedResponse
 
 class RemoteUserDatasource @Inject constructor(private val client: HttpClient) : UserDatasource {
     override suspend fun invoke(parameter: PaginationRequest): Result<PaginatedResponse<UserResponse>> =

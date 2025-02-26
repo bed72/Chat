@@ -65,8 +65,8 @@ android {
 }
 
 dependencies {
-//    implementation(libs.exifinterface)
     // Others
+    ksp(libs.room.compiler)
     ksp(libs.hilt.compiler)
     implementation(libs.bundles.core)
     implementation(platform(libs.compose))

@@ -7,8 +7,8 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-import com.bed.chat.external.clients.HttpClient
-import com.bed.chat.external.clients.HttpClientImpl
+import com.bed.chat.external.clients.http.HttpClient
+import com.bed.chat.external.clients.http.HttpClientImpl
 
 @Module
 @InstallIn(SingletonComponent::class)

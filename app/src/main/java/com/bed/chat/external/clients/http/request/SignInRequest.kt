@@ -1,4 +1,4 @@
-package com.bed.chat.external.clients.request
+package com.bed.chat.external.clients.http.request
 
 import com.bed.chat.domain.models.input.SignInInputModel
 import kotlinx.serialization.SerialName
