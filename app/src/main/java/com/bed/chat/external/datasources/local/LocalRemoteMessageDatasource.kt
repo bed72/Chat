@@ -4,15 +4,15 @@ import javax.inject.Inject
 
 import androidx.paging.PagingSource
 
-import com.bed.chat.data.datasources.MessageDatasource
+import com.bed.chat.data.datasources.LocalMessageDatasource
 
 import com.bed.chat.external.clients.database.ChatDatabase
 import com.bed.chat.external.clients.database.entities.MessageEntity
 import com.bed.chat.external.clients.database.entities.MessageRemoteKeyEntity
 
-class LocalMessageDatasource @Inject constructor(
+class LocalRemoteMessageDatasourceImpl @Inject constructor(
     private val database: ChatDatabase
-) : MessageDatasource {
+) : LocalMessageDatasource {
 
     private val message get() = database.messageDao()
     private val messageKey get() = database.messageRemoteKeyDao()

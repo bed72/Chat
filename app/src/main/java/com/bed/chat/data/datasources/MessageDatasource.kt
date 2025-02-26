@@ -9,18 +9,20 @@ import com.bed.chat.external.clients.http.response.PaginatedResponse
 import com.bed.chat.external.clients.database.entities.MessageEntity
 import com.bed.chat.external.clients.database.entities.MessageRemoteKeyEntity
 
-interface MessageDatasource {
-    suspend operator fun invoke(parameter: Pair<Int, PaginationRequest>): Result<PaginatedResponse<MessageResponse>>? = null
+interface RemoteMessageDatasource {
+    suspend operator fun invoke(parameter: Pair<Int, PaginationRequest>): Result<PaginatedResponse<MessageResponse>>
+}
 
-    suspend fun deleteMessage(parameter: Int) {}
+interface LocalMessageDatasource {
+    suspend fun deleteMessage(parameter: Int)
 
-    suspend fun insertMessage(parameter: List<MessageEntity>) {}
+    suspend fun insertMessage(parameter: List<MessageEntity>)
 
-    fun getMessage(parameter: Int): PagingSource<Int, MessageEntity>? = null
+    fun getMessage(parameter: Int): PagingSource<Int, MessageEntity>
 
-    suspend fun deleteMessageRemoteKey(parameter: Int) {}
+    suspend fun deleteMessageRemoteKey(parameter: Int)
 
-    suspend fun insertMessageRemoteKey(parameter: MessageRemoteKeyEntity) {}
+    suspend fun insertMessageRemoteKey(parameter: MessageRemoteKeyEntity)
 
-    suspend fun getMessageRemoteKey(parameter: Int): MessageRemoteKeyEntity? = null
+    suspend fun getMessageRemoteKey(parameter: Int): MessageRemoteKeyEntity?
 }

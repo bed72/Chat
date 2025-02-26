@@ -9,21 +9,22 @@ import dagger.hilt.components.SingletonComponent
 
 import com.bed.chat.data.datasources.ChatDatasource
 import com.bed.chat.data.datasources.UserDatasource
-import com.bed.chat.data.datasources.MessageDatasource
+import com.bed.chat.data.datasources.RemoteMessageDatasource
 import com.bed.chat.data.datasources.CryptographyDatasource
 import com.bed.chat.data.datasources.AuthenticationDatasource
+import com.bed.chat.data.datasources.LocalMessageDatasource
 import com.bed.chat.data.datasources.storage.StorageDatasource
 import com.bed.chat.data.datasources.storage.SelfUserStorageDatasource
 
-import com.bed.chat.external.datasources.remoto.RemoteChatDatasource
-import com.bed.chat.external.datasources.remoto.RemoteUserDatasource
-import com.bed.chat.external.datasources.remoto.RemoteMessageDatasource
-import com.bed.chat.external.datasources.remoto.RemoteAuthenticationDatasource
-
-import com.bed.chat.external.datasources.local.LocalMessageDatasource
 import com.bed.chat.external.datasources.local.LocalCryptographyDatasource
 import com.bed.chat.external.datasources.local.storage.LocalStorageDatasource
 import com.bed.chat.external.datasources.local.storage.LocalSelfUserDatasource
+import com.bed.chat.external.datasources.local.LocalRemoteMessageDatasourceImpl
+
+import com.bed.chat.external.datasources.remoto.RemoteChatDatasource
+import com.bed.chat.external.datasources.remoto.RemoteUserDatasource
+import com.bed.chat.external.datasources.remoto.RemoteAuthenticationDatasource
+import com.bed.chat.external.datasources.remoto.RemoteRemoteMessageDatasourceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -38,7 +39,7 @@ interface DatasourceModule {
 
     @Binds
     @Singleton
-    fun bindRemoteMessageDatasource(datasource: RemoteMessageDatasource): MessageDatasource
+    fun bindRemoteMessageDatasource(datasource: RemoteRemoteMessageDatasourceImpl): RemoteMessageDatasource
 
     @Binds
     @Singleton
@@ -51,7 +52,7 @@ interface DatasourceModule {
 
     @Binds
     @Singleton
-    fun bindLocalMessageDatasource(datasource: LocalMessageDatasource): MessageDatasource
+    fun bindLocalMessageDatasource(datasource: LocalRemoteMessageDatasourceImpl): LocalMessageDatasource
 
     @Binds
     @Singleton

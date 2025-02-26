@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import com.bed.chat.domain.models.output.MessageOutputModel
 
+import com.bed.chat.external.clients.database.entities.MessageEntity
+
 @Serializable
 data class MessageResponse(
     @SerialName("id")
@@ -33,4 +35,13 @@ fun MessageResponse.toModel() = MessageOutputModel(
     isUnread = isUnread,
     text = text,
     timestamp = timestamp.toTimestamp()
+)
+
+fun MessageResponse.toEntity() = MessageEntity(
+    id = id,
+    senderId = senderId,
+    receiverId = receiverId,
+    isUnread = isUnread,
+    text = text,
+    timestamp = timestamp
 )
