@@ -9,7 +9,7 @@ import androidx.paging.PagingData
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 
-import com.bed.chat.domain.models.MessageOutputModel
+import com.bed.chat.domain.models.output.MessageOutputModel
 
 import com.bed.chat.presentation.shared.preview.fake.messageOneFake
 import com.bed.chat.presentation.shared.preview.fake.messageTwoFake

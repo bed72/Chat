@@ -10,7 +10,7 @@ import com.bed.chat.external.clients.database.ChatDatabase
 import com.bed.chat.external.clients.database.entities.MessageEntity
 import com.bed.chat.external.clients.database.entities.MessageRemoteKeyEntity
 
-class LocalRemoteMessageDatasourceImpl @Inject constructor(
+class LocalMessageDatasourceImpl @Inject constructor(
     private val database: ChatDatabase
 ) : LocalMessageDatasource {
 

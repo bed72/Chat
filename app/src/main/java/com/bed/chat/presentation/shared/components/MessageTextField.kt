@@ -55,8 +55,8 @@ fun MessageTextField(
     message: String,
     onSendMessage: () -> Unit,
     onMessageChange: (text: String) -> Unit,
-    placeholder: String = "",
     modifier: Modifier = Modifier,
+    placeholder: String = "",
 ) {
     var value by remember { mutableStateOf(message) }
 
@@ -98,7 +98,7 @@ fun MessageTextField(
 
                     Spacer(modifier = Modifier.width(16.dp))
 
-                    Button { onSendMessage() }
+                    Button(onSendMessage = onSendMessage)
                 }
         }
     )
@@ -158,7 +158,7 @@ fun Button(onSendMessage: () -> Unit) {
     Surface(
         modifier = Modifier
             .size(32.dp)
-            .then(noRippleClickable(onSendMessage)),
+            .noRippleClickable(onSendMessage),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
     ) {

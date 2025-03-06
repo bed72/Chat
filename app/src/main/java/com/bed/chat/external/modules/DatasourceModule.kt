@@ -19,12 +19,12 @@ import com.bed.chat.data.datasources.storage.SelfUserStorageDatasource
 import com.bed.chat.external.datasources.local.LocalCryptographyDatasource
 import com.bed.chat.external.datasources.local.storage.LocalStorageDatasource
 import com.bed.chat.external.datasources.local.storage.LocalSelfUserDatasource
-import com.bed.chat.external.datasources.local.LocalRemoteMessageDatasourceImpl
+import com.bed.chat.external.datasources.local.LocalMessageDatasourceImpl
 
 import com.bed.chat.external.datasources.remoto.RemoteChatDatasource
 import com.bed.chat.external.datasources.remoto.RemoteUserDatasource
 import com.bed.chat.external.datasources.remoto.RemoteAuthenticationDatasource
-import com.bed.chat.external.datasources.remoto.RemoteRemoteMessageDatasourceImpl
+import com.bed.chat.external.datasources.remoto.RemoteMessageDatasourceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -39,7 +39,7 @@ interface DatasourceModule {
 
     @Binds
     @Singleton
-    fun bindRemoteMessageDatasource(datasource: RemoteRemoteMessageDatasourceImpl): RemoteMessageDatasource
+    fun bindRemoteMessageDatasource(datasource: RemoteMessageDatasourceImpl): RemoteMessageDatasource
 
     @Binds
     @Singleton
@@ -52,7 +52,7 @@ interface DatasourceModule {
 
     @Binds
     @Singleton
-    fun bindLocalMessageDatasource(datasource: LocalRemoteMessageDatasourceImpl): LocalMessageDatasource
+    fun bindLocalMessageDatasource(datasource: LocalMessageDatasourceImpl): LocalMessageDatasource
 
     @Binds
     @Singleton

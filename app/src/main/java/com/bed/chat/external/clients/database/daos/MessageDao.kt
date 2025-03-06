@@ -18,6 +18,7 @@ interface MessageDao {
     @Query("DELETE FROM ${DatabaseInformation.Tables.MESSAGE} WHERE ${DatabaseInformation.Columns.MESSAGE_RECEIVER_ID} = :parameter")
     suspend fun delete(parameter: Int)
 
+    @Suppress("MaxLineLength")
     @Query(
         "SELECT * FROM ${DatabaseInformation.Tables.MESSAGE} WHERE ${DatabaseInformation.Columns.MESSAGE_RECEIVER_ID} = :parameter  ORDER BY ${DatabaseInformation.Columns.MESSAGE_TIMESTAMP} DESC"
     )

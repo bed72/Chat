@@ -22,7 +22,7 @@ data class MessageResponse(
     val isUnread: Boolean,
 
     @SerialName("text")
-    val text: String,
+    val message: String,
 
     @SerialName("timestamp")
     val timestamp: Long,
@@ -30,10 +30,12 @@ data class MessageResponse(
 
 fun MessageResponse.toModel() = MessageOutputModel(
     id = id,
+    autoId = 0,
     senderId = senderId,
     receiverId = receiverId,
+    isSelf = false,
     isUnread = isUnread,
-    text = text,
+    message = message,
     timestamp = timestamp.toTimestamp()
 )
 
@@ -42,6 +44,6 @@ fun MessageResponse.toEntity() = MessageEntity(
     senderId = senderId,
     receiverId = receiverId,
     isUnread = isUnread,
-    text = text,
+    message = message,
     timestamp = timestamp
 )

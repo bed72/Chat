@@ -14,7 +14,7 @@ import com.bed.chat.external.clients.http.response.MessageResponse
 import com.bed.chat.external.clients.http.request.PaginationRequest
 import com.bed.chat.external.clients.http.response.PaginatedResponse
 
-class RemoteRemoteMessageDatasourceImpl @Inject constructor(private val client: HttpClient) : RemoteMessageDatasource {
+class RemoteMessageDatasourceImpl @Inject constructor(private val client: HttpClient) : RemoteMessageDatasource {
     override suspend fun invoke(parameter: Pair<Int, PaginationRequest>): Result<PaginatedResponse<MessageResponse>> =
         client.http.request<PaginatedResponse<MessageResponse>> {
             method = HttpMethod.Get

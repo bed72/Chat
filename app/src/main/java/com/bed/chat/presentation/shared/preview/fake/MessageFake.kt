@@ -1,14 +1,14 @@
 package com.bed.chat.presentation.shared.preview.fake
 
-import com.bed.chat.domain.models.MessageOutputModel
+import com.bed.chat.domain.models.output.MessageOutputModel
 
 val messageOneFake = MessageOutputModel(
     id = 1,
     autoId = 1,
     senderId = 1,
     receiverId = 2,
-    text = "Olá",
-    date = "15:00",
+    message = "Olá",
+    timestamp = "15:00",
     isSelf = true,
     isUnread = true,
 )
@@ -18,8 +18,8 @@ val messageTwoFake = MessageOutputModel(
     autoId = 2,
     senderId = 2,
     receiverId = 1,
-    text = "Oi, tudo bem?",
-    date = "15:05",
+    message = "Oi, tudo bem?",
+    timestamp = "15:05",
     isSelf = false,
     isUnread = true,
 )
@@ -29,8 +29,8 @@ val messageThreeFake = MessageOutputModel(
     autoId = 3,
     senderId = 1,
     receiverId = 2,
-    text = "Tudo bem sim, e com você?",
-    date = "15:07",
+    message = "Tudo bem sim, e com você?",
+    timestamp = "15:07",
     isSelf = true,
     isUnread = false,
 )
@@ -40,8 +40,8 @@ val messageFourFake = MessageOutputModel(
     autoId = 4,
     senderId = 2,
     receiverId = 1,
-    text = "Estou bem também, obrigado!",
-    date = "15:10",
+    message = "Estou bem também, obrigado!",
+    timestamp = "15:10",
     isSelf = false,
     isUnread = false,
 )
@@ -51,8 +51,8 @@ val messageFiveFake = MessageOutputModel(
     autoId = 5,
     senderId = 1,
     receiverId = 2,
-    text = "Que bom! Vamos marcar de sair qualquer dia desses?",
-    date = "15:15",
+    message = "Que bom! Vamos marcar de sair qualquer dia desses?",
+    timestamp = "15:15",
     isSelf = true,
     isUnread = false,
 )

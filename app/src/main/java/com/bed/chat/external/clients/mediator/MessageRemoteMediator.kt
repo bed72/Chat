@@ -1,7 +1,5 @@
 package com.bed.chat.external.clients.mediator
 
-import javax.inject.Inject
-
 import androidx.room.withTransaction
 
 import androidx.paging.LoadType
@@ -22,7 +20,7 @@ import com.bed.chat.external.clients.database.entities.MessageEntity
 import com.bed.chat.external.clients.database.entities.MessageRemoteKeyEntity
 
 @OptIn(ExperimentalPagingApi::class)
-class MessageRemoteMediator @Inject constructor(
+class MessageRemoteMediator(
     private val receiverId: Int,
     private val database: ChatDatabase,
     private val localDatasource: LocalMessageDatasource,

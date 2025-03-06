@@ -21,7 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 
 import com.bed.chat.R
-import com.bed.chat.domain.models.MessageOutputModel
+
+import com.bed.chat.domain.models.output.MessageOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.components.MessageTextField

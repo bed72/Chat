@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 
-import com.bed.chat.domain.models.MessageOutputModel
+import com.bed.chat.domain.models.output.MessageOutputModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.preview.fake.messageOneFake
@@ -49,7 +49,7 @@ fun MessageBubble(
             shape =  RoundedCornerShape(100.dp),
         ) {
             Text(
-                text = message.text,
+                text = message.message,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
                 style = MaterialTheme.typography.bodyMedium,
             )
@@ -58,7 +58,7 @@ fun MessageBubble(
         if (!isSamePrevious)
             Text(
                 modifier = Modifier.padding(start = 4.dp, top = 4.dp),
-                text = message.date,
+                text = message.timestamp,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
