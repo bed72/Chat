@@ -52,7 +52,7 @@ fun UserSuccess(
                 users[index]?.let {
                     UserItem(
                         it,
-                        modifier = Modifier.then(noRippleClickable { onClicked(it.id) })
+                        modifier = Modifier.noRippleClickable { onClicked(it.id) }
                     )
 
                     if (index > users.itemCount) return@items

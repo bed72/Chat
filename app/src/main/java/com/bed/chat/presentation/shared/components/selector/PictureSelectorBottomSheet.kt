@@ -134,7 +134,7 @@ private fun PictureSelectorOption(
             .fillMaxWidth()
             .defaultMinSize(minHeight = 48.dp)
             .padding(horizontal = 16.dp)
-            .then(noRippleClickable(onClick))
+            .noRippleClickable(onClick)
     ) {
         Icon(
             painter = painterResource(id = icon),

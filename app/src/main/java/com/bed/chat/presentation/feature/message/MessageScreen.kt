@@ -28,12 +28,14 @@ fun MessageRoute(
     goBack: () -> Unit,
     viewModel: MessageViewModel = hiltViewModel()
 ) {
+    val messages = viewModel.messages.collectAsLazyPagingItems()
+
     MessageScreen(
         goBack = goBack,
+        messages = messages,
         message = viewModel.message,
         onSendMessage = viewModel::onSendMessage,
-        onMessageChange = viewModel::onMessageChange,
-        messages = viewModel.messages.collectAsLazyPagingItems()
+        onMessageChange = viewModel::onMessageChange
     )
 }
 

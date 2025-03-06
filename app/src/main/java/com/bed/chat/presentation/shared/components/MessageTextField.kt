@@ -158,7 +158,9 @@ fun Button(onSendMessage: () -> Unit) {
     Surface(
         modifier = Modifier
             .size(32.dp)
-            .noRippleClickable(onSendMessage),
+            .noRippleClickable {
+                onSendMessage()
+            },
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
     ) {

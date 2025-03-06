@@ -73,7 +73,7 @@ fun MessageTopBar(
                 contentDescription = stringResource(R.string.common_go_back_icon_description),
                 modifier = Modifier
                     .padding(end = 8.dp)
-                    .then(noRippleClickable(goBack))
+                    .noRippleClickable(goBack)
             )
         }
     )

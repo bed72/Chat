@@ -31,7 +31,7 @@ class MessageViewModel @Inject constructor(
     private val repository: MessageRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    var message by  mutableStateOf("")
+    var message by mutableStateOf("")
         private set
     private val sendMessage = MutableSharedFlow<Unit>()
     private val parameter = savedStateHandle.toRoute<Routes.Message>()
@@ -41,7 +41,9 @@ class MessageViewModel @Inject constructor(
 
     init {
         launch {
-            sendMessage.mapLatest { sendMessage() }.collect {}
+            sendMessage.mapLatest { sendMessage() }.collect {
+                println()
+            }
         }
     }
 

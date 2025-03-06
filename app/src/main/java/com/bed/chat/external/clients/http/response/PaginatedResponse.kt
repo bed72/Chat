@@ -15,7 +15,7 @@ data class PaginatedResponse<out T> @OptIn(ExperimentalSerializationApi::class) 
     @SerialName("hasMore")
     val hasMore: Boolean,
 
-    @JsonNames("users", "conversations")
+    @JsonNames("users", "messages", "conversations")
     val data: List<T>,
 )
 

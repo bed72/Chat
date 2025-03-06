@@ -144,7 +144,7 @@ private fun IconTextField(
             handleIcon(iconIsVisible),
             tint = MaterialTheme.colorScheme.outline,
             contentDescription = stringResource(handleIconDescription(iconIsVisible)),
-            modifier = modifier.then(noRippleClickable { setIconIsVisible(!iconIsVisible) })
+            modifier = modifier.noRippleClickable { setIconIsVisible(!iconIsVisible) }
         )
     else Spacer(modifier.size(0.dp))
 }

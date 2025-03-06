@@ -110,7 +110,7 @@ fun SignUpScreen(
                     isCompressing = formState.isCompressingImage,
                     modifier = modifier
                         .align(Alignment.CenterHorizontally)
-                        .then(noRippleClickable { SignUpFormEvent.OpenPictureSelectorBottomSheet })
+                        .noRippleClickable { SignUpFormEvent.OpenPictureSelectorBottomSheet }
                 )
 
                 Spacer(modifier = modifier.height(16.dp))
