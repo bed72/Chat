@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.feature.user.component
+package com.bed.chat.presentation.feature.users.component
 
 import androidx.compose.runtime.Composable
 
@@ -16,7 +16,7 @@ import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.components.skeleton.UserItemSkeleton
 
 @Composable
-fun UserLoading(modifier: Modifier = Modifier) {
+fun UsersLoading(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.padding(horizontal = 16.dp)
     ) {
@@ -32,6 +32,6 @@ fun UserLoading(modifier: Modifier = Modifier) {
 @Composable
 private fun UserLoadingPreview() {
     ChatTheme {
-        UserLoading()
+        UsersLoading()
     }
 }

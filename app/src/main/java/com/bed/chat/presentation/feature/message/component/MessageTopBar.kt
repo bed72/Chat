@@ -2,6 +2,10 @@ package com.bed.chat.presentation.feature.message.component
 
 import androidx.compose.runtime.Composable
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
@@ -19,22 +23,35 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-
 import com.bed.chat.R
+
+import com.bed.chat.domain.models.output.UserOutputModel
+
+import com.bed.chat.presentation.feature.message.MessageViewModel
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.components.TopBar
 import com.bed.chat.presentation.shared.components.RoundedAvatar
+import com.bed.chat.presentation.shared.preview.fake.userOneFake
 import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun MessageTopBar(
-    user: String,
-    lastSeen: String,
+    state: MessageViewModel.UserState,
+    goBack: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    when (state) {
+        MessageViewModel.UserState.Loading -> MessageTopBarSkeleton(modifier)
+        is MessageViewModel.UserState.Failure -> HandleUser(null, goBack, modifier)
+        is MessageViewModel.UserState.Success -> HandleUser(state.user, goBack, modifier)
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun HandleUser(
+    user: UserOutputModel?,
     goBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -43,7 +60,7 @@ fun MessageTopBar(
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RoundedAvatar(
-                    model = null,
+                    model = user?.profilePicture,
                     size = 42.dp,
                     iconColor = MaterialTheme.colorScheme.background,
                     backgroundColor = MaterialTheme.colorScheme.background
@@ -52,14 +69,14 @@ fun MessageTopBar(
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     Text(
-                        text = user,
+                        text = user?.firstName ?: "...",
                         maxLines = 1,
                         fontWeight = FontWeight.Bold,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.labelLarge
                     )
                     Text(
-                        text = lastSeen,
+                        text = if (user == null) "..." else "Online",
                         fontStyle = FontStyle.Italic,
                         style = MaterialTheme.typography.labelMedium
                     )
@@ -84,8 +101,7 @@ fun MessageTopBar(
 private fun MessageTopBarPreview() {
     ChatTheme {
         MessageTopBar(
-            user = "Bed",
-            lastSeen = "Online",
+            state = MessageViewModel.UserState.Success(userOneFake),
             goBack = {}
         )
     }

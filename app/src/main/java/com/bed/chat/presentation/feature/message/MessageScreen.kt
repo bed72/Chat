@@ -8,11 +8,23 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.lifecycle.compose.LifecycleResumeEffect
+
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 import com.bed.chat.domain.models.output.MessageOutputModel
 
@@ -28,11 +40,41 @@ fun MessageRoute(
     goBack: () -> Unit,
     viewModel: MessageViewModel = hiltViewModel()
 ) {
+    val hostState = remember { SnackbarHostState() }
+    val userState by viewModel.userState.collectAsStateWithLifecycle()
     val messages = viewModel.messages.collectAsLazyPagingItems()
+    val (showFailure, setShowFailure) = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.showFailureState.collect { setShowFailure(it) }
+    }
+
+    LaunchedEffect(messages.loadState.refresh) {
+        viewModel.setMessagesState(messages.loadState.refresh)
+    }
+
+    LaunchedEffect(showFailure) {
+        if (showFailure)
+            hostState.showSnackbar(
+                "Opps, uma falha aconteceu!!!",
+                duration = SnackbarDuration.Short
+            ).also {
+                viewModel.dismissShowFailure()
+                if (it == SnackbarResult.Dismissed) goBack()
+            }
+    }
+
+    LifecycleResumeEffect(Unit) {
+        viewModel.onResume()
+
+        onPauseOrDispose { viewModel.onPause() }
+    }
 
     MessageScreen(
         goBack = goBack,
         messages = messages,
+        userState = userState,
+        hostState = hostState,
         message = viewModel.message,
         onSendMessage = viewModel::onSendMessage,
         onMessageChange = viewModel::onMessageChange
@@ -44,13 +86,17 @@ fun MessageScreen(
     message: String,
     goBack: () -> Unit,
     onSendMessage: () -> Unit,
+    hostState: SnackbarHostState,
     onMessageChange: (String) -> Unit,
+    userState: MessageViewModel.UserState,
     messages: LazyPagingItems<MessageOutputModel>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+
+
     ChatScaffold(
         modifier = modifier,
-        topBar = { MessageTopBar(user = "Bed", lastSeen = "Online", goBack = goBack) },
+        topBar = { MessageTopBar(state = userState, goBack = goBack) },
         content = {
             MessageContent(
                 message = message,
@@ -58,7 +104,8 @@ fun MessageScreen(
                 onSendMessage = onSendMessage,
                 onMessageChange = onMessageChange,
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(hostState = hostState) }
     )
 }
 
@@ -73,7 +120,9 @@ private fun MessageScreenPreview(
             goBack = {},
             onSendMessage = {},
             onMessageChange = {},
-            messages = messages.collectAsLazyPagingItems()
+            hostState = remember { SnackbarHostState() },
+            messages = messages.collectAsLazyPagingItems(),
+            userState = MessageViewModel.UserState.Loading,
         )
     }
 }

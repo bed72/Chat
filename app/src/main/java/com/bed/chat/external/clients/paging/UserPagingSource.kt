@@ -5,12 +5,12 @@ import javax.inject.Inject
 import androidx.paging.PagingState
 import androidx.paging.PagingSource
 
-import com.bed.chat.data.datasources.UserDatasource
+import com.bed.chat.data.datasources.UsersDatasource
 import com.bed.chat.external.clients.http.request.PaginationRequest
 import com.bed.chat.external.clients.http.response.UserResponse
 
 class UserPagingSource @Inject constructor(
-    private val datasource: UserDatasource
+    private val datasource: UsersDatasource
 ) : PagingSource<Int, UserResponse>() {
     override fun getRefreshKey(state: PagingState<Int, UserResponse>): Int? =
         state.anchorPosition?.let { position ->
@@ -33,7 +33,7 @@ class UserPagingSource @Inject constructor(
         LoadResult.Error(exception)
     }
 
-    private suspend fun getUsers(limit: Int, offset: Int) = datasource(
+    private suspend fun getUsers(limit: Int, offset: Int) = datasource.getUsers(
         PaginationRequest(limit, offset)
     )
 }

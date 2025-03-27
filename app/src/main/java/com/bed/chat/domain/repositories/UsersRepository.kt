@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 import com.bed.chat.domain.models.output.UserOutputModel
 
-interface UserRepository {
-    operator fun invoke(parameter: Int = 10): Flow<PagingData<UserOutputModel>>
+interface UsersRepository {
+    suspend fun getUser(parameter: Int): Result<UserOutputModel>
+    fun getUsers(parameter: Int = 10): Flow<PagingData<UserOutputModel>>
 }

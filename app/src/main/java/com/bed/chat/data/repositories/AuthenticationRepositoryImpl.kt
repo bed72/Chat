@@ -2,7 +2,6 @@ package com.bed.chat.data.repositories
 
 import javax.inject.Inject
 
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.CoroutineDispatcher
 
 import com.bed.chat.data.datasources.AuthenticationDatasource
@@ -29,34 +28,26 @@ class AuthenticationRepositoryImpl @Inject constructor(
 ) : AuthenticationRepository {
 
     override suspend fun authenticate(): Result<Unit> =
-        withContext(ioDispatcher) {
-            runCatching {
-                datasource.authenticate().onSuccess { save(it) }
-                Unit
-            }
+        safeCallResult(ioDispatcher) {
+            datasource.authenticate().onSuccess { save(it) }
+            Unit
         }
 
     override suspend fun signUp(parameter: SignUpInputModel): Result<Unit> =
-        withContext(ioDispatcher) {
-            runCatching {
-                datasource.signUp(parameter.toRequest()).getOrThrow()
-            }
+        safeCallResult(ioDispatcher) {
+            datasource.signUp(parameter.toRequest()).getOrThrow()
         }
 
     override suspend fun signIn(parameter: SignInInputModel): Result<Unit> =
-        withContext(ioDispatcher) {
-           runCatching {
-               val response = datasource.signIn(parameter.toRequest()).getOrThrow()
+        safeCallResult(ioDispatcher) {
+            val response = datasource.signIn(parameter.toRequest()).getOrThrow()
 
-               if (response.token.isNotEmpty()) tokenRepository.save(response.token)
-           }
+            if (response.token.isNotEmpty()) tokenRepository.save(response.token)
         }
 
     override suspend fun uploadProfilePicture(parameter: String): Result<ImageOutputModel> =
-        withContext(ioDispatcher) {
-            runCatching {
-                datasource.uploadProfilePicture(parameter).map { it.toModel() }.getOrThrow()
-            }
+        safeCallResult(ioDispatcher) {
+            datasource.uploadProfilePicture(parameter).map { it.toModel() }.getOrThrow()
         }
 
     private suspend fun save(parameter: UserResponse) {

@@ -15,12 +15,21 @@ interface MessageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(parameter: List<MessageEntity>)
 
-    @Query("DELETE FROM ${DatabaseInformation.Tables.MESSAGE} WHERE ${DatabaseInformation.Columns.MESSAGE_RECEIVER_ID} = :parameter")
+    @Query("""
+        DELETE FROM ${DatabaseInformation.Tables.MESSAGE}
+        WHERE ${DatabaseInformation.Columns.MESSAGE_RECEIVER_ID} = :parameter
+        OR ${DatabaseInformation.Columns.MESSAGE_SENDER_ID} = :parameter
+    """)
     suspend fun delete(parameter: Int)
 
     @Suppress("MaxLineLength")
     @Query(
-        "SELECT * FROM ${DatabaseInformation.Tables.MESSAGE} WHERE ${DatabaseInformation.Columns.MESSAGE_RECEIVER_ID} = :parameter  ORDER BY ${DatabaseInformation.Columns.MESSAGE_TIMESTAMP} DESC"
+        """
+            SELECT * FROM ${DatabaseInformation.Tables.MESSAGE}
+            WHERE ${DatabaseInformation.Columns.MESSAGE_RECEIVER_ID} = :parameter
+            OR ${DatabaseInformation.Columns.MESSAGE_SENDER_ID} = :parameter
+            ORDER BY ${DatabaseInformation.Columns.MESSAGE_TIMESTAMP} DESC
+        """
     )
     fun get(parameter: Int): PagingSource<Int, MessageEntity>
 }

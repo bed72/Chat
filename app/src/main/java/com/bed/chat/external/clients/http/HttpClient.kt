@@ -4,8 +4,6 @@ import android.util.Log
 
 import javax.inject.Inject
 
-import kotlinx.serialization.json.Json
-
 import android.accounts.NetworkErrorException
 
 import kotlinx.coroutines.flow.firstOrNull
@@ -14,8 +12,6 @@ import io.ktor.http.isSuccess
 import io.ktor.http.HttpHeaders
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-
-import io.ktor.serialization.kotlinx.json.json
 
 import io.ktor.client.call.body
 
@@ -38,6 +34,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.HttpRequestRetry
+import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.ClientRequestException
@@ -45,7 +42,12 @@ import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 
+import kotlinx.serialization.json.Json
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
+
 import com.bed.chat.domain.exception.NetworkException
+
 import com.bed.chat.domain.repositories.TokenRepository
 
 interface HttpClient {
@@ -62,13 +64,14 @@ class HttpClientImpl @Inject constructor(
         configureAuth()
 //        configureRetry()
         configureLogging()
+        configureWebSocket()
         configureResponseTimeout()
         configureResponseObserver()
         configureContentNegotiation()
         configureValidationResponse()
 
         defaultRequest {
-            url(HttpUrl.API.value)
+//            url(HttpUrl.API.value)
             headers { header(HttpHeaders.ContentType, ContentType.Application.Json) }
         }
     }
@@ -84,6 +87,12 @@ class HttpClientImpl @Inject constructor(
 //        }
 //    }
 
+    private fun HttpClientConfig<CIOEngineConfig>.configureWebSocket() {
+        install(WebSockets) {
+            contentConverter = KotlinxWebsocketSerializationConverter(Json)
+        }
+    }
+
     private fun HttpClientConfig<CIOEngineConfig>.configureAuth() {
         install(Auth) {
             bearer {
@@ -95,6 +104,7 @@ class HttpClientImpl @Inject constructor(
             }
         }
     }
+
     @Suppress("UnusedPrivateMember")
     private fun HttpClientConfig<CIOEngineConfig>.configureRetry() {
         install(HttpRequestRetry) {

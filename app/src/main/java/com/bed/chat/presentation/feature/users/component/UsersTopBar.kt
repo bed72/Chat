@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.feature.user.component
+package com.bed.chat.presentation.feature.users.component
 
 import androidx.compose.runtime.Composable
 
@@ -17,7 +17,7 @@ import com.bed.chat.presentation.shared.components.TopBar
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun UserTopBar(modifier: Modifier = Modifier) {
+fun UsersTopBar(modifier: Modifier = Modifier) {
     TopBar(
         modifier = modifier,
         title = {
@@ -33,6 +33,6 @@ fun UserTopBar(modifier: Modifier = Modifier) {
 @Composable
 private fun UserTopBarPreview() {
     ChatTheme {
-        UserTopBar()
+        UsersTopBar()
     }
 }

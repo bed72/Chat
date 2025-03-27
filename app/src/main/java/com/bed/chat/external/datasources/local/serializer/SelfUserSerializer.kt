@@ -10,7 +10,7 @@ import com.bed.chat.SelfUser
 import com.google.protobuf.InvalidProtocolBufferException
 
 object SelfUserSerializer : Serializer<SelfUser> {
-    override val defaultValue: SelfUser get() = SelfUser.getDefaultInstance()
+    override val defaultValue: SelfUser = SelfUser.getDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): SelfUser = try {
         SelfUser.parseFrom(input)

@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.feature.user
+package com.bed.chat.presentation.feature.users
 
 import kotlinx.coroutines.flow.flowOf
 
@@ -19,33 +19,33 @@ import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.components.ChatScaffold
 import com.bed.chat.presentation.shared.preview.fake.userOneFake
 
-import com.bed.chat.presentation.feature.user.component.UserTopBar
-import com.bed.chat.presentation.feature.user.component.UserLoading
-import com.bed.chat.presentation.feature.user.component.UserFailure
-import com.bed.chat.presentation.feature.user.component.UserSuccess
+import com.bed.chat.presentation.feature.users.component.UsersTopBar
+import com.bed.chat.presentation.feature.users.component.UsersLoading
+import com.bed.chat.presentation.feature.users.component.UsersFailure
+import com.bed.chat.presentation.feature.users.component.UsersSuccess
 
 @Composable
-fun UserRoute(
+fun UsersRoute(
     navigateToChat: (userId: Int) -> Unit,
-    viewModel: UserViewModel = hiltViewModel()
+    viewModel: UsersViewModel = hiltViewModel()
 ) {
-    UserScreen(
+    UsersScreen(
         users = viewModel.users.collectAsLazyPagingItems()
     ) { navigateToChat(it) }
 }
 
 @Composable
-fun UserScreen(
+fun UsersScreen(
     users: LazyPagingItems<UserOutputModel>,
     onClicked: (userId: Int) -> Unit,
 ) {
     ChatScaffold(
-        topBar = { UserTopBar() },
+        topBar = { UsersTopBar() },
         content = {
             when (users.loadState.refresh) {
-                LoadState.Loading -> UserLoading()
-                is LoadState.Error -> UserFailure(onTryAgainClick = { users.refresh() })
-                is LoadState.NotLoading -> UserSuccess(users = users, onClicked = { onClicked(it) })
+                LoadState.Loading -> UsersLoading()
+                is LoadState.Error -> UsersFailure(onTryAgainClick = { users.refresh() })
+                is LoadState.NotLoading -> UsersSuccess(users = users, onClicked = { onClicked(it) })
             }
         }
     )
@@ -58,7 +58,7 @@ fun UserScreen(
 )
 private fun ChatsScreenPreview() {
     ChatTheme {
-           UserScreen(
+           UsersScreen(
                onClicked = {},
                users = flowOf(PagingData.from(listOf(userOneFake))).collectAsLazyPagingItems()
            )

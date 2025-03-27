@@ -21,7 +21,7 @@ import com.bed.chat.external.clients.database.entities.MessageRemoteKeyEntity
 
 @OptIn(ExperimentalPagingApi::class)
 class MessageRemoteMediator(
-    private val receiverId: Int,
+    private val id: Int,
     private val database: ChatDatabase,
     private val localDatasource: LocalMessageDatasource,
     private val remoteDatasource: RemoteMessageDatasource,
@@ -35,7 +35,7 @@ class MessageRemoteMediator(
                 getOffset(loadType) ?: return MediatorResult.Success(endOfPaginationReached = true)
             val limit = state.config.pageSize
 
-            remoteDatasource(receiverId to buildParameter(limit to offset))
+            remoteDatasource.getMessage(id to buildParameter(limit to offset))
                 .map { response ->
                     database.withTransaction {
                         if (loadType == LoadType.REFRESH) delete()
@@ -60,13 +60,13 @@ class MessageRemoteMediator(
     private suspend fun getOffset(parameter: LoadType) = when (parameter) {
         LoadType.REFRESH -> 0
         LoadType.PREPEND -> null
-        LoadType.APPEND -> localDatasource.getMessageRemoteKey(receiverId)?.nextOffset
+        LoadType.APPEND -> localDatasource.getMessageRemoteKey(id)?.nextOffset
     }
 
     private suspend fun delete() {
         with (localDatasource) {
-            deleteMessage(receiverId)
-            deleteMessageRemoteKey(receiverId)
+            deleteMessage(id)
+            deleteMessageRemoteKey(id)
         }
     }
 
@@ -82,7 +82,7 @@ class MessageRemoteMediator(
 
     private fun buildEntity(parameter: Triple<Int, Int, PaginatedResponse<MessageResponse>>) =
         MessageRemoteKeyEntity(
-            receiverId = receiverId,
+            receiverId = id,
             nextOffset = if (parameter.third.hasMore) parameter.first + parameter.second else null
         )
 }

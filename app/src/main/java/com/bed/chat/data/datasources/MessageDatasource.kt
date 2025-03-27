@@ -1,16 +1,26 @@
 package com.bed.chat.data.datasources
 
+import kotlinx.coroutines.flow.Flow
+
 import androidx.paging.PagingSource
 
 import com.bed.chat.external.clients.http.response.MessageResponse
 import com.bed.chat.external.clients.http.request.PaginationRequest
 import com.bed.chat.external.clients.http.response.PaginatedResponse
 
+import com.bed.chat.external.clients.websocket.response.WebSocketResponse
+import com.bed.chat.external.clients.websocket.request.WebSocketDataRequest
+
 import com.bed.chat.external.clients.database.entities.MessageEntity
 import com.bed.chat.external.clients.database.entities.MessageRemoteKeyEntity
 
 interface RemoteMessageDatasource {
-    suspend operator fun invoke(parameter: Pair<Int, PaginationRequest>): Result<PaginatedResponse<MessageResponse>>
+    fun observerDataWebSocket() : Flow<WebSocketResponse>
+
+    suspend fun disconnectWebSocket()
+    suspend fun sendMessage(parameter: WebSocketDataRequest)
+    suspend fun connectWebSocket(parameter: Int): Result<Unit>
+    suspend fun getMessage(parameter: Pair<Int, PaginationRequest>): Result<PaginatedResponse<MessageResponse>>
 }
 
 interface LocalMessageDatasource {

@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.android.components.ViewModelComponent
 
 import com.bed.chat.domain.repositories.ChatRepository
-import com.bed.chat.domain.repositories.UserRepository
+import com.bed.chat.domain.repositories.UsersRepository
 import com.bed.chat.domain.repositories.TokenRepository
 import com.bed.chat.domain.repositories.MessageRepository
 import com.bed.chat.domain.repositories.AuthenticationRepository
@@ -17,7 +17,7 @@ import com.bed.chat.domain.repositories.storage.StorageRepository
 import com.bed.chat.domain.repositories.storage.SelfUserRepository
 
 import com.bed.chat.data.repositories.ChatRepositoryImpl
-import com.bed.chat.data.repositories.UserRepositoryImpl
+import com.bed.chat.data.repositories.UsersRepositoryImpl
 import com.bed.chat.data.repositories.TokenRepositoryImpl
 import com.bed.chat.data.repositories.MessageRepositoryImpl
 import com.bed.chat.data.repositories.AuthenticationRepositoryImpl
@@ -31,7 +31,7 @@ interface RepositoryByViewModelModule {
     fun bindChatRepository(repository: ChatRepositoryImpl): ChatRepository
 
     @Binds
-    fun bindUserRepository(repository: UserRepositoryImpl): UserRepository
+    fun bindUserRepository(repository: UsersRepositoryImpl): UsersRepository
 
     @Binds
     fun bindMessageRepository(repository: MessageRepositoryImpl): MessageRepository

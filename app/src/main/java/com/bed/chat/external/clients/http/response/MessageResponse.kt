@@ -12,6 +12,9 @@ data class MessageResponse(
     @SerialName("id")
     val id: Int,
 
+    @SerialName("messageId")
+    val messageId: String,
+
     @SerialName("senderId")
     val senderId: Int,
 

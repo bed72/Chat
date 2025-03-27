@@ -4,6 +4,8 @@ import javax.inject.Inject
 
 import io.ktor.http.HttpMethod
 
+import io.ktor.client.request.url
+
 import com.bed.chat.data.datasources.ChatDatasource
 
 import com.bed.chat.external.clients.http.request
@@ -17,6 +19,6 @@ class RemoteChatDatasource @Inject constructor(private val client: HttpClient) :
     override suspend fun invoke(parameter: PaginationRequest): Result<PaginatedResponse<ChatResponse>> =
         client.http.request<PaginatedResponse<ChatResponse>> {
             method = HttpMethod.Get
-            url { configurePaginationParameter(HttpUrl.CONVERSATIONS, parameter) }
+            url(configurePaginationParameter(HttpUrl.CONVERSATIONS, parameter))
         }
 }

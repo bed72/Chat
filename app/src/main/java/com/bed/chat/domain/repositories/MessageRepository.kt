@@ -3,9 +3,14 @@ package com.bed.chat.domain.repositories
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 
+import com.bed.chat.domain.models.input.MessageDataInputModel
 import com.bed.chat.domain.models.output.MessageOutputModel
 
 interface MessageRepository {
-    suspend fun sendMessage(receiverId: Int, message: String)
-    fun getMessage(receiverId: Int): Flow<PagingData<MessageOutputModel>>
+    fun observerDataWebSocket() : Flow<MessageOutputModel?>
+    fun getMessage(parameter: Int): Flow<PagingData<MessageOutputModel>>
+
+    suspend fun disconnectWebSocket()
+    suspend fun connectWebSocket(): Result<Unit>
+    suspend fun sendMessage(parameter: MessageDataInputModel): Result<Unit>
 }

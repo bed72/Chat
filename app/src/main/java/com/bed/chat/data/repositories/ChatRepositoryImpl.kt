@@ -2,7 +2,6 @@ package com.bed.chat.data.repositories
 
 import javax.inject.Inject
 
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -22,16 +21,14 @@ class ChatRepositoryImpl @Inject constructor(
     private val repository: SelfUserRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ChatRepository {
-    override suspend fun invoke(limit: Int, offset: Int): Result<List<ChatOutputModel>> {
-        return withContext(ioDispatcher) {
-            runCatching {
-                val selfId = repository.user.firstOrNull()?.id
-                val response = datasource(toRequest(limit, offset))
+    override suspend fun invoke(limit: Int, offset: Int): Result<List<ChatOutputModel>> =
+        safeCallResult(ioDispatcher) {
+            val selfId = repository.user.firstOrNull()?.id
+            val response = datasource(toRequest(limit, offset))
 
-                response.map { it.toModel(selfId) }.getOrThrow().data
-            }
+            response.map { it.toModel(selfId) }.getOrThrow().data
         }
-    }
+
 
     private fun toRequest(limit: Int, offset: Int) = PaginationRequest(limit, offset)
 }

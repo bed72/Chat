@@ -1,4 +1,4 @@
-package com.bed.chat.presentation.feature.user.component
+package com.bed.chat.presentation.feature.users.component
 
 import kotlinx.coroutines.flow.flowOf
 
@@ -34,7 +34,7 @@ import com.bed.chat.presentation.shared.components.empty.EmptyDefault
 import com.bed.chat.presentation.shared.components.loader.LoadFailure
 
 @Composable
-fun UserSuccess(
+fun UsersSuccess(
     onClicked: (userId: Int) -> Unit,
     users: LazyPagingItems<UserOutputModel>,
     modifier: Modifier = Modifier,
@@ -72,7 +72,7 @@ fun UserSuccess(
 @Composable
 private fun UserSuccessPreview() {
     ChatTheme {
-        UserSuccess(
+        UsersSuccess(
             onClicked = {},
             users = flowOf(PagingData.from(listOf(userOneFake))).collectAsLazyPagingItems()
         )
