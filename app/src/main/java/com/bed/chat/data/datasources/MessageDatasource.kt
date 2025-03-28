@@ -18,8 +18,8 @@ interface RemoteMessageDatasource {
     fun observerDataWebSocket() : Flow<WebSocketResponse>
 
     suspend fun disconnectWebSocket()
+    suspend fun connectWebSocket(parameter: Int)
     suspend fun sendMessage(parameter: WebSocketDataRequest)
-    suspend fun connectWebSocket(parameter: Int): Result<Unit>
     suspend fun getMessage(parameter: Pair<Int, PaginationRequest>): Result<PaginatedResponse<MessageResponse>>
 }
 

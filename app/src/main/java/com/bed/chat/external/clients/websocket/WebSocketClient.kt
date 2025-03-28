@@ -1,5 +1,6 @@
 package com.bed.chat.external.clients.websocket
 
+import android.util.Log
 import javax.inject.Inject
 
 import kotlinx.coroutines.isActive
@@ -35,7 +36,7 @@ interface WebSocketClient {
     fun observer(): Flow<WebSocketResponse>
 
     suspend fun disconnect()
-    suspend fun connect(parameter: Int): Result<Unit>
+    suspend fun connect(parameter: Int)
     suspend fun send(parameter: WebSocketDataRequest)
 }
 
@@ -49,26 +50,28 @@ class WebSocketClientImpl @Inject constructor(
         session = null
     }
 
-    override suspend fun connect(parameter: Int): Result<Unit> {
-        if (session != null) return Result.success(Unit)
+    override suspend fun connect(parameter: Int) {
+        if (session != null) return
 
         try {
             session = client.http.webSocketSession {
-                    url("${HttpUrl.WS.value}/$parameter")
+                url("${HttpUrl.WS.value}/$parameter")
             }
 
-            return Result.success(Unit)
+            if (session?.isActive == true) log("Starting instance -> $session")
+            else log("Failure start websocket", isFailure = true)
         } catch (exception: Exception) {
-            return Result.failure(exception)
+            log(exception.toString(), isFailure = true)
         }
     }
 
     @Suppress("RethrowCaughtException")
     override suspend fun send(parameter: WebSocketDataRequest) {
-        if (session == null)
+        if (session == null) // || session?.isActive == false)
             throw WebSocketException("WebSocket is null or not active")
 
         try {
+            log("Sending message: $parameter")
             session?.sendSerialized(parameter)
         } catch (exception: Exception) {
             throw exception
@@ -95,5 +98,10 @@ class WebSocketClientImpl @Inject constructor(
             is MessageResponse -> WebSocketResponse.MessageReceived(data)
             else -> WebSocketResponse.NotHandleYet
         }
+    }
+
+    private fun log(parameter: String, isFailure: Boolean = false) {
+        if (isFailure) Log.e("WEBSOCKET FAILURE", parameter)
+        else Log.w("WEBSOCKET INFORMATION", parameter)
     }
 }

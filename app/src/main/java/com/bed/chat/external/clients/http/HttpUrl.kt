@@ -1,8 +1,8 @@
 package com.bed.chat.external.clients.http
 
 enum class HttpUrl(val value: String) {
-    WS("ws://chat-api.androidmoderno.com.br:8080/chat"),
     API("https://chat-api.androidmoderno.com.br"),
+    WS("ws://chat-api.androidmoderno.com.br:8080/chat"),
     USERS("${API.value}/users"),
     SIGN_IN("${API.value}/signin"),
     SIGN_UP("${API.value}/signup"),

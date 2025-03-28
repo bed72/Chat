@@ -13,6 +13,7 @@ import kotlin.uuid.ExperimentalUuidApi
 
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -43,7 +44,6 @@ import com.bed.chat.external.clients.websocket.response.WebSocketResponse
 
 import com.bed.chat.external.clients.websocket.request.WebSocketRequest
 import com.bed.chat.external.clients.websocket.request.WebSocketDataRequest
-import kotlinx.coroutines.flow.flowOn
 
 class MessageRepositoryImpl @Inject constructor(
     private val database: ChatDatabase,
@@ -90,7 +90,6 @@ class MessageRepositoryImpl @Inject constructor(
         .flowOn(ioDispatcher)
         .map { it.toModel() }
 
-
     private suspend fun save(message: MessageResponse) {
         localDatasource.insertMessage(listOf(message.toEntity()))
     }
@@ -107,7 +106,7 @@ class MessageRepositoryImpl @Inject constructor(
     private fun toRequest(parameter: MessageDataInputModel) = WebSocketDataRequest(
         type = "messageRequest",
         data = WebSocketRequest(
-            message = parameter.message,
+            text = parameter.text,
             timestamp = parameter.timestamp,
             receiverId = parameter.receiverId,
             messageId = parameter.messageId.toString()

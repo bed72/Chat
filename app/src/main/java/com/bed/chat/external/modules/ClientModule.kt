@@ -37,7 +37,11 @@ interface HttpClientModule {
     @Binds
     @Singleton
     fun bindHttpClient(client: HttpClientImpl): HttpClient
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+interface WebSocketClientModule {
     @Binds
     @Singleton
     fun bindWebSocketClient(client: WebSocketClientImpl): WebSocketClient

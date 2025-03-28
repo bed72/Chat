@@ -15,7 +15,7 @@ data class WebSocketDataRequest(
 @Serializable
 data class WebSocketRequest(
     @SerialName("text")
-    val message: String,
+    val text: String,
 
     @SerialName("timestamp")
     val timestamp: Long,

@@ -62,7 +62,7 @@ class HttpClientImpl @Inject constructor(
         expectSuccess = true
 
         configureAuth()
-//        configureRetry()
+        configureRetry()
         configureLogging()
         configureWebSocket()
         configureResponseTimeout()
@@ -71,7 +71,6 @@ class HttpClientImpl @Inject constructor(
         configureValidationResponse()
 
         defaultRequest {
-//            url(HttpUrl.API.value)
             headers { header(HttpHeaders.ContentType, ContentType.Application.Json) }
         }
     }
@@ -119,7 +118,7 @@ class HttpClientImpl @Inject constructor(
         install(Logging) {
             level = LogLevel.ALL
             logger = Logger.DEFAULT
-            filter { it.url.host.contains("http") }
+            filter { it.url.host.contains("https") }
             sanitizeHeader { it == HttpHeaders.Authorization }
         }
     }

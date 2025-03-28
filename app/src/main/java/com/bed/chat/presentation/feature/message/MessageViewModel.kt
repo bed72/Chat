@@ -1,6 +1,5 @@
 package com.bed.chat.presentation.feature.message
 
-import android.util.Log
 import javax.inject.Inject
 
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -74,8 +73,8 @@ class MessageViewModel @Inject constructor(
         messageRepository.getMessage(parameter.userId).cachedIn(viewModelScope)
 
     init {
-        launch { combineFlowByFailure()  }
         launch { sendMessage.mapLatest { sendMessage() }.collect {} }
+        launch { combineFlowByFailure()  }
     }
 
     override fun onCleared() {
@@ -136,7 +135,7 @@ class MessageViewModel @Inject constructor(
 
     @OptIn(ExperimentalUuidApi::class)
     private fun buildInput() = MessageDataInputModel(
-        message = message,
+        text = message,
         receiverId = parameter.userId
     )
 

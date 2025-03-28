@@ -6,7 +6,7 @@ import kotlin.uuid.Uuid
 import kotlin.uuid.ExperimentalUuidApi
 
 data class MessageDataInputModel @OptIn(ExperimentalUuidApi::class) constructor(
-    val message: String,
+    val text: String,
     val receiverId: Int,
     val messageId: Uuid = Uuid.random(),
     val timestamp: Long = Instant.now().toEpochMilli()

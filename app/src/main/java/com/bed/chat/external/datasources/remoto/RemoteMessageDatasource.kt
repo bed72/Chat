@@ -33,8 +33,9 @@ class RemoteMessageDatasourceImpl @Inject constructor(
         webSocketClient.disconnect()
     }
 
-    override suspend fun connectWebSocket(parameter: Int): Result<Unit> =
+    override suspend fun connectWebSocket(parameter: Int) {
         webSocketClient.connect(parameter)
+    }
 
     override suspend fun sendMessage(parameter: WebSocketDataRequest) {
         webSocketClient.send(parameter)

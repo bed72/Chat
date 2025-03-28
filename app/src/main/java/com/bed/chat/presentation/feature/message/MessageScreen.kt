@@ -67,7 +67,9 @@ fun MessageRoute(
     LifecycleResumeEffect(Unit) {
         viewModel.onResume()
 
-        onPauseOrDispose { viewModel.onPause() }
+        onPauseOrDispose {
+            viewModel.onPause()
+        }
     }
 
     MessageScreen(
