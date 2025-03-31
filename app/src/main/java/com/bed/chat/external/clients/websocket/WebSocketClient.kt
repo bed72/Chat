@@ -15,6 +15,7 @@ import io.ktor.websocket.close
 import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 
+import io.ktor.client.HttpClient
 import io.ktor.client.request.url
 
 import kotlinx.serialization.json.Json
@@ -25,7 +26,6 @@ import io.ktor.client.plugins.websocket.WebSocketException
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 
 import com.bed.chat.external.clients.http.HttpUrl
-import com.bed.chat.external.clients.http.HttpClient
 import com.bed.chat.external.clients.http.response.MessageResponse
 
 import com.bed.chat.external.clients.websocket.response.WebSocketResponse
@@ -54,7 +54,7 @@ class WebSocketClientImpl @Inject constructor(
         if (session != null) return
 
         try {
-            session = client.http.webSocketSession {
+            session = client.webSocketSession {
                 url("${HttpUrl.WS.value}/$parameter")
             }
 

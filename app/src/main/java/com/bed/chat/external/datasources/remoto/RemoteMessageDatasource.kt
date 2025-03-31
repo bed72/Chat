@@ -4,6 +4,7 @@ import javax.inject.Inject
 
 import io.ktor.http.HttpMethod
 
+import io.ktor.client.HttpClient
 import io.ktor.client.request.url
 
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +13,6 @@ import com.bed.chat.data.datasources.RemoteMessageDatasource
 
 import com.bed.chat.external.clients.http.request
 import com.bed.chat.external.clients.http.HttpUrl
-import com.bed.chat.external.clients.http.HttpClient
 
 import com.bed.chat.external.clients.http.response.MessageResponse
 import com.bed.chat.external.clients.http.request.PaginationRequest
@@ -42,7 +42,7 @@ class RemoteMessageDatasourceImpl @Inject constructor(
     }
 
     override suspend fun getMessage(parameter: Pair<Int, PaginationRequest>): Result<PaginatedResponse<MessageResponse>> =
-        httpClient.http.request<PaginatedResponse<MessageResponse>> {
+        httpClient.request<PaginatedResponse<MessageResponse>> {
             method = HttpMethod.Get
             url(configurePaginationParameter(HttpUrl.MESSAGES, parameter.second, parameter.first))
         }

@@ -4,6 +4,9 @@ import javax.inject.Singleton
 
 import android.content.Context
 
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,8 +23,7 @@ import androidx.datastore.preferences.preferencesDataStore
 
 import com.bed.chat.SelfUser
 
-import com.bed.chat.external.clients.http.HttpClient
-import com.bed.chat.external.clients.http.HttpClientImpl
+import com.bed.chat.domain.repositories.TokenRepository
 
 import com.bed.chat.external.clients.database.ChatDatabase
 import com.bed.chat.external.clients.database.DatabaseInformation
@@ -29,15 +31,15 @@ import com.bed.chat.external.clients.database.DatabaseInformation
 import com.bed.chat.external.clients.websocket.WebSocketClient
 import com.bed.chat.external.clients.websocket.WebSocketClientImpl
 
-import com.bed.chat.external.datasources.local.serializer.SelfUserSerializer
+import com.bed.chat.external.clients.http.configureLogging
+import com.bed.chat.external.clients.http.configureWebSocket
+import com.bed.chat.external.clients.http.configureDefaultHeaders
+import com.bed.chat.external.clients.http.configureResponseTimeout
+import com.bed.chat.external.clients.http.authenticationInterceptor
+import com.bed.chat.external.clients.http.configureContentNegotiation
+import com.bed.chat.external.clients.http.configureValidationResponse
 
-@Module
-@InstallIn(SingletonComponent::class)
-interface HttpClientModule {
-    @Binds
-    @Singleton
-    fun bindHttpClient(client: HttpClientImpl): HttpClient
-}
+import com.bed.chat.external.datasources.local.serializer.SelfUserSerializer
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -68,4 +70,24 @@ object StorageClientModule {
     @Singleton
     fun provideDataStoreClient(@ApplicationContext context: Context): DataStore<Preferences> =
         preferencesDataStore(name = StorageClientModule.javaClass.name).getValue(context, String::javaClass)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object HttpClientModule {
+    @Provides
+    @Singleton
+    fun provideHttpClient(repository: TokenRepository): HttpClient = HttpClient(CIO) {
+        expectSuccess = true
+
+        configureLogging()
+        configureWebSocket()
+        configureDefaultHeaders()
+        configureResponseTimeout()
+        configureContentNegotiation()
+        configureValidationResponse()
+    }
+        .apply {
+            authenticationInterceptor(repository)
+        }
 }

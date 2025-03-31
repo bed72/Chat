@@ -12,6 +12,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 
+import io.ktor.client.HttpClient
 import io.ktor.client.plugins.onUpload
 
 import io.ktor.client.request.url
@@ -21,7 +22,6 @@ import io.ktor.client.request.forms.MultiPartFormDataContent
 
 import com.bed.chat.external.clients.http.request
 import com.bed.chat.external.clients.http.HttpUrl
-import com.bed.chat.external.clients.http.HttpClient
 
 import com.bed.chat.external.clients.http.request.SignInRequest
 import com.bed.chat.external.clients.http.request.SignUpRequest
@@ -36,19 +36,19 @@ class RemoteAuthenticationDatasource @Inject constructor(
 ) : AuthenticationDatasource {
 
     override suspend fun authenticate(): Result<UserResponse> =
-        client.http.request<UserResponse> {
+        client.request<UserResponse> {
             url(HttpUrl.AUTHENTICATE.value)
         }
 
     override suspend fun signUp(parameter: SignUpRequest): Result<Unit> =
-        client.http.request<Unit> {
+        client.request<Unit> {
             setBody(parameter)
             method = HttpMethod.Post
             url(HttpUrl.SIGN_UP.value)
         }
 
     override suspend fun signIn(parameter: SignInRequest): Result<TokenResponse> =
-        client.http.request<TokenResponse> {
+        client.request<TokenResponse> {
             setBody(parameter)
             method = HttpMethod.Post
             url(HttpUrl.SIGN_IN.value)
@@ -58,7 +58,7 @@ class RemoteAuthenticationDatasource @Inject constructor(
         val file = File(filePath)
 
         return if (!file.exists()) Result.failure(FileNotFoundException("Imagem não encontrada."))
-        else client.http.request<ImageResponse> {
+        else client.request<ImageResponse> {
             method = HttpMethod.Post
             url(HttpUrl.UPLOADING.value)
             contentType(ContentType.MultiPart.FormData)
