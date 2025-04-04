@@ -16,14 +16,12 @@ import com.bed.chat.presentation.shared.extensions.launch
 
 import com.bed.chat.domain.repositories.ChatRepository
 import com.bed.chat.domain.models.output.ChatOutputModel
-import com.bed.chat.domain.models.output.UserOutputModel
 import com.bed.chat.domain.repositories.AuthenticationRepository
-import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
     private val chatRepository: ChatRepository,
-    private val authenticationRepository: AuthenticationRepository
+    authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
     val currentUser = authenticationRepository
