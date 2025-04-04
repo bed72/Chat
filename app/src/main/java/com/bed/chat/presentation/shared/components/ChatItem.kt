@@ -24,21 +24,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 
 import com.bed.chat.domain.models.output.ChatOutputModel
+import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.preview.provider.ChatPreviewParameterProvider
 
 @Composable
 fun ChatItem(
-    chat: ChatOutputModel,
+    model: ChatOutputModel,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val receiver = remember (chat.members) {
-        chat.members.first { it.self.not() }
+    val receiver = remember (model.members) {
+        model.otherMember
     }
 
     ConstraintLayout(
         modifier = modifier
+            .noRippleClickable(onClick)
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
     ) {
@@ -78,7 +81,7 @@ fun ChatItem(
         )
 
         Text(
-            text = chat.lastMessage ?: "",
+            text = model.lastMessage ?: "",
             modifier = Modifier
                 .constrainAs(lastMessageRef) {
                     top.linkTo(firstNameRef.bottom)
@@ -92,7 +95,7 @@ fun ChatItem(
         )
 
         Text(
-            text = chat.timestamp,
+            text = model.timestamp,
             modifier = Modifier
                 .constrainAs(lastMessageTimeRef) {
                     top.linkTo(firstNameRef.top)
@@ -106,7 +109,7 @@ fun ChatItem(
         )
 
         Text(
-            text = chat.unreadCount.toString(),
+            text = model.unreadCount.toString(),
             modifier = Modifier
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primaryContainer)
@@ -116,7 +119,7 @@ fun ChatItem(
                     end.linkTo(parent.end)
                     bottom.linkTo(lastMessageRef.bottom)
                     width = Dimension.wrapContent
-                    visibility = if (chat.unreadCount > 0) Visibility.Visible
+                    visibility = if (model.unreadCount > 0) Visibility.Visible
                     else Visibility.Gone
                 },
             color = MaterialTheme.colorScheme.onSurface,
@@ -133,7 +136,8 @@ private fun ChatItemPreview(
 ) {
     ChatTheme {
         ChatItem(
-            chat = chat
+            model = chat,
+            onClick = {}
         )
     }
 }

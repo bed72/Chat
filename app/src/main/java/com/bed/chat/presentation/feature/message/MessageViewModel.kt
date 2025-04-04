@@ -42,6 +42,9 @@ import com.bed.chat.presentation.shared.extensions.launch
 
 import com.bed.chat.domain.models.output.UserOutputModel
 import com.bed.chat.domain.models.input.MessageDataInputModel
+import com.bed.chat.domain.models.output.MessageWithMembersOutputModel
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -52,6 +55,9 @@ class MessageViewModel @Inject constructor(
 ) : ViewModel() {
     var message by mutableStateOf("")
         private set
+
+    private val _isOnline = MutableStateFlow(false)
+    val isOnline get() = _isOnline.asStateFlow()
 
     private val _showFailureState = Channel<Boolean>()
     val showFailureState = _showFailureState.receiveAsFlow()
@@ -109,10 +115,17 @@ class MessageViewModel @Inject constructor(
                 .fold(
                     onSuccess = {
                         messageRepository.observerDataWebSocket()
+                            .onEach { updateIsOnline(it) }
                             .launchIn(viewModelScope)
                     },
                     onFailure = {}
                 )
+        }
+    }
+
+    private fun updateIsOnline(data: MessageWithMembersOutputModel?) {
+        data?.ids?.let { usersOnline ->
+            _isOnline.update {usersOnline.contains(parameter.userId) }
         }
     }
 

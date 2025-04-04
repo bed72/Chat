@@ -1,5 +1,10 @@
 package com.bed.chat.domain.models.output
 
+data class MessageWithMembersOutputModel(
+    val ids: List<Int>?,
+    val messages: MessageOutputModel?
+)
+
 data class MessageOutputModel(
     val id: Int?,
     val autoId: Int,

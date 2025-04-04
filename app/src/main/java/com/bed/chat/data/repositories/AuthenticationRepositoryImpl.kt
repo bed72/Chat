@@ -2,6 +2,8 @@ package com.bed.chat.data.repositories
 
 import javax.inject.Inject
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.CoroutineDispatcher
 
 import com.bed.chat.data.datasources.AuthenticationDatasource
@@ -15,6 +17,7 @@ import com.bed.chat.external.clients.http.response.UserResponse
 import com.bed.chat.domain.models.input.SignInInputModel
 import com.bed.chat.domain.models.input.SignUpInputModel
 import com.bed.chat.domain.models.output.ImageOutputModel
+import com.bed.chat.domain.models.output.UserOutputModel
 
 import com.bed.chat.domain.repositories.TokenRepository
 import com.bed.chat.domain.repositories.AuthenticationRepository
@@ -24,8 +27,13 @@ class AuthenticationRepositoryImpl @Inject constructor(
     private val tokenRepository: TokenRepository,
     private val datasource: AuthenticationDatasource,
     private val selfUserRepository: SelfUserRepository,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : AuthenticationRepository {
+
+    override val currentUser: Flow<UserOutputModel> get() =
+        selfUserRepository
+            .user
+            .flowOn(ioDispatcher)
 
     override suspend fun authenticate(): Result<Unit> =
         safeCallResult(ioDispatcher) {
@@ -43,6 +51,8 @@ class AuthenticationRepositoryImpl @Inject constructor(
             val response = datasource.signIn(parameter.toRequest()).getOrThrow()
 
             if (response.token.isNotEmpty()) tokenRepository.save(response.token)
+
+            authenticate()
         }
 
     override suspend fun uploadProfilePicture(parameter: String): Result<ImageOutputModel> =

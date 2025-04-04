@@ -76,4 +76,8 @@
     <!-- Profile Screen -->
     <string name="profile_title">Configurações</string>
 
+    <!-- Messages Screen -->
+    <string name="messages_is_offline">…</string>
+    <string name="messages_is_online">Online</string>
+
 </resources>

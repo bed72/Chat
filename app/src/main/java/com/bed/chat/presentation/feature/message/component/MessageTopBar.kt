@@ -38,13 +38,14 @@ import com.bed.chat.presentation.shared.modifiers.noRippleClickable
 @Composable
 fun MessageTopBar(
     state: MessageViewModel.UserState,
+    isOnline: Boolean,
     goBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     when (state) {
         MessageViewModel.UserState.Loading -> MessageTopBarSkeleton(modifier)
-        is MessageViewModel.UserState.Failure -> HandleUser(null, goBack, modifier)
-        is MessageViewModel.UserState.Success -> HandleUser(state.user, goBack, modifier)
+        is MessageViewModel.UserState.Failure -> HandleUser(null, goBack, isOnline, modifier)
+        is MessageViewModel.UserState.Success -> HandleUser(state.user, goBack, isOnline, modifier)
     }
 }
 
@@ -53,6 +54,7 @@ fun MessageTopBar(
 private fun HandleUser(
     user: UserOutputModel?,
     goBack: () -> Unit,
+    isOnline: Boolean,
     modifier: Modifier = Modifier
 ) {
     TopBar(
@@ -69,17 +71,19 @@ private fun HandleUser(
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     Text(
-                        text = user?.firstName ?: "...",
+                        text = user?.firstName ?: stringResource(R.string.messages_is_offline),
                         maxLines = 1,
                         fontWeight = FontWeight.Bold,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.labelLarge
                     )
-                    Text(
-                        text = if (user == null) "..." else "Online",
-                        fontStyle = FontStyle.Italic,
-                        style = MaterialTheme.typography.labelMedium
-                    )
+                    if (user != null || isOnline) {
+                        Text(
+                            text = stringResource(R.string.messages_is_online),
+                            fontStyle = FontStyle.Italic,
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                    }
                 }
             }
         },
@@ -102,7 +106,8 @@ private fun MessageTopBarPreview() {
     ChatTheme {
         MessageTopBar(
             state = MessageViewModel.UserState.Success(userOneFake),
-            goBack = {}
+            goBack = {},
+            isOnline = false
         )
     }
 }

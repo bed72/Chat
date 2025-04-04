@@ -30,6 +30,7 @@ import com.bed.chat.external.clients.http.response.MessageResponse
 
 import com.bed.chat.external.clients.websocket.response.WebSocketResponse
 import com.bed.chat.external.clients.websocket.request.WebSocketDataRequest
+import com.bed.chat.external.clients.websocket.response.ActiveUserIdsResponse
 import com.bed.chat.external.clients.websocket.response.WebSocketDataResponse
 
 interface WebSocketClient {
@@ -96,6 +97,7 @@ class WebSocketClientImpl @Inject constructor(
 
         return when (val data = value.data) {
             is MessageResponse -> WebSocketResponse.MessageReceived(data)
+            is ActiveUserIdsResponse -> WebSocketResponse.ActiveUsersChanged(data)
             else -> WebSocketResponse.NotHandleYet
         }
     }

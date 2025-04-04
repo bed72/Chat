@@ -20,14 +20,14 @@ import com.bed.chat.presentation.shared.components.TopBar
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun ChatTopBar(
-    user: String,
+    user: String?,
     modifier: Modifier = Modifier
 ) {
     TopBar(
         modifier = modifier,
         title = {
             Text(
-                text = AnnotatedString.fromHtml(stringResource(R.string.chat_title, user)),
+                text = AnnotatedString.fromHtml(stringResource(R.string.chat_title, user ?: R.string.messages_is_offline)),
                 style = MaterialTheme.typography.headlineSmall
             )
         }

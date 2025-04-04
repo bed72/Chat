@@ -41,6 +41,7 @@ fun MessageRoute(
     viewModel: MessageViewModel = hiltViewModel()
 ) {
     val hostState = remember { SnackbarHostState() }
+    val isOnline by viewModel.isOnline.collectAsStateWithLifecycle()
     val userState by viewModel.userState.collectAsStateWithLifecycle()
     val messages = viewModel.messages.collectAsLazyPagingItems()
     val (showFailure, setShowFailure) = remember { mutableStateOf(false) }
@@ -74,6 +75,7 @@ fun MessageRoute(
 
     MessageScreen(
         goBack = goBack,
+        isOnline = isOnline,
         messages = messages,
         userState = userState,
         hostState = hostState,
@@ -86,6 +88,7 @@ fun MessageRoute(
 @Composable
 fun MessageScreen(
     message: String,
+    isOnline: Boolean,
     goBack: () -> Unit,
     onSendMessage: () -> Unit,
     hostState: SnackbarHostState,
@@ -98,7 +101,7 @@ fun MessageScreen(
 
     ChatScaffold(
         modifier = modifier,
-        topBar = { MessageTopBar(state = userState, goBack = goBack) },
+        topBar = { MessageTopBar(state = userState, isOnline = isOnline, goBack = goBack) },
         content = {
             MessageContent(
                 message = message,
@@ -120,6 +123,7 @@ private fun MessageScreenPreview(
         MessageScreen(
             message = "Oie",
             goBack = {},
+            isOnline = false,
             onSendMessage = {},
             onMessageChange = {},
             hostState = remember { SnackbarHostState() },

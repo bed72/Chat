@@ -8,8 +8,8 @@ import androidx.navigation.compose.composable
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 
-import com.bed.chat.presentation.feature.users.UsersRoute
 import com.bed.chat.presentation.feature.chats.ChatRoute
+import com.bed.chat.presentation.feature.users.UsersRoute
 import com.bed.chat.presentation.feature.splash.SplashRoute
 import com.bed.chat.presentation.feature.signin.SignInRoute
 import com.bed.chat.presentation.feature.signup.SignUpRoute
@@ -72,7 +72,11 @@ fun Router(state: RoutesState) {
         }
 
         composable<Routes.Chat> {
-            ChatRoute()
+            ChatRoute(
+                onNavigateToChat = {
+                    navController.navigate(Routes.Message(it.otherMember.id))
+                }
+            )
         }
 
         composable<Routes.User> {

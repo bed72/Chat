@@ -25,6 +25,7 @@ import com.bed.chat.presentation.shared.preview.provider.ChatsPreviewParameterPr
 @Composable
 fun ChatSuccess(
     data: List<ChatOutputModel>,
+    onClick: (ChatOutputModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (data.isNotEmpty()) {
@@ -34,7 +35,12 @@ fun ChatSuccess(
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
             itemsIndexed(data) { index, model ->
-                ChatItem(model)
+                ChatItem(
+                    model = model,
+                    onClick = {
+                        onClick(model)
+                    }
+                )
 
                 if (index > data.lastIndex) return@itemsIndexed
 
@@ -51,7 +57,8 @@ private fun ChatSuccessPreview(
 ) {
     ChatTheme {
         ChatSuccess(
-            data = ChatViewModel.CheatUiState.Success(chats).data,
+            data = ChatViewModel.ChatState.Success(chats).data,
+            onClick = {}
         )
     }
 }

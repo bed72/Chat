@@ -6,4 +6,6 @@ data class ChatOutputModel(
     val timestamp: String,
     val lastMessage: String?,
     val members: List<UserOutputModel>,
-)
+) {
+    val otherMember get() = members.first { it.self.not() }
+}
