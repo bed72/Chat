@@ -9,5 +9,6 @@ enum class HttpUrl(val value: String) {
     MESSAGES("${API.value}/messages"),
     AUTHENTICATE("${API.value}/authenticate"),
     UPLOADING("${API.value}/profile-picture"),
-    CONVERSATIONS("${API.value}/conversations")
+    CONVERSATIONS("${API.value}/conversations"),
+    NOTIFICATIONS("${API.value}/notifications/register")
 }

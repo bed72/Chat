@@ -2,6 +2,36 @@
     <string name="empty" />
     <string name="app_name">chat</string>
 
+    <!-- Splash Screen -->
+    <string name="app_icon_description">Ícone da aplicação, um megafone.</string>
+
+    <!-- SignIn Screen -->
+    <string name="sign_in_title">Bem vindo!</string>
+    <string name="sign_in_title_button">Entrar</string>
+    <string name="sign_in_description_create_account_link">Criar conta</string>">
+    <string name="sign_in_description_create_account">Não possui uma conta?</string>
+    <string name="sign_in_sub_title">Acesse sua conta e converse com quem quiser</string>
+
+    <!-- SignUp Screen -->
+    <string name="sign_up_title">Criar conta</string>
+    <string name="sign_up_title_button">Criar</string>
+    <string name="sign_up_sub_title">Entre com seu nome, e-mail e senha.</string>
+    <string name="sign_up_description_create_account_link">Acessar conta</string>">
+    <string name="sign_up_description_create_account">Já possui uma conta?</string>
+
+    <!-- Chat Screen -->
+    <string name="chat_title"><![CDATA[Olá, <b>%1$s</b>]]></string>
+
+    <!-- User Screen -->
+    <string name="user_title">Comunidade</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_title">Configurações</string>
+
+    <!-- Messages Screen -->
+    <string name="messages_is_offline">…</string>
+    <string name="messages_is_online">Online</string>
+
     <!-- Icons -->
     <string name="common_go_back_icon_description">Ícone do botão de voltar</string>
 
@@ -20,6 +50,12 @@
     <string name="bottom_navigation_item_profile">Perfil</string>
     <string name="bottom_navigation_item_plus">Ícone de mais</string>
     <string name="bottom_navigation_item_icon">Icone da barra de navegação</string>
+
+    <!-- Banner Notification -->
+    <string name="banner_notification_close">Fechar</string>
+    <string name="banner_notification_title">Configure as Notificações</string>
+    <string name="banner_notification_open_config">Ir para as configurações</string>
+    <string name="banner_notification_description">Aceite as notificações pela configuração do aplicativo.</string>
 
     <!-- Inputs Component -->
     <string name="label_email_input">E-mail</string>
@@ -50,34 +86,12 @@
     <string name="picture_selector_bottom_sheet_camera_description">Ícone de uma câmera de fotos</string>
     <string name="picture_selector_bottom_sheet_gallery_description">Ícone de uma galeria de fotos</string>
 
-    <!-- Splash Screen -->
-    <string name="app_icon_description">Ícone da aplicação, um megafone.</string>
 
-    <!-- SignIn Screen -->
-    <string name="sign_in_title">Bem vindo!</string>
-    <string name="sign_in_title_button">Entrar</string>
-    <string name="sign_in_description_create_account_link">Criar conta</string>">
-    <string name="sign_in_description_create_account">Não possui uma conta?</string>
-    <string name="sign_in_sub_title">Acesse sua conta e converse com quem quiser</string>
-
-    <!-- SignUp Screen -->
-    <string name="sign_up_title">Criar conta</string>
-    <string name="sign_up_title_button">Criar</string>
-    <string name="sign_up_sub_title">Entre com seu nome, e-mail e senha.</string>
-    <string name="sign_up_description_create_account_link">Acessar conta</string>">
-    <string name="sign_up_description_create_account">Já possui uma conta?</string>
-
-    <!-- Chat Screen -->
-    <string name="chat_title"><![CDATA[Olá, <b>%1$s</b>]]></string>
-
-    <!-- User Screen -->
-    <string name="user_title">Comunidade</string>
-
-    <!-- Profile Screen -->
-    <string name="profile_title">Configurações</string>
-
-    <!-- Messages Screen -->
-    <string name="messages_is_offline">…</string>
-    <string name="messages_is_online">Online</string>
+    <!-- Notifications -->
+    <string name="notification_channel_description">Mensagens do Chat</string>
+    <string name="notification_title">Permitir notificações?</string>
+    <string name="notification_granted">Permitir</string>
+    <string name="notification_denied">Agora não</string>
+    <string name="notification_description">Nosso app de chat usa notificações para avisar você quando receber novas mensagens. \nSem essa permissão, você pode não ser alertado sobre conversas importantes em tempo real.</string>
 
 </resources>

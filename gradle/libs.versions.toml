@@ -5,8 +5,8 @@ agp = "8.9.1"
 hilt = "2.56.1"
 coil = "2.7.0"
 ktor = "3.1.1"
-room = "2.6.1"
-core = "1.15.0"
+room = "2.7.0"
+core = "1.16.0"
 slf4j = "1.7.36"
 lottie = "6.6.4"
 splash = "1.0.1"
@@ -14,17 +14,19 @@ paging = "3.3.6"
 kotlin = "2.1.20"
 detekt = "1.23.7"
 shimmer = "1.3.2"
-material = "1.3.1"
+services = "4.4.2"
+material = "1.3.2"
 protobuf = "0.9.4"
 activity = "1.10.1"
 lifecycle = "2.8.7"
-datastore = "1.1.3"
+datastore = "1.1.4"
 leakcanary = "2.14"
+firebase = "33.12.0"
 constraint = "1.1.1"
 navigation = "2.8.9"
 coroutines = "1.10.1"
 ksp = "2.1.20-1.0.31"
-compose = "2025.03.00"
+compose = "2025.04.00"
 exifinterface = "1.4.0"
 protobuflite = "4.30.1"
 hilt-navigation = "1.2.0"
@@ -36,6 +38,10 @@ espresso = "3.6.1"
 junit-version = "1.2.1"
 
 [libraries]
+# Firebase
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+
 # UI
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -110,6 +116,7 @@ application = { id = "com.android.application", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+firebase = { id = "com.google.gms.google-services", version.ref = "services" }
 compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
@@ -135,6 +142,8 @@ android-test = [
 ]
 
 core = [
+    # Firebae
+    "firebase-messaging",
     #Paging
     "paging-runtime",
     "paging-compose",

@@ -54,8 +54,8 @@ fun HttpClientConfig<CIOEngineConfig>.configureLogging() {
     install(Logging) {
         level = LogLevel.ALL
         logger = Logger.DEFAULT
-        filter { it.url.host.contains("https") }
-        sanitizeHeader { it == HttpHeaders.Authorization }
+//        filter { it.url.host.contains("https") }
+//        sanitizeHeader { it == HttpHeaders.Authorization }
     }
 }
 

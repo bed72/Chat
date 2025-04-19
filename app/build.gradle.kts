@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.compiler)
     alias(libs.plugins.protobuf)
+    alias(libs.plugins.firebase)
     alias(libs.plugins.application)
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
@@ -70,6 +71,7 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.bundles.core)
     implementation(platform(libs.compose))
+    implementation(platform(libs.firebase))
 
     // Test
     testImplementation(libs.bundles.test)
