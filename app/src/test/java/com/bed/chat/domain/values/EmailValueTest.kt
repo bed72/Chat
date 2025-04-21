@@ -4,8 +4,8 @@ import org.junit.Test
 import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
-import com.bed.chat.domain.exception.ValidationMessage
-import com.bed.chat.domain.exception.ValidationException
+import com.bed.chat.domain.exceptions.ValidationMessage
+import com.bed.chat.domain.exceptions.ValidationException
 
 internal class EmailValueTest {
     @Test

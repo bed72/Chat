@@ -35,7 +35,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
 
-import com.bed.chat.domain.exception.NetworkException
+import com.bed.chat.domain.exceptions.NetworkException
 import com.bed.chat.domain.repositories.TokenRepository
 
 fun HttpClientConfig<CIOEngineConfig>.configureDefaultHeaders() {

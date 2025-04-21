@@ -2,7 +2,7 @@ package com.bed.chat.domain.values
 
 import kotlin.text.isNullOrEmpty
 
-import com.bed.chat.domain.exception.ValidationException
+import com.bed.chat.domain.exceptions.ValidationException
 
 @JvmInline
 value class NameValue private constructor(private val value: String) {

@@ -21,7 +21,7 @@ import com.bed.chat.presentation.shared.routes.rememberRoutesState
 @Composable
 fun App(
     modifier: Modifier = Modifier,
-    state: RoutesState = rememberRoutesState()
+    state: RoutesState
 ) {
     val topLevel = remember(state.topLevelRoutes) {
         state.topLevelRoutes.toSet()

@@ -1,4 +1,4 @@
-package com.bed.chat.domain.exception
+package com.bed.chat.domain.exceptions
 
 enum class ValidationMessage(val message: String) {
     NAME_INVALID("Nome inválido."),

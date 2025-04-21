@@ -1,14 +1,14 @@
 [versions]
 
 # Commons
-agp = "8.9.1"
-hilt = "2.56.1"
+agp = "8.9.2"
+hilt = "2.56.2"
 coil = "2.7.0"
-ktor = "3.1.1"
+ktor = "3.1.2"
 room = "2.7.0"
 core = "1.16.0"
 slf4j = "1.7.36"
-lottie = "6.6.4"
+lottie = "6.6.6"
 splash = "1.0.1"
 paging = "3.3.6"
 kotlin = "2.1.20"
@@ -24,11 +24,11 @@ leakcanary = "2.14"
 firebase = "33.12.0"
 constraint = "1.1.1"
 navigation = "2.8.9"
-coroutines = "1.10.1"
+coroutines = "1.10.2"
 ksp = "2.1.20-1.0.31"
 compose = "2025.04.00"
 exifinterface = "1.4.0"
-protobuflite = "4.30.1"
+protobuflite = "4.30.2"
 hilt-navigation = "1.2.0"
 
 # Tests

@@ -1,6 +1,6 @@
 package com.bed.chat.domain.values
 
-import com.bed.chat.domain.exception.ValidationException
+import com.bed.chat.domain.exceptions.ValidationException
 
 @JvmInline
 value class EmailValue private constructor(private val value: String) {

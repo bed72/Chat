@@ -19,6 +19,7 @@
 
         <activity
             android:exported="true"
+            android:launchMode="singleTop"
             android:name=".presentation.MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize"
@@ -31,6 +32,14 @@
             </intent-filter>
 
         </activity>
+
+        <service
+            android:exported="false"
+            android:name=".external.clients.fcm.services.FcmMessagingService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -1,4 +1,4 @@
-package com.bed.chat.domain.exception
+package com.bed.chat.domain.exceptions
 
 enum class NetworkMessage(val message: String) {
     UNKNOWN_ERROR("Ocorreu um erro inesperado. Por favor, tente novamente."),

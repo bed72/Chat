@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.navigation.navDeepLink
 
 import com.bed.chat.presentation.feature.chats.ChatRoute
 import com.bed.chat.presentation.feature.users.UsersRoute
@@ -18,6 +19,8 @@ import com.bed.chat.presentation.feature.message.MessageRoute
 
 import com.bed.chat.presentation.shared.extensions.slideInTo
 import com.bed.chat.presentation.shared.extensions.slideOutTo
+
+const val CHAT_URI = "chat://chat"
 
 @Composable
 fun Router(state: RoutesState) {
@@ -90,6 +93,9 @@ fun Router(state: RoutesState) {
         }
 
         composable<Routes.Message>(
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "$CHAT_URI/{userId}" }
+            ),
             enterTransition = { slideInTo(AnimatedContentTransitionScope.SlideDirection.Left) },
             exitTransition = { slideOutTo(AnimatedContentTransitionScope.SlideDirection.Right) }
         )  {

@@ -30,6 +30,6 @@ class ChatApp : Application() {
     }
 
     companion object {
-        private const val CHANNEL_ID = "chat_messages"
+        const val CHANNEL_ID = "chat_messages"
     }
 }
