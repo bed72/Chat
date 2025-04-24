@@ -11,25 +11,25 @@ import com.bed.chat.R
 
 sealed interface Routes {
     @Serializable
-    object Splash
+    data object Splash : Routes
 
     @Serializable
-    object SignIn
+    data object SignIn : Routes
 
     @Serializable
-    object SignUp
+    data object SignUp : Routes
 
     @Serializable
-    object Chat
+    data object Chat : Routes
 
     @Serializable
-    object User
+    data object User : Routes
 
     @Serializable
-    object Profile
+    data object Profile : Routes
 
     @Serializable
-    data class Message(val userId: Int)
+    data class Message(val userId: Int) : Routes
 }
 
 enum class TopLevelRoutes(

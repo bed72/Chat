@@ -32,6 +32,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChatTheme {
                 val state = rememberRoutesState()
+                state.startRoute = if (intent.data == null) Routes.Splash else Routes.Chat
+
                 navController = state.navController
 
                 App(state = state)

@@ -26,7 +26,7 @@ const val CHAT_URI = "chat://chat"
 fun Router(state: RoutesState) {
     val navController = state.navController
 
-    NavHost(navController = navController, startDestination = Routes.Splash) {
+    NavHost(navController = navController, startDestination = state.startRoute) {
         composable<Routes.Splash> {
             SplashRoute(
                 onNavigateToChats = {

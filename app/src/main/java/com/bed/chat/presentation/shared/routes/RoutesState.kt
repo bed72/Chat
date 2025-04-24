@@ -18,6 +18,8 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 class RoutesState(val navController: NavHostController) {
     private val previousRoute = mutableStateOf<NavDestination?>(null)
 
+    var startRoute: Routes = Routes.Splash
+
     val topLevelRoutes: List<TopLevelRoutes> = TopLevelRoutes.entries
 
     val currentRoute: NavDestination?
