@@ -22,14 +22,14 @@ import com.bed.chat.domain.models.output.UserOutputModel
 import com.bed.chat.domain.models.output.ImageOutputModel
 
 import com.bed.chat.domain.repositories.TokenRepository
-import com.bed.chat.domain.repositories.NotificationRepository
+import com.bed.chat.domain.repositories.FirebaseTokenRepository
 import com.bed.chat.domain.repositories.AuthenticationRepository
 import com.bed.chat.domain.repositories.storage.SelfUserRepository
 
 class AuthenticationRepositoryImpl @Inject constructor(
     private val tokenRepository: TokenRepository,
     private val selfUserRepository: SelfUserRepository,
-    private val notificationRepository: NotificationRepository,
+    private val firebaseTokenRepository: FirebaseTokenRepository,
     private val notificationDatasource: NotificationDatasource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val authenticationDatasource: AuthenticationDatasource,
@@ -79,7 +79,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
     }
 
     private suspend fun saveNotificationToken() {
-        val token = notificationRepository.getToken()
+        val token = firebaseTokenRepository.getToken()
         notificationDatasource.registerToken(TokenRequest(token))
     }
 }

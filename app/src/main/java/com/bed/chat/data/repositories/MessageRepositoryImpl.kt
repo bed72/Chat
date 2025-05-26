@@ -50,13 +50,13 @@ import com.bed.chat.external.clients.websocket.response.ActiveUserIdsResponse
 
 class MessageRepositoryImpl @Inject constructor(
     private val database: ChatDatabase,
-    private val repository: SelfUserRepository,
+    private val userRepository: SelfUserRepository,
     private val localDatasource: LocalMessageDatasource,
     private val remoteDatasource: RemoteMessageDatasource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : MessageRepository {
 
-    private val user = runBlocking { repository.user.firstOrNull() }
+    private val user = runBlocking { userRepository.user.firstOrNull() }
 
     override suspend fun sendMessage(parameter: MessageDataInputModel): Result<Unit> =
         safeCallResult(ioDispatcher) { remoteDatasource.sendMessage(toRequest(parameter)) }

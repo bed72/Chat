@@ -24,6 +24,12 @@ class ChatViewModel @Inject constructor(
     authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
+    init {
+        launch {
+            chatRepository.newMessageReceivedFlow.collect { getChats() }
+        }
+    }
+
     val currentUser = authenticationRepository
         .currentUser
         .stateIn(
@@ -38,7 +44,7 @@ class ChatViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             initialValue = ChatState.Loading,
-            started = SharingStarted.WhileSubscribed(4_000)
+            started = SharingStarted.WhileSubscribed()
         )
 
 

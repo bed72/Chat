@@ -30,6 +30,7 @@ import com.bed.chat.presentation.shared.routes.CHAT_URI
 import com.bed.chat.external.mappers.NotificationMapper
 import com.bed.chat.external.clients.fcm.models.NotificationModel
 
+import com.bed.chat.domain.repositories.NotificationRepository
 import com.bed.chat.domain.repositories.storage.SelfUserRepository
 
 @AndroidEntryPoint
@@ -39,6 +40,9 @@ class FcmMessagingService : FirebaseMessagingService() {
 
     @Inject
     lateinit var repository: SelfUserRepository
+
+    @Inject
+    lateinit var notificationRepository: NotificationRepository
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -53,6 +57,7 @@ class FcmMessagingService : FirebaseMessagingService() {
             repository.user.firstOrNull()?.let { user ->
                message.data["messagePayload"]?.let {
                    val data = mapper(it)
+                   notificationRepository.notifyNewMessage(data)
                    sendNotification(data)
                 }
             }

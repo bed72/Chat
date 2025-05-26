@@ -8,12 +8,14 @@ import kotlin.uuid.ExperimentalUuidApi
 
 import kotlinx.coroutines.channels.Channel
 
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,8 +45,6 @@ import com.bed.chat.presentation.shared.extensions.launch
 import com.bed.chat.domain.models.output.UserOutputModel
 import com.bed.chat.domain.models.input.MessageDataInputModel
 import com.bed.chat.domain.models.output.MessageWithMembersOutputModel
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 @OptIn(ExperimentalCoroutinesApi::class)
