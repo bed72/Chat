@@ -57,7 +57,13 @@ class FcmMessagingService : FirebaseMessagingService() {
             repository.user.firstOrNull()?.let { user ->
                message.data["messagePayload"]?.let {
                    val data = mapper(it)
-                   notificationRepository.notifyNewMessage(data)
+
+                   if (ChatApp.ON_APP_FOREGROUND) {
+                       notificationRepository.notifyNewMessage(data)
+
+                       return@launch
+                   }
+
                    sendNotification(data)
                 }
             }

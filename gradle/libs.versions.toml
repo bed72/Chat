@@ -86,7 +86,7 @@ lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = 
 activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 shimmer = { group = "com.valentinilk.shimmer", name = "compose-shimmer", version.ref = "shimmer" }
 protobuf-lite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuflite" }
-#detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+proccess = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
 navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
@@ -162,6 +162,7 @@ core = [
     "lottie",
     "shimmer",
     "activity",
+    "proccess",
     "datastore",
     "lifecycle",
     "constraint",
