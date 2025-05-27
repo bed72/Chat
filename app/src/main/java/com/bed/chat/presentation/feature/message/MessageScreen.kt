@@ -1,5 +1,6 @@
 package com.bed.chat.presentation.feature.message
 
+import androidx.compose.foundation.layout.imePadding
 import kotlinx.coroutines.flow.Flow
 
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -100,7 +101,7 @@ fun MessageScreen(
 
 
     ChatScaffold(
-        modifier = modifier,
+        modifier = modifier.imePadding(),
         topBar = { MessageTopBar(state = userState, isOnline = isOnline, goBack = goBack) },
         content = {
             MessageContent(

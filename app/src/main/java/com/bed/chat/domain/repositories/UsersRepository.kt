@@ -7,5 +7,5 @@ import com.bed.chat.domain.models.output.UserOutputModel
 
 interface UsersRepository {
     suspend fun getUser(parameter: Int): Result<UserOutputModel>
-    fun getUsers(parameter: Int = 10): Flow<PagingData<UserOutputModel>>
+    fun getUsers(parameter: Int = 25): Flow<PagingData<UserOutputModel>>
 }

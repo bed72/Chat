@@ -15,7 +15,7 @@ class UserPagingSource @Inject constructor(
     override fun getRefreshKey(state: PagingState<Int, UserResponse>): Int? =
         state.anchorPosition?.let { position ->
             state.closestPageToPosition(position)?.run {
-                prevKey?.plus(state.config.pageSize) ?: nextKey?.minus(10)
+                prevKey?.plus(state.config.pageSize) ?: nextKey?.minus(25)
             }
         }
 

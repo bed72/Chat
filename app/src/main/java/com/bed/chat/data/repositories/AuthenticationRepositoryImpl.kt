@@ -29,9 +29,9 @@ import com.bed.chat.domain.repositories.storage.SelfUserRepository
 class AuthenticationRepositoryImpl @Inject constructor(
     private val tokenRepository: TokenRepository,
     private val selfUserRepository: SelfUserRepository,
-    private val firebaseTokenRepository: FirebaseTokenRepository,
     private val notificationDatasource: NotificationDatasource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val firebaseTokenRepository: FirebaseTokenRepository,
     private val authenticationDatasource: AuthenticationDatasource,
 ) : AuthenticationRepository {
 

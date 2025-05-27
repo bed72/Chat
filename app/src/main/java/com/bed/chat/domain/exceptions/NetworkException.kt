@@ -1,5 +1,7 @@
 package com.bed.chat.domain.exceptions
 
+import android.content.Context
+
 enum class NetworkMessage(val message: String) {
     UNKNOWN_ERROR("Ocorreu um erro inesperado. Por favor, tente novamente."),
     UNAUTHORIZED("Você não tem permissão para acessar essa funcionalidade."),
@@ -29,13 +31,13 @@ sealed class NetworkException(
         cause: Throwable? = null,
         message: String = NetworkMessage.SERVER_ERROR.message
     ) : NetworkException(message, cause)
-    class UnauthorizedException(
-        cause: Throwable? = null,
-        message: String = NetworkMessage.UNAUTHORIZED.message
-    ) : NetworkException(message, cause)
     class UnprocessableEntityException(
         cause: Throwable? = null,
         message: String = NetworkMessage.UNPROCESSABLE_ENTITY.message
+    ) : NetworkException(message, cause)
+    class UnauthorizedException(
+        cause: Throwable? = null,
+        message: String = NetworkMessage.UNAUTHORIZED.message
     ) : NetworkException(message, cause)
 
     override fun toString(): String = "${this::class.simpleName}: $message"

@@ -23,6 +23,9 @@ import androidx.datastore.preferences.preferencesDataStore
 
 import com.bed.chat.SelfUser
 
+import com.bed.chat.BuildConfig
+import com.bed.chat.domain.repositories.SessionRepository
+
 import com.bed.chat.domain.repositories.TokenRepository
 
 import com.bed.chat.external.clients.database.ChatDatabase
@@ -77,17 +80,20 @@ object StorageClientModule {
 object HttpClientModule {
     @Provides
     @Singleton
-    fun provideHttpClient(repository: TokenRepository): HttpClient = HttpClient(CIO) {
+    fun provideHttpClient(
+        tokenRepository: TokenRepository,
+        sessionRepository: SessionRepository
+    ): HttpClient = HttpClient(CIO) {
         expectSuccess = true
 
-        configureLogging()
         configureWebSocket()
         configureDefaultHeaders()
         configureResponseTimeout()
         configureContentNegotiation()
-        configureValidationResponse()
+        configureValidationResponse(sessionRepository)
+        if (BuildConfig.DEBUG) configureLogging()
     }
         .apply {
-            authenticationInterceptor(repository)
+            authenticationInterceptor(tokenRepository)
         }
 }

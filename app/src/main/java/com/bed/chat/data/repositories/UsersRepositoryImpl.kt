@@ -45,7 +45,6 @@ class UsersRepositoryImpl @Inject constructor(
     private fun buildConfig(parameter: Int) = PagingConfig(
         prefetchDistance = 1,
         pageSize = parameter,
-        enablePlaceholders = false,
         initialLoadSize = parameter,
     )
 

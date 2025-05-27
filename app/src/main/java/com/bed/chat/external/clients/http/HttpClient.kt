@@ -36,6 +36,7 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
 
 import com.bed.chat.domain.exceptions.NetworkException
+import com.bed.chat.domain.repositories.SessionRepository
 import com.bed.chat.domain.repositories.TokenRepository
 
 fun HttpClientConfig<CIOEngineConfig>.configureDefaultHeaders() {
@@ -82,7 +83,7 @@ fun HttpClientConfig<CIOEngineConfig>.configureContentNegotiation() {
     }
 }
 
-fun HttpClientConfig<CIOEngineConfig>.configureValidationResponse() {
+fun HttpClientConfig<CIOEngineConfig>.configureValidationResponse(repository: SessionRepository) {
     HttpResponseValidator {
         handleResponseExceptionWithRequest { cause, _ ->
             val exception = cause as? ClientRequestException ?: return@handleResponseExceptionWithRequest
@@ -90,9 +91,12 @@ fun HttpClientConfig<CIOEngineConfig>.configureValidationResponse() {
             throw when (exception.response.status) {
                 HttpStatusCode.NotFound -> NetworkException.NotFoundException(cause)
                 HttpStatusCode.BadRequest -> NetworkException.BadRequestException(cause)
-                HttpStatusCode.Unauthorized -> NetworkException.UnauthorizedException(cause)
                 HttpStatusCode.InternalServerError -> NetworkException.ServerErrorException(cause)
                 HttpStatusCode.UnprocessableEntity -> NetworkException.UnprocessableEntityException(cause)
+                HttpStatusCode.Unauthorized -> {
+                    repository.notifySessionExpired()
+                    NetworkException.UnauthorizedException(cause)
+                }
                 else -> NetworkException.UnknownException(cause)
             }
         }

@@ -105,10 +105,7 @@ class MessageRepositoryImpl @Inject constructor(
         localDatasource.insertMessage(listOf(message.toEntity()))
     }
 
-    private fun buildConfig() = PagingConfig(
-        pageSize = 10,
-        enablePlaceholders = false,
-    )
+    private fun buildConfig() = PagingConfig(pageSize = 25)
 
     private fun PagingData<MessageEntity>.toModel(): PagingData<MessageOutputModel> =
         map {it.toModel(user?.id) }

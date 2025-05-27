@@ -1,14 +1,8 @@
 package com.bed.chat.presentation.shared.theme
 
 import android.os.Build
-import android.app.Activity
-import androidx.core.view.WindowCompat
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalContext
 
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -97,20 +91,6 @@ fun ChatTheme(
 
         darkTheme -> darkScheme
         else -> lightScheme
-    }
-
-    val view = LocalView.current
-    val context = LocalContext.current
-
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-
-            val controller = WindowCompat.getInsetsController(window, view)
-            controller.isAppearanceLightStatusBars = darkTheme
-        }
     }
 
     MaterialTheme(
