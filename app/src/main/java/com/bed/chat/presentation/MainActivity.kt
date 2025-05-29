@@ -1,7 +1,5 @@
 package com.bed.chat.presentation
 
-import javax.inject.Inject
-
 import android.os.Bundle
 import android.content.Intent
 
@@ -9,30 +7,27 @@ import kotlinx.coroutines.launch
 
 import dagger.hilt.android.AndroidEntryPoint
 
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 
-import androidx.lifecycle.lifecycleScope
-
+import androidx.activity.viewModels
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
-import com.bed.chat.domain.repositories.SessionRepository
-
 import com.bed.chat.presentation.shared.routes.Routes
 import com.bed.chat.presentation.shared.theme.ChatTheme
 import com.bed.chat.presentation.shared.routes.rememberRoutesState
-import kotlinx.coroutines.flow.collectLatest
+import com.bed.chat.presentation.shared.viewmodel.SessionViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavController
 
-    @Inject
-    lateinit var repository: SessionRepository
+    private val viewModel: SessionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +70,8 @@ class MainActivity : ComponentActivity() {
 
     private fun observeSessionExpired() {
         lifecycleScope.launch {
-            repository.sessionExpiredFlow.collectLatest {
-                repository.logout()
+            viewModel.state.collect {
+                viewModel.logout()
 
                 navController.navigate(Routes.SignIn) {
                     popUpTo(0) { inclusive = true }
