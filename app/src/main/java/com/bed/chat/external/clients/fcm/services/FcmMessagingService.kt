@@ -4,6 +4,7 @@ import javax.inject.Inject
 
 import android.content.Intent
 import android.app.PendingIntent
+import android.util.Log
 
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +53,10 @@ class FcmMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+
+        message.data["messagePayload"].let {
+            Log.d("FCM", "Notification: $it")
+        }
 
         scope.launch {
             repository.user.firstOrNull()?.let { user ->

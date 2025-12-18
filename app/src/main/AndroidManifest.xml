@@ -41,6 +41,16 @@
             </intent-filter>
         </service>
 
+        <service
+            android:exported="true"
+            android:label="Notification Listener"
+            android:name=".external.clients.fcm.services.NotificationService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

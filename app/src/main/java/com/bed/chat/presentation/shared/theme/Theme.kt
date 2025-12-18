@@ -6,12 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.ui.graphics.Color
+import com.materialkolor.DynamicMaterialExpressiveTheme
+import com.materialkolor.PaletteStyle
+import com.materialkolor.dynamiccolor.ColorSpec
+import com.materialkolor.rememberDynamicMaterialThemeState
 
 private val lightScheme = lightColorScheme(
     primary = lightPrimary,
@@ -77,25 +84,42 @@ private val darkScheme = darkColorScheme(
     scrim = darkScrim,
 )
 
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ChatTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+//    val colorScheme = when {
+//        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+//            val context = LocalContext.current
+//            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+//        }
+//
+//        darkTheme -> darkScheme
+//        else -> lightScheme
+//    }
+//
+//    MaterialTheme(
+//        content = content,
+//        typography = Typography,
+//        colorScheme = colorScheme
+//    )
 
-        darkTheme -> darkScheme
-        else -> lightScheme
-    }
+    val state = rememberDynamicMaterialThemeState(
+        isDark = darkTheme,
+        contrastLevel = 1.0,
+        style = PaletteStyle.Vibrant,
+        seedColor = Color(0xFF1EE776),
+        specVersion = ColorSpec.SpecVersion.SPEC_2025,
+    )
 
-    MaterialTheme(
+    DynamicMaterialExpressiveTheme(
+        state = state,
+        animate = true,
         content = content,
-        typography = Typography,
-        colorScheme = colorScheme
+        motionScheme = MotionScheme.expressive(),
     )
 }

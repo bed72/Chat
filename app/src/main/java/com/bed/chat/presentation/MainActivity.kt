@@ -29,7 +29,9 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: SessionViewModel by viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         installSplashScreen()

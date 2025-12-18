@@ -5,6 +5,7 @@ import kotlinx.coroutines.launch
 import androidx.hilt.navigation.compose.hiltViewModel
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.clickable
 
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
@@ -110,7 +111,7 @@ fun SignUpScreen(
                     isCompressing = formState.isCompressingImage,
                     modifier = modifier
                         .align(Alignment.CenterHorizontally)
-                        .noRippleClickable { SignUpFormEvent.OpenPictureSelectorBottomSheet }
+                        .clickable { SignUpFormEvent.OpenPictureSelectorBottomSheet  }
                 )
 
                 Spacer(modifier = modifier.height(16.dp))

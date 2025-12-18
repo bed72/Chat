@@ -1,41 +1,42 @@
 [versions]
 
 # Commons
-agp = "8.11.0"
-hilt = "2.56.2"
+ksp = "2.3.4"
+agp = "8.13.2"
 coil = "2.7.0"
-ktor = "3.2.1"
-room = "2.7.2"
-core = "1.16.0"
+ktor = "3.3.3"
+room = "2.8.4"
+hilt = "2.57.2"
+core = "1.17.0"
 slf4j = "1.7.36"
-lottie = "6.6.7"
-splash = "1.0.1"
+lottie = "6.7.1"
+splash = "1.2.0"
 paging = "3.3.6"
-kotlin = "2.1.20"
+kotlin = "2.3.0"
 detekt = "1.23.8"
 shimmer = "1.3.3"
-services = "4.4.2"
-material = "1.3.2"
-protobuf = "0.9.4"
-activity = "1.10.1"
-lifecycle = "2.9.1"
-datastore = "1.1.7"
+services = "4.4.4"
+material = "1.4.0"
+protobuf = "0.9.6"
+activity = "1.12.2"
+datastore = "1.2.0"
 leakcanary = "2.14"
-firebase = "33.16.0"
+firebase = "34.7.0"
 constraint = "1.1.1"
-navigation = "2.9.1"
+lifecycle = "2.10.0"
+navigation = "2.9.6"
 coroutines = "1.10.2"
-ksp = "2.1.20-1.0.31"
-compose = "2025.06.01"
-exifinterface = "1.4.1"
-protobuflite = "4.31.1"
-hilt-navigation = "1.2.0"
+compose = "2025.12.01"
+kolor = "5.0.0-alpha04"
+exifinterface = "1.4.2"
+protobuflite = "4.33.2"
+hilt-navigation = "1.3.0"
 
 # Tests
 junit = "4.13.2"
-mockito = "5.4.0"
-espresso = "3.6.1"
-junit-version = "1.2.1"
+mockito = "6.1.0"
+espresso = "3.7.0"
+junit-version = "1.3.0"
 
 [libraries]
 # Firebase
@@ -44,6 +45,8 @@ firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref =
 
 # UI
 ui = { group = "androidx.compose.ui", name = "ui" }
+
+
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-runtime = { group = "androidx.compose.runtime", name = "runtime" }
@@ -51,6 +54,7 @@ ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 ui-animation = { group = "androidx.compose.animation", name = "animation" }
 ui-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 ui-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+ui-kolor = { group = "com.materialkolor", name = "material-kolor", version.ref = "kolor" }
 ui-material = { group = "androidx.compose.material3", name = "material3", version.ref = "material" }
 
 # Ktor
@@ -75,6 +79,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt"}
 hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
+
 
 core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
@@ -173,6 +178,7 @@ core = [
     "datastore-preferences",
     # UI
     "ui",
+    "ui-kolor",
     "ui-icons",
     "ui-runtime",
     "ui-tooling",

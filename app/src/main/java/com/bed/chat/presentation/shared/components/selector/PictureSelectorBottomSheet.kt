@@ -155,9 +155,12 @@ private fun PictureSelectorOption(
 @OptIn(ExperimentalMaterial3Api::class)
 private fun PictureBottomSheetSelectorPreview() {
     val sheetState = SheetState(
+        skipHiddenState = false ,
+        velocityThreshold = { 0F },
+        positionalThreshold = { 0F },
+        confirmValueChange = { true },
         skipPartiallyExpanded = false,
         initialValue = SheetValue.Expanded,
-        density = Density(LocalContext.current),
     )
 
     ChatTheme {
